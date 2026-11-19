@@ -1,0 +1,8 @@
+# Claude Code skills (local only, not part of the website)
+.claude/
+skills-lock.json
+
+# OS / editor junk
+.DS_Store
+*.swp
+node_modules/
