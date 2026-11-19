@@ -100,7 +100,8 @@ a { color: inherit; }
 
 /* Highlighter marker behind navy text (contrast-safe orange) */
 .mark {
-  background: linear-gradient(transparent 58%, var(--orange) 58%, var(--orange) 94%, transparent 94%);
+  /* orange band from 58% to 94% of the line height */
+  background: linear-gradient(var(--orange), var(--orange)) no-repeat 0 90.6% / 100% 36%;
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
   padding: 0 .06em;
 }
@@ -204,7 +205,7 @@ a { color: inherit; }
 /* Load-in moment (only motion that plays by itself) */
 @media (prefers-reduced-motion: no-preference) {
   .phone { animation: rise .9s var(--ease) both .1s; }
-  .hero-slip { animation: pop .5s var(--ease) both .85s; }
+  .hero-slip { animation: pop .5s var(--ease) both 1.05s; }  /* after the highlighter finishes */
   @keyframes rise { from { opacity: 0; transform: translateY(40px) rotate(-3deg); } to { opacity: 1; transform: translateY(0) rotate(-3deg); } }
   @keyframes pop { from { opacity: 0; transform: translateY(12px) rotate(4deg) scale(.92); } to { opacity: 1; transform: rotate(4deg) scale(1); } }
 }
@@ -406,16 +407,59 @@ a { color: inherit; }
 .wa-float {
   position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60;
   width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center;
-  background: #25D366; color: #fff; border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--ink);
+  background: #25D366; color: var(--ink); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--ink); /* navy icon: 8:1 vs white's 2:1 */
   transition: transform .2s var(--ease), opacity .2s;
 }
 .wa-float .icon { width: 30px; height: 30px; }
 .wa-float.is-hidden { opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none; }
 
-/* Gentle scroll reveal (only when JS + motion allowed) */
+/* ---------- Motion: three moments (all skipped with reduced motion) ----------
+   Nothing is hidden by default: if an animation never runs, the final
+   state is what people see. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 @media (prefers-reduced-motion: no-preference) {
-  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-  .js .reveal.is-in { opacity: 1; transform: none; }
+  /* 1. Hero: the highlighter draws across "More enquiries" (then the
+        "New enquiry" slip pops onto the phone, see .hero-slip above) */
+  .hero-title .mark { animation: mark-draw .7s cubic-bezier(.3, .7, .2, 1) .3s both; }
+  @keyframes mark-draw { from { background-size: 0% 36%; } }
+
+  /* 2. Packages: quote slips are handed over one after another */
+  .slip.is-entering {
+    animation: slip-in .5s cubic-bezier(.2, .8, .2, 1) both;
+    animation-delay: calc(var(--i, 0) * 50ms);
+  }
+  @keyframes slip-in { from { opacity: 0; transform: translateY(28px); } }
+}
+/* 3. How it works: the dashed line fills orange as you scroll.
+      Uses the browser's own scroll timeline; older browsers just keep the
+      dashed line. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .steps { view-timeline: --steps block; }
+    .steps li:not(:last-child)::after {
+      background:
+        linear-gradient(var(--orange), var(--orange)) no-repeat 0 0 / 100% 0%,
+        repeating-linear-gradient(var(--ink) 0 6px, transparent 6px 12px);
+      animation: step-fill-y linear both;
+      animation-timeline: --steps;
+    }
+    .steps li:nth-child(1)::after { animation-range: cover 20% cover 38%; }
+    .steps li:nth-child(2)::after { animation-range: cover 38% cover 54%; }
+    .steps li:nth-child(3)::after { animation-range: cover 54% cover 70%; }
+    @keyframes step-fill-y { to { background-size: 100% 100%, auto; } }
+    @keyframes step-fill-x { to { background-size: 100% 100%, auto; } }
+    @media (min-width: 900px) {
+      .steps li:not(:last-child)::after {
+        background:
+          linear-gradient(var(--orange), var(--orange)) no-repeat 0 0 / 0% 100%,
+          repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 12px);
+        animation-name: step-fill-x;
+      }
+    }
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

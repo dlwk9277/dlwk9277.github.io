@@ -90,14 +90,52 @@
       total.appendChild(el("span", "slip-total-label", "Total"));
       total.appendChild(el("span", "slip-from", "from"));
       var price = el("span", "slip-price");
+      price.setAttribute("aria-hidden", "true");   /* screen readers get the sr-only text below */
       price.appendChild(el("span", "cur", "S$"));
-      price.appendChild(doc.createTextNode(money(p.price)));
+      var amount = el("span", "amt", money(p.price));
+      amount.setAttribute("data-value", String(p.price).replace(/[^\d.]/g, ""));
+      price.appendChild(amount);
       total.appendChild(price);
+      total.appendChild(el("span", "sr-only", "S$" + money(p.price)));
       slip.appendChild(total);
 
       slip.appendChild(waButton("Ask about " + p.name, p.message, p.featured ? "" : "btn-dark"));
+      slip.style.setProperty("--i", i);
       list.appendChild(slip);
     });
+  }
+
+  /* ---------- Motion moment 2: slips handed over + prices count up ----------
+     Only runs if the packages start below the screen (so nothing visible ever
+     disappears), and never with reduced motion. Prices are real text the
+     whole time; the count only changes the digits, then lands on the exact value. */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (list && !reduceMotion && "IntersectionObserver" in window &&
+      list.getBoundingClientRect().top > window.innerHeight) {
+    var slipObs = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (en) { return en.isIntersecting; })) return;
+      slipObs.disconnect();
+      list.querySelectorAll(".slip").forEach(function (s) { s.classList.add("is-entering"); });
+      list.querySelectorAll(".amt").forEach(countUp);
+    }, { rootMargin: "0px 0px 60px 0px" });   /* start just before they appear */
+    slipObs.observe(list);
+  }
+  function countUp(node) {
+    var target = Number(node.getAttribute("data-value"));
+    if (!isFinite(target) || target <= 0) return;
+    var finalText = node.textContent;
+    node.style.display = "inline-block";
+    node.style.minWidth = node.getBoundingClientRect().width + "px";  /* no layout shift */
+    node.style.textAlign = "right";
+    var start = null, dur = 650;
+    function frame(t) {
+      if (start === null) start = t;
+      var k = Math.min(1, (t - start) / dur);
+      var eased = 1 - Math.pow(1 - k, 3);              /* decelerate on arrival */
+      node.textContent = k < 1 ? money(Math.round(target * eased / 10) * 10) : finalText;
+      if (k < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
 
   /* ---------- Care plan ---------- */
@@ -198,17 +236,4 @@
     doc.querySelectorAll(".hero-actions .btn, .promise-cta, .contact-copy .btn, .site-footer").forEach(function (n) { io.observe(n); });
   }
 
-  /* ---------- Gentle reveal ---------- */
-  var reveals = doc.querySelectorAll(".steps li");
-  reveals.forEach(function (n) { n.classList.add("reveal"); });
-  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("is-in"); rio.unobserve(en.target); }
-      });
-    }, { threshold: 0 });
-    reveals.forEach(function (n) { rio.observe(n); });
-  } else {
-    reveals.forEach(function (n) { n.classList.add("is-in"); });
-  }
 })();
