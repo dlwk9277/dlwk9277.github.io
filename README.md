@@ -91,7 +91,7 @@ All in `js/config.js`:
 - **Other WhatsApp messages:** the `whatsappMessages` block. `hero` is the top button, `packages` is "Ask which package fits", `preview` is "Get my free design preview", `contact` is the bottom section, and `floating` is the round phone button. Write them normally; the site handles the link encoding.
 - **WhatsApp number:** `whatsappNumber: "6592778104"`, as country code + number, digits only. This updates every button and the number shown on the page. If you ever change it, also find-and-replace `6592778104` and `+65 9277 8104` in `index.html`, `privacy.html` and `404.html` (fallback links and Google's business details). The comment in `config.js` lists the exact spots.
 
-> If you change the starting price, also update the `S$500` in the `<meta name="description">` line, the `priceRange` near the top of `index.html`, and the FAQ answer that mentions the Care Plan price.
+> If you change the starting price, also update the starting price (currently `S$300`) in the `<meta name="description">` line, the `priceRange` near the top of `index.html`, and the FAQ answer that mentions the Care Plan price.
 
 ## 5. Turn on testimonials (when you have real ones)
 

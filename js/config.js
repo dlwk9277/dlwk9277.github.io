@@ -50,7 +50,7 @@ window.SITE_CONFIG = {
     {
       id: "starter",            /* a short unique label, no spaces */
       name: "Starter",
-      price: 500,
+      price: 300,
       bestFor: "New businesses that need to look legit online, fast.",
       includes: [
         "One-page website",
@@ -66,7 +66,7 @@ window.SITE_CONFIG = {
     {
       id: "business",
       name: "Business",
-      price: 1500,
+      price: 500,
       bestFor: "Established businesses that want more enquiries from Google.",
       includes: [
         "4 to 6 pages",
@@ -83,11 +83,11 @@ window.SITE_CONFIG = {
     {
       id: "business-tool",
       name: "Business + Tool",
-      price: 2500,
+      price: 1000,
       bestFor: "Businesses that get the same questions every day.",
       includes: [
         "Everything in Business",
-        "A custom tool, such as an instant quote calculator or a booking form",
+        "A custom tool or automation, such as a quote calculator, booking flow or WhatsApp auto-reply",
         "Enquiries arrive on your WhatsApp with the details filled in",
         "Free hosting"
       ],
