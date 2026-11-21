@@ -83,7 +83,8 @@ When you set up an ad campaign aimed at messages or leads, choose this Pixel and
 
 All in `js/config.js`:
 
-- **Prices:** each package has `price: 500`. Type a plain number with no `S$` and no commas. The site formats it as `S$1,500`.
+- **Prices:** each package has `price: 250`. Type a plain number with no `S$` and no commas. The site formats it as `S$1,500`.
+- **Launch discount (crossed-out prices):** a package with `oldPrice: 500` shows S$500 crossed out next to its `price`, with the small `discountTag` ("50% off"). The line above the packages is `launchNote`. To end the discount: set `price` back to the usual price, delete the `oldPrice` lines, and set `launchNote` and `discountTag` to `""`. Then update the starting price in `index.html` too (see the note below).
 - **Package details:** edit `name`, `bestFor` (the one-line description) and the `includes` list. Each item goes in quotes, separated by commas.
 - **"Most popular" tag:** set `featured: true` on the package you want highlighted and `false` on the others.
 - **Each package's WhatsApp message:** the `message` line inside that package.
@@ -91,7 +92,7 @@ All in `js/config.js`:
 - **Other WhatsApp messages:** the `whatsappMessages` block. `hero` is the top button, `packages` is "Ask which package fits", `preview` is "Get my free design preview", `contact` is the bottom section, and `floating` is the round phone button. Write them normally; the site handles the link encoding.
 - **WhatsApp number:** `whatsappNumber: "6592778104"`, as country code + number, digits only. This updates every button and the number shown on the page. If you ever change it, also find-and-replace `6592778104` and `+65 9277 8104` in `index.html`, `privacy.html` and `404.html` (fallback links and Google's business details). The comment in `config.js` lists the exact spots.
 
-> If you change the starting price, also update the starting price (currently `S$300`) in the `<meta name="description">` line, the `priceRange` near the top of `index.html`, and the FAQ answer that mentions the Care Plan price.
+> If you change the starting price, also update the starting price (currently `S$150`) in the `<meta name="description">` line, the `priceRange` near the top of `index.html`, and the FAQ answer that mentions the Care Plan price. The share image `assets/og-image.png` also shows the Starter price; its source is kept outside this repo (`~/sites/brand/og/`), so ask for a re-render. After changing the image, bump `?v=` on the `og:image` and `twitter:image` lines so WhatsApp and Facebook fetch the new one.
 
 ## 5. Turn on testimonials (when you have real ones)
 

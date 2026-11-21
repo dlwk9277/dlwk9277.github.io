@@ -88,15 +88,28 @@
 
       var total = el("div", "slip-total");
       total.appendChild(el("span", "slip-total-label", "Total"));
-      total.appendChild(el("span", "slip-from", "from"));
+      var amounts = el("div", "slip-amounts");
+      if (p.oldPrice) {
+        var deal = el("div", "slip-deal");
+        if (C.discountTag) deal.appendChild(el("span", "slip-off", C.discountTag));
+        var was = el("s", "slip-was");
+        was.appendChild(el("span", "sr-only", "usual price "));
+        was.appendChild(doc.createTextNode("S$" + money(p.oldPrice)));
+        deal.appendChild(was);
+        amounts.appendChild(deal);
+      }
+      var now = el("div", "slip-now");
+      now.appendChild(el("span", "slip-from", "from"));
+      /* The price is real text, read once. (It used to be duplicated in an
+         sr-only copy, which made it read "S$300 S$300" in the page text.) */
       var price = el("span", "slip-price");
-      price.setAttribute("aria-hidden", "true");   /* screen readers get the sr-only text below */
       price.appendChild(el("span", "cur", "S$"));
       var amount = el("span", "amt", money(p.price));
       amount.setAttribute("data-value", String(p.price).replace(/[^\d.]/g, ""));
       price.appendChild(amount);
-      total.appendChild(price);
-      total.appendChild(el("span", "sr-only", "S$" + money(p.price)));
+      now.appendChild(price);
+      amounts.appendChild(now);
+      total.appendChild(amounts);
       slip.appendChild(total);
 
       slip.appendChild(waButton("Ask about " + p.name, p.message, p.featured ? "" : "btn-dark"));
@@ -124,6 +137,7 @@
     var target = Number(node.getAttribute("data-value"));
     if (!isFinite(target) || target <= 0) return;
     var finalText = node.textContent;
+    node.setAttribute("aria-hidden", "true");
     node.style.display = "inline-block";
     node.style.minWidth = node.getBoundingClientRect().width + "px";  /* no layout shift */
     node.style.textAlign = "right";
@@ -133,10 +147,14 @@
       var k = Math.min(1, (t - start) / dur);
       var eased = 1 - Math.pow(1 - k, 3);              /* decelerate on arrival */
       node.textContent = k < 1 ? money(Math.round(target * eased / 10) * 10) : finalText;
-      if (k < 1) requestAnimationFrame(frame);
+      if (k < 1) requestAnimationFrame(frame); else node.removeAttribute("aria-hidden");
     }
     requestAnimationFrame(frame);
   }
+
+  /* ---------- Launch discount note (config: launchNote) ---------- */
+  var note = doc.getElementById("launch-note");
+  if (note && C.launchNote) { note.textContent = C.launchNote; note.hidden = false; }
 
   /* ---------- Care plan ---------- */
   var care = doc.getElementById("care-plan");
@@ -234,6 +252,24 @@
       float.classList.toggle("is-hidden", visible.size > 0);
     }, { threshold: 0.4 });
     doc.querySelectorAll(".hero-actions .btn, .promise-cta, .contact-copy .btn, .site-footer").forEach(function (n) { io.observe(n); });
+
+    /* Never sit on top of a price or a call-to-action: watch a strip at the
+       bottom of the screen, as tall as the button, and hide the button
+       while any price row or button is inside that strip. */
+    var under = new Set(), strip;
+    function watchStrip() {
+      if (strip) strip.disconnect();
+      under.clear();
+      var top = Math.max(0, window.innerHeight - 100);
+      strip = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { en.isIntersecting ? under.add(en.target) : under.delete(en.target); });
+        float.classList.toggle("is-covering", under.size > 0);
+      }, { rootMargin: "-" + top + "px 0px 0px 0px" });
+      doc.querySelectorAll(".slip-total, .btn, .cta-band, .care a").forEach(function (n) { strip.observe(n); });
+    }
+    watchStrip();
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(watchStrip, 200); });
   }
 
 })();

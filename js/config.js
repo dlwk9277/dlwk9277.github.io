@@ -44,13 +44,22 @@ window.SITE_CONFIG = {
   /* ---------- PACKAGES & PRICES -----------------------------------------
      Change names, prices and what's included here.
      - price: a number in S$ (no "S$", no commas), e.g. 1500
+     - oldPrice: optional. The usual price, shown crossed out next to
+       price with the discount tag. Delete the line to stop showing it.
      - featured: true puts the "Most popular" tag on that package
      - message: the WhatsApp message for that package's button        */
+  /* Launch discount. Shown above the packages, and as the small tag
+     next to each crossed-out oldPrice. Set both to "" to switch off
+     (and delete the oldPrice lines).                                  */
+  launchNote: "Launch price: 50% off while I take on my first clients.",
+  discountTag: "50% off",
+
   packages: [
     {
       id: "starter",            /* a short unique label, no spaces */
       name: "Starter",
-      price: 300,
+      price: 150,
+      oldPrice: 300,
       bestFor: "New businesses that need to look legit online, fast.",
       includes: [
         "One-page website",
@@ -66,7 +75,8 @@ window.SITE_CONFIG = {
     {
       id: "business",
       name: "Business",
-      price: 500,
+      price: 250,
+      oldPrice: 500,
       bestFor: "Established businesses that want more enquiries from Google.",
       includes: [
         "4 to 6 pages",
@@ -83,7 +93,8 @@ window.SITE_CONFIG = {
     {
       id: "business-tool",
       name: "Business + Tool",
-      price: 1000,
+      price: 500,
+      oldPrice: 1000,
       bestFor: "Businesses that get the same questions every day.",
       includes: [
         "Everything in Business",

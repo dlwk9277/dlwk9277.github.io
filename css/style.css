@@ -258,7 +258,7 @@ a { color: inherit; }
 .slip-items li { display: flex; gap: 10px; align-items: flex-start; }
 .slip-items .icon { color: var(--ink); background: var(--orange-soft); border-radius: 50%; padding: 3px; width: 22px; height: 22px; margin-top: 2px; }
 .slip-total {
-  position: relative; display: flex; align-items: baseline; gap: 8px; margin-top: 26px; padding-top: 18px;
+  position: relative; display: flex; align-items: flex-end; gap: 8px; margin-top: 26px; padding-top: 18px;
   border-top: 2px dashed var(--ink);
 }
 /* ticket notches where the slip "tears off" */
@@ -270,6 +270,14 @@ a { color: inherit; }
 .slip-total::after { right: -36px; clip-path: inset(0 50% 0 0); }
 .slip-total-label { font-weight: 700; margin-right: auto; }
 .slip-from { font-size: .95rem; color: var(--slate); }
+.slip-amounts { display: grid; justify-items: end; gap: 6px; }
+.slip-deal { display: flex; align-items: center; gap: 8px; }
+.slip-off {
+  background: var(--orange); color: var(--ink); font-weight: 800; font-size: .8rem;
+  padding: 2px 9px; border-radius: 999px; white-space: nowrap;
+}
+.slip-was { color: var(--slate); font-weight: 700; font-size: 1.05rem; text-decoration-thickness: 2px; }
+.slip-now { display: flex; align-items: baseline; gap: 8px; }
 .slip-price { font-family: var(--f-display); font-weight: 900; font-stretch: 112%; font-size: 2.5rem; line-height: 1; }
 .slip-price .cur { font-size: .5em; vertical-align: .5em; margin-right: 2px; }
 .slip .btn { margin-top: 22px; width: 100%; }
@@ -278,7 +286,8 @@ a { color: inherit; }
 .slip.is-featured .slip-head { border-bottom-color: #33445e; }
 .slip.is-featured .slip-doc,
 .slip.is-featured .slip-for,
-.slip.is-featured .slip-from { color: var(--on-ink-muted); }
+.slip.is-featured .slip-from,
+.slip.is-featured .slip-was { color: var(--on-ink-muted); }
 .slip.is-featured .slip-items .icon { background: var(--orange); }
 .slip.is-featured .slip-total { border-top-color: var(--orange); }
 .slip.is-featured .slip-price { color: var(--orange); }       /* orange on navy: 6:1 */
@@ -403,6 +412,11 @@ a { color: inherit; }
 .footer-links a:hover { color: var(--orange); }
 .footer-links .icon { color: var(--orange); }
 
+.launch-note {
+  display: inline-block; margin: 0 0 30px; font-weight: 700; font-size: 1.05rem;
+  background: var(--orange-soft); border: 2px solid var(--ink); border-radius: var(--r-sm); padding: 8px 14px;
+}
+
 /* Floating WhatsApp (mobile/tablet only) */
 .wa-float {
   position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60;
@@ -411,7 +425,7 @@ a { color: inherit; }
   transition: transform .2s var(--ease), opacity .2s;
 }
 .wa-float .icon { width: 30px; height: 30px; }
-.wa-float.is-hidden { opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none; }
+.wa-float.is-hidden, .wa-float.is-covering { opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none; }
 
 /* ---------- Motion: three moments (all skipped with reduced motion) ----------
    Nothing is hidden by default: if an animation never runs, the final
