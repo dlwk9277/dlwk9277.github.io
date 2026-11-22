@@ -59,111 +59,222 @@
   /* Visible phone number text */
   doc.querySelectorAll("[data-wa-number]").forEach(function (n) { n.textContent = prettyNumber(WA_NUM); });
 
-  /* ---------- Packages ---------- */
-  var list = doc.getElementById("package-list");
-  if (list && Array.isArray(C.packages)) {
-    C.packages.forEach(function (p, i) {
-      var slip = el("article", "slip" + (p.featured ? " is-featured" : ""));
-      slip.setAttribute("aria-labelledby", "pkg-" + i);
-      slip.setAttribute("data-reveal", "");
-      slip.setAttribute("data-spot", "");
-      if (p.featured) slip.appendChild(el("span", "slip-bg"));   /* inner layer for the moving border light */
-      if (p.featured) slip.appendChild(el("span", "slip-tag", "Most popular"));
-
-      var head = el("div", "slip-head");
-      head.appendChild(el("span", "slip-doc", "Quotation"));
-      head.appendChild(el("span", "slip-doc", "Option " + (i + 1)));
-      slip.appendChild(head);
-
-      var h = el("h3", "slip-name", p.name);
-      h.id = "pkg-" + i;
-      slip.appendChild(h);
-      if (p.bestFor) slip.appendChild(el("p", "slip-for", p.bestFor));
-
-      var ul = el("ul", "slip-items");
-      (p.includes || []).forEach(function (item) {
-        var li = el("li");
-        li.appendChild(icon("i-check"));
-        li.appendChild(el("span", null, item));
-        ul.appendChild(li);
-      });
-      slip.appendChild(ul);
-
-      var total = el("div", "slip-total");
-      total.appendChild(el("span", "slip-total-label", "Total"));
-      var amounts = el("div", "slip-amounts");
-      if (p.oldPrice) {
-        var deal = el("div", "slip-deal");
-        if (C.discountTag) deal.appendChild(el("span", "slip-off", C.discountTag));
-        var was = el("s", "slip-was");
-        was.appendChild(el("span", "sr-only", "usual price "));
-        was.appendChild(doc.createTextNode("S$" + money(p.oldPrice)));
-        deal.appendChild(was);
-        amounts.appendChild(deal);
-      }
-      var now = el("div", "slip-now");
-      now.appendChild(el("span", "slip-from", "from"));
-      /* The price is real text, read once. (It used to be duplicated in an
-         sr-only copy, which made it read "S$300 S$300" in the page text.) */
-      var price = el("span", "slip-price");
-      price.appendChild(el("span", "cur", "S$"));
-      var amount = el("span", "amt", money(p.price));
-      amount.setAttribute("data-value", String(p.price).replace(/[^\d.]/g, ""));
-      price.appendChild(amount);
-      now.appendChild(price);
-      amounts.appendChild(now);
-      total.appendChild(amounts);
-      slip.appendChild(total);
-
-      slip.appendChild(waButton("Ask about " + p.name, p.message, p.featured ? "" : "btn-dark"));
-      list.appendChild(slip);
-    });
-  }
-
-  /* Prices count up when their card scrolls into view (see MOTION below).
-     Prices are real text the whole time; the count only changes the digits,
-     then lands on the exact value. */
-  function countUp(node) {
-    var target = Number(node.getAttribute("data-value"));
-    if (!isFinite(target) || target <= 0) return;
-    var finalText = node.textContent;
-    node.setAttribute("aria-hidden", "true");
-    node.style.display = "inline-block";
-    node.style.minWidth = node.getBoundingClientRect().width + "px";  /* no layout shift */
-    node.style.textAlign = "right";
-    var start = null, dur = 650;
-    function frame(t) {
-      if (start === null) start = t;
-      var k = Math.min(1, (t - start) / dur);
-      var eased = 1 - Math.pow(1 - k, 3);              /* decelerate on arrival */
-      node.textContent = k < 1 ? money(Math.round(target * eased / 10) * 10) : finalText;
-      if (k < 1) requestAnimationFrame(frame); else node.removeAttribute("aria-hidden");
+  /* ---------- Sale calendar (config: saleEvents) ----------
+     Picks today's sale in Singapore time. No sale today = full prices. */
+  function sgToday() {
+    try {
+      return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Singapore", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    } catch (e) {
+      var d = new Date(Date.now() + 8 * 3600 * 1000);
+      return d.toISOString().slice(0, 10);
     }
-    requestAnimationFrame(frame);
+  }
+  function niceDate(iso) {
+    var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var p = iso.split("-");
+    return Number(p[2]) + " " + m[Number(p[1]) - 1];
+  }
+  var today = sgToday();
+  var SALE = (C.saleEvents || []).filter(function (e) { return e && e.from <= today && today <= e.to; })[0] || null;
+  var daysLeft = SALE ? Math.round((Date.parse(SALE.to) - Date.parse(today)) / 864e5) : 0;
+  /* Price right now: the sale price during a sale, otherwise the original. */
+  function num(v) { return Number(String(v).replace(/[^\d.]/g, "")); }
+  function onSale(p) { return !!(SALE && p.oldPrice && p.oldPrice > p.price); }
+  function nowPrice(p) { return SALE || !p.oldPrice ? p.price : p.oldPrice; }
+
+  var calc = C.calculator, pkgs = C.packages || [];
+
+  /* ---------- Floating sale banner (stays at the top while you scroll) ---------- */
+  var bar = doc.getElementById("sale-bar");
+  if (bar && SALE && pkgs.length) {
+    var first = pkgs[0];
+    var ends = daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
+    bar.querySelector("[data-sale-text]").textContent =
+      SALE.name + ": from S$" + money(first.price) + (first.oldPrice ? " (was S$" + money(first.oldPrice) + ")" : "") + " · " + ends;
+    bar.hidden = false;
   }
 
-  /* ---------- Launch discount note (config: launchNote) ---------- */
-  var note = doc.getElementById("launch-note");
-  if (note && C.launchNote) { note.textContent = C.launchNote; note.hidden = false; }
+  /* ---------- Price calculator (config: packages, calculator) ----------
+     Always shows the LOWEST package that covers everything picked.
+     An "extra" (complex automation) is shown on its own line, never in the big number. */
+  var sizesBox = doc.getElementById("calc-sizes"), extrasBox = doc.getElementById("calc-extras");
+  if (calc && sizesBox && extrasBox && pkgs.length) {
+    var rank = {};
+    pkgs.forEach(function (p, i) { rank[p.id] = i; });
+    function pkgOf(id) { return pkgs[rank[id] || 0]; }
 
-  /* ---------- Care plan ---------- */
-  var care = doc.getElementById("care-plan");
-  if (care && C.carePlan) {
-    var cp = C.carePlan;
-    var txt = el("div");
-    var t = el("p", "care-title");
-    t.appendChild(doc.createTextNode(cp.name + " "));
-    t.appendChild(el("span", "care-price", "from S$" + money(cp.pricePerMonth) + "/month"));
-    txt.appendChild(t);
-    txt.appendChild(el("p", null, cp.description));
-    care.appendChild(txt);
-    var a = el("a", null, "Ask about the " + cp.name);
-    a.href = waLink(cp.message);
-    a.target = "_blank";
-    a.rel = "noopener";
-    care.appendChild(a);
-    care.hidden = false;
+    /* Site size: each option shows its own price */
+    var pickSize = Math.max(0, (calc.sizes || []).findIndex(function (o) { return o.selected; }));
+    (calc.sizes || []).forEach(function (o, i) {
+      var lab = el("label", "calc-opt");
+      var inp = el("input"); inp.type = "radio"; inp.name = "calc-size"; inp.value = String(i);
+      if (i === pickSize) inp.checked = true;
+      var box = el("span", "box");
+      box.appendChild(el("b", null, o.label));
+      if (o.hint) box.appendChild(el("small", null, o.hint));
+      var pr = el("span", "opt-price");
+      var p = pkgOf(o.needs);
+      if (onSale(p)) { var w = el("s", null, "S$" + money(p.oldPrice)); pr.appendChild(w); pr.appendChild(doc.createTextNode(" ")); }
+      pr.appendChild(el("span", null, "S$" + money(nowPrice(p))));
+      box.appendChild(pr);
+      lab.appendChild(inp); lab.appendChild(box);
+      sizesBox.appendChild(lab);
+    });
+
+    /* Options, in groups */
+    var chips = [];
+    (calc.groups || [{ id: "", label: "Add what you need" }]).forEach(function (g) {
+      var items = (calc.extras || []).map(function (o, i) { return [o, i]; }).filter(function (x) { return (x[0].group || "") === g.id || (!g.id && !x[0].group); });
+      if (!items.length) return;
+      var fs = el("fieldset", "calc-group");
+      var lg = el("legend", null, g.label);
+      if (g.hint) lg.appendChild(el("span", null, g.hint));
+      fs.appendChild(lg);
+      var wrap = el("div", "calc-extras");
+      items.forEach(function (x) {
+        var o = x[0];
+        var lab = el("label", "calc-chip" + (o.hint ? " has-hint" : ""));
+        var inp = el("input"); inp.type = "checkbox"; inp.value = String(x[1]);
+        var txt = el("span");
+        var name = el("b", null, o.label);
+        txt.appendChild(name);
+        var tag = el("em", "tag");
+        txt.appendChild(tag);
+        if (o.hint) txt.appendChild(el("small", null, o.hint));
+        lab.appendChild(inp); lab.appendChild(txt);
+        wrap.appendChild(lab);
+        chips.push({ o: o, inp: inp, tag: tag });
+      });
+      fs.appendChild(wrap);
+      extrasBox.appendChild(fs);
+    });
+
+    var out = {
+      pkg: doc.getElementById("calc-pkg"), price: doc.getElementById("calc-price"),
+      lines: doc.getElementById("calc-lines"), extra: doc.getElementById("calc-extra"), send: doc.getElementById("calc-send")
+    };
+    var mini = { pkg: doc.getElementById("calc-mini-pkg"), price: doc.getElementById("calc-mini-price"), send: doc.getElementById("calc-mini-send") };
+    var shown = null, tween = 0;
+    var animate = doc.documentElement.classList.contains("motion");
+    function showPrice(v) {
+      if (shown === null || !animate) { out.price.textContent = money(v); shown = v; return; }
+      var from = shown, start = null; shown = v;
+      cancelAnimationFrame(tween);
+      (function step(t) {
+        if (start === null) start = t;
+        var k = Math.min(1, (t - start) / 450), e = 1 - Math.pow(1 - k, 3);
+        out.price.textContent = money(Math.round((from + (v - from) * e) / 10) * 10);
+        if (k < 1) tween = requestAnimationFrame(step); else out.price.textContent = money(v);
+      })(performance.now());
+    }
+    function line(label, amount, cls, sub) {
+      var li = el("li", cls || "");
+      var l = el("span", "ql-label", label);
+      if (sub) l.appendChild(el("small", null, sub));
+      li.appendChild(l);
+      li.appendChild(el("span", "ql-amt", amount));
+      out.lines.appendChild(li);
+    }
+    function update(e) {
+      var sizeInp = sizesBox.querySelector("input:checked");
+      var size = calc.sizes[Number(sizeInp ? sizeInp.value : 0)];
+      var need = rank[size.needs] || 0;
+      var picked = chips.filter(function (c) { return c.inp.checked; });
+      picked.forEach(function (c) { if (rank[c.o.needs] > need) need = rank[c.o.needs]; });
+      var p = pkgs[need];
+
+      /* Live tags: Free, Included, +S$ difference, or the add-on price */
+      chips.forEach(function (c) {
+        var o = c.o, t;
+        if (o.extra) t = "+S$" + money(o.extra);
+        else if (o.free) t = "Free";
+        else if (rank[o.needs] > need) t = "+S$" + money(num(nowPrice(pkgOf(o.needs))) - num(nowPrice(p)));
+        else t = "Included";
+        c.tag.textContent = t;
+        c.tag.className = "tag" + (o.extra || t.charAt(0) === "+" ? " tag-plus" : o.free ? " tag-free" : "");
+      });
+
+      var old = out.pkg.textContent;
+      out.pkg.textContent = p.name;
+      if (e && old !== p.name && animate) { out.pkg.classList.remove("calc-bump"); void out.pkg.offsetWidth; out.pkg.classList.add("calc-bump"); }
+
+      /* The quote */
+      out.lines.textContent = "";
+      var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra; }).map(function (c) { return c.o.label; }));
+      line(p.name + " package", "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
+      if (onSale(p)) line(SALE.name, "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
+      picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, "Free", "ql-free"); });
+      showPrice(num(nowPrice(p)));
+
+      var extras = picked.filter(function (c) { return c.o.extra; });
+      var extraCost = extras.reduce(function (a, c) { return a + num(c.o.extra); }, 0);
+      if (extraCost) {
+        out.extra.textContent = "+ S$" + money(extraCost) + " " + extras.map(function (c) { return c.o.label; }).join(", ") + ", " + (calc.extraNote || "");
+        out.extra.hidden = false;
+      } else out.extra.hidden = true;
+
+      var items = [size.label].concat(picked.map(function (c) { return c.o.extra ? c.o.label + " (+S$" + money(c.o.extra) + ")" : c.o.label; }));
+      var msg = (calc.message || "Hi Darren, I'd like the {package} package.")
+        .replace("{package}", p.name).replace("{price}", money(nowPrice(p)))
+        .replace("{items}", items.join(", "));
+      out.send.href = waLink(msg);
+      if (mini.pkg) { mini.pkg.textContent = p.name; mini.price.textContent = money(nowPrice(p)); mini.send.href = out.send.href; }
+    }
+    /* hide the little bar once the full quote is on screen */
+    var miniBox = doc.getElementById("calc-mini");
+    if (miniBox && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) { miniBox.classList.toggle("is-gone", en[0].isIntersecting); }, { threshold: 0.25 })
+        .observe(doc.getElementById("calc-result"));
+    }
+    doc.getElementById("calc-form").addEventListener("change", update);
+    update();
   }
+
+  /* ---------- Drag to compare ---------- */
+  doc.querySelectorAll("[data-compare]").forEach(function (box) {
+    var range = box.querySelector(".cmp-range");
+    function setPos(v) {
+      v = Math.max(0, Math.min(100, v));
+      box.style.setProperty("--pos", v + "%");
+      if (range) range.value = String(Math.round(v));
+    }
+    function fromX(x) { var r = box.getBoundingClientRect(); setPos((x - r.left) / r.width * 100); }
+    /* Mouse: drag anywhere. Touch: only once the finger moves sideways,
+       so starting a scroll on the phone doesn't jump the line. */
+    var dragging = false, startX = 0, isTouch = false;
+    box.addEventListener("pointerdown", function (e) {
+      dragging = true; startX = e.clientX; isTouch = e.pointerType !== "mouse";
+      if (!isTouch) { box.setPointerCapture(e.pointerId); box.dataset.touched = "1"; fromX(e.clientX); }
+    });
+    box.addEventListener("pointermove", function (e) {
+      if (!dragging) return;
+      if (isTouch && Math.abs(e.clientX - startX) < 6 && !box.dataset.touched) return;
+      box.dataset.touched = "1"; fromX(e.clientX);
+    });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (t) { box.addEventListener(t, function () { dragging = false; }); });
+    if (range) range.addEventListener("input", function () { box.dataset.touched = "1"; setPos(Number(range.value)); });
+    /* One gentle sweep the first time it's on screen, so people see it moves.
+       Stops the moment they touch it. */
+    if (doc.documentElement.classList.contains("motion") && "IntersectionObserver" in window) {
+      var nudged = false;
+      var nudgeObs = new IntersectionObserver(function (en) {
+        if (!en[0].isIntersecting || nudged || box.dataset.touched) return;
+        nudged = true; nudgeObs.disconnect();
+        var path = [[50, 14, 900], [14, 86, 1300], [86, 50, 800]], seg = 0, t0 = null;
+        function ease(k) { return k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; }
+        function step(t) {
+          if (box.dataset.touched) return;
+          if (t0 === null) t0 = t;
+          var p = path[seg], k = Math.min(1, (t - t0) / p[2]);
+          setPos(p[0] + (p[1] - p[0]) * ease(k));
+          if (k < 1) requestAnimationFrame(step);
+          else if (++seg < path.length) { t0 = null; requestAnimationFrame(step); }
+        }
+        setTimeout(function () { requestAnimationFrame(step); }, 500);
+      }, { threshold: 0.7 });
+      nudgeObs.observe(box);
+    }
+  });
 
   /* ---------- Portfolio (hidden when empty) ---------- */
   var projects = (C.projects || []).filter(function (p) { return p && p.name; });
@@ -227,7 +338,7 @@
   doc.addEventListener("click", trackContact);
   doc.addEventListener("auxclick", trackContact);
 
-  /* ---------- Header border on scroll ---------- */
+  /* ---------- Header background on scroll ---------- */
   var header = doc.querySelector(".site-header");
   function onScroll() { if (header) header.classList.toggle("is-scrolled", window.scrollY > 8); }
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -241,7 +352,7 @@
       entries.forEach(function (en) { en.isIntersecting ? visible.add(en.target) : visible.delete(en.target); });
       float.classList.toggle("is-hidden", visible.size > 0);
     }, { threshold: 0.4 });
-    doc.querySelectorAll(".hero-actions .btn, .promise-cta, .contact-copy .btn, .site-footer").forEach(function (n) { io.observe(n); });
+    doc.querySelectorAll(".hero-actions .btn, .contact-copy .btn, .site-footer, .calc-form").forEach(function (n) { io.observe(n); });
 
     /* Never sit on top of a price or a call-to-action: watch a strip at the
        bottom of the screen, as tall as the button, and hide the button
@@ -255,7 +366,7 @@
         entries.forEach(function (en) { en.isIntersecting ? under.add(en.target) : under.delete(en.target); });
         float.classList.toggle("is-covering", under.size > 0);
       }, { rootMargin: "-" + top + "px 0px 0px 0px" });
-      doc.querySelectorAll(".slip-total, .btn, .cta-band, .care a").forEach(function (n) { strip.observe(n); });
+      doc.querySelectorAll(".btn").forEach(function (n) { strip.observe(n); });
     }
     watchStrip();
     var rt;
@@ -272,23 +383,6 @@
      ===================================================================== */
   var html = doc.documentElement;
   var MOTION = html.classList.contains("motion");
-  var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-  /* Cursor spotlight on cards (desktop only). It answers the pointer,
-     so it also runs for reduced-motion visitors. */
-  if (finePointer) {
-    doc.addEventListener("pointermove", function (e) {
-      var card = e.target.closest && e.target.closest("[data-spot]");
-      if (!card) return;
-      var r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", (e.clientX - r.left) + "px");
-      card.style.setProperty("--my", (e.clientY - r.top) + "px");
-    }, { passive: true });
-  }
-
-  /* Moving strips: a second copy of each strip follows the first, so the
-     loop is seamless. (The strips are decorative and hidden from screen readers.) */
-  doc.querySelectorAll(".marquee-track").forEach(function (t) { t.parentNode.appendChild(t.cloneNode(true)); });
 
   if (MOTION) {
     /* 1. Split headings into words, so each word can slide up from a mask.
@@ -324,7 +418,6 @@
         obs.unobserve(t);
         if (t.hasAttribute("data-reveal")) t.style.setProperty("--d", Math.min(k++ * 0.09, 0.45) + "s");
         t.classList.add("is-in");
-        if (t.classList.contains("slip")) t.querySelectorAll(".amt").forEach(countUp);
         setTimeout(function () { t.classList.add("is-settled"); }, 1500);
       });
     }
@@ -336,66 +429,29 @@
       (n.classList.contains("footer-giant") ? edgeObs : revealObs).observe(n);
     });
 
-    /* 3. Pause looping animations while they're off screen. */
+    /* 3. Pause the hero's drifting glows while the hero is off screen. */
     var loopObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { en.target.classList.toggle("is-paused", !en.isIntersecting); });
     });
-    doc.querySelectorAll(".hero, .marquees, .slips").forEach(function (n) { loopObs.observe(n); });
+    doc.querySelectorAll(".hero").forEach(function (n) { loopObs.observe(n); });
 
-    /* 4. Example enquiries popping up beside the phone, every 3 seconds. */
-    var pings = doc.querySelectorAll(".ping");
-    var hero = doc.querySelector(".hero");
-    if (pings.length > 1 && hero) {
-      var cur = 0, heroOn = true;
-      setInterval(function () {
-        if (!heroOn || doc.hidden) return;
-        var out = pings[cur];
-        out.classList.remove("is-on");
-        out.classList.add("is-out");
-        setTimeout(function () { out.classList.remove("is-out"); }, 700);
-        cur = (cur + 1) % pings.length;
-        pings[cur].classList.add("is-on");
-      }, 3000);
-      new IntersectionObserver(function (en) { heroOn = en[0].isIntersecting; }).observe(hero);
-    }
-
-    /* 5. The phone tilts gently towards the cursor (desktop only). */
-    var tilt = doc.querySelector("[data-tilt]");
-    if (tilt && hero && finePointer) {
-      var tx = 0, ty = 0, tiltQueued = false;
-      hero.addEventListener("pointermove", function (e) {
-        var r = hero.getBoundingClientRect();
-        tx = (e.clientX - r.left) / r.width - 0.5;
-        ty = (e.clientY - r.top) / r.height - 0.5;
-        if (tiltQueued) return;
-        tiltQueued = true;
-        requestAnimationFrame(function () {
-          tiltQueued = false;
-          tilt.style.transform = "rotateY(" + (tx * 14).toFixed(2) + "deg) rotateX(" + (-ty * 10).toFixed(2) + "deg)";
-        });
-      }, { passive: true });
-      hero.addEventListener("pointerleave", function () { tilt.style.transform = ""; });
-    }
-
-    /* 6. "How it works": the line fills and each step lights up as you scroll. */
-    var steps = doc.querySelector("[data-timeline]");
-    if (steps) {
-      var stepItems = steps.querySelectorAll(".step");
-      var howOn = false, howQueued = false;
-      var paint = function () {
-        howQueued = false;
-        var r = steps.getBoundingClientRect();
-        var line = window.innerHeight * 0.62;               /* the "reading line" on screen */
-        var p = Math.max(0, Math.min(1, (line - r.top) / r.height));
-        steps.style.setProperty("--p", p.toFixed(4));
-        stepItems.forEach(function (s) {
-          s.classList.toggle("is-lit", s.getBoundingClientRect().top < line);
-        });
+    /* 4. "More enquiries" highlight: it sweeps in at the start, then follows
+          your scroll. Scroll down and the highlight wipes away; scroll back
+          up and it returns. Only the highlight's width changes, once a frame. */
+    var mark = doc.querySelector("[data-mark]");
+    var title = mark && mark.closest(".hero-title");
+    if (mark && title) {
+      var live = false, queued = false;
+      var setMark = function () {
+        queued = false;
+        var k = Math.max(0, Math.min(1, 1 - window.scrollY / (window.innerHeight * 0.45)));
+        mark.style.setProperty("--m", k.toFixed(3));
       };
       window.addEventListener("scroll", function () {
-        if (howOn && !howQueued) { howQueued = true; requestAnimationFrame(paint); }
+        if (live && !queued) { queued = true; requestAnimationFrame(setMark); }
       }, { passive: true });
-      new IntersectionObserver(function (en) { howOn = en[0].isIntersecting; if (howOn) paint(); }).observe(steps);
+      /* wait until the first sweep has finished, then hand over to the scroll */
+      setTimeout(function () { mark.classList.add("is-live"); live = true; setMark(); }, 2400);
     }
   }
 

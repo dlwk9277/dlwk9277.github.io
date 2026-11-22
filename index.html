@@ -4,26 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Website Design Singapore for Home Service Businesses | Darren Lee</title>
-  <meta name="description" content="Websites for Singapore aircon, plumbing, cleaning and renovation businesses. Live in 7 days, free hosting, from S$150. Free design preview before you pay.">
+  <meta name="description" content="Websites for Singapore aircon, plumbing, cleaning and renovation businesses. Live in 5 working days, free hosting, from S$150. Free design preview before you pay.">
   <link rel="canonical" href="https://dlwk9277.github.io/">
-  <meta name="theme-color" content="#07080A">
+  <meta name="theme-color" content="#0C0C0D">
   <meta name="color-scheme" content="dark">
 
   <!-- Open Graph / social sharing -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Darren Lee">
   <meta property="og:title" content="Websites for Singapore home service businesses | Darren Lee">
-  <meta property="og:description" content="Get more enquiries with a fast, professional website. Live in 7 days, free hosting, free design preview before you pay.">
+  <meta property="og:description" content="Get more enquiries with a fast, professional website. Live in 5 working days, free hosting, free design preview before you pay.">
   <meta property="og:url" content="https://dlwk9277.github.io/">
-  <meta property="og:image" content="https://dlwk9277.github.io/assets/og-image.png?v=3">
+  <meta property="og:image" content="https://dlwk9277.github.io/assets/og-image.png?v=5">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Darren Lee: websites for Singapore home service businesses. Live in 7 days.">
+  <meta property="og:image:alt" content="Darren Lee: websites for Singapore home service businesses. Live in 5 working days.">
   <meta property="og:locale" content="en_SG">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Websites for Singapore home service businesses | Darren Lee">
-  <meta name="twitter:description" content="Get more enquiries with a fast, professional website. Live in 7 days, free hosting included.">
-  <meta name="twitter:image" content="https://dlwk9277.github.io/assets/og-image.png?v=3">
+  <meta name="twitter:description" content="Get more enquiries with a fast, professional website. Live in 5 working days, free hosting included.">
+  <meta name="twitter:image" content="https://dlwk9277.github.io/assets/og-image.png?v=5">
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -48,16 +48,15 @@
   <!-- Settings first (prices, WhatsApp, Pixel ID), then site behaviour -->
   <script src="js/config.js" defer></script>
   <script src="js/site.js" defer></script>
-  <script src="js/hands.js" defer></script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Darren Lee",
-    "description": "Websites, landing pages and simple web tools for home service and renovation businesses in Singapore.",
+    "description": "Websites, landing pages, chatbots and automations for home service and renovation businesses in Singapore.",
     "url": "https://dlwk9277.github.io/",
-    "image": "https://dlwk9277.github.io/assets/og-image.png?v=3",
+    "image": "https://dlwk9277.github.io/assets/og-image.png?v=5",
     "telephone": "+6592778104",
     "priceRange": "From S$150",
     "areaServed": { "@type": "Country", "name": "Singapore" },
@@ -72,7 +71,7 @@
       "areaServed": "SG"
     },
     "founder": { "@type": "Person", "name": "Darren Lee" },
-    "knowsAbout": ["Website design", "Landing pages", "Quote calculators", "Booking forms", "Google Business Profile", "Local SEO"]
+    "knowsAbout": ["Website design", "Landing pages", "Quote calculators", "Booking forms", "Chatbots", "n8n automation", "Google Business Profile", "Local SEO"]
   }
   </script>
 </head>
@@ -88,269 +87,154 @@
 
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="wordmark" href="#top" aria-label="Darren Lee, back to top"><span class="wordmark-dot" aria-hidden="true"></span>Darren Lee</a>
-      <nav class="site-nav" aria-label="Main">
-        <a href="#services">Services</a>
-        <a href="#packages">Prices</a>
-        <a href="#how">How it works</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <a class="btn btn-small" data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">
-        <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
-        <span>WhatsApp</span>
-      </a>
-    </div>
-  </header>
+  <!-- Floating top: the sale banner (text from the sale calendar in js/config.js) stays on screen while you scroll -->
+  <div class="top">
+    <a class="sale-bar" id="sale-bar" href="#calculator" hidden><span class="sale-dot" aria-hidden="true"></span><span data-sale-text></span></a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="#top" aria-label="Darren Lee, back to top"><span class="wordmark-dot" aria-hidden="true"></span>Darren Lee</a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="#calculator">Prices</a>
+          <a href="#how">How it works</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="btn btn-small" data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </header>
+  </div>
 
   <main id="main">
 
-    <!-- 1. HERO -->
+    <!-- 1. HERO + drag-to-compare -->
     <section class="hero" id="top">
-      <div class="hero-bg" aria-hidden="true">
-        <span class="glow glow-1"></span>
-        <span class="glow glow-2"></span>
-        <span class="hero-grid-lines"></span>
-      </div>
-
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="hero-for" data-load="0">Websites for aircon, plumbing, electrical, cleaning, moving and renovation businesses in Singapore.</p>
-          <h1 class="hero-title" data-split>More enquiries for your home service business.</h1>
-          <p class="hero-sub" data-load="2">A fast, professional website with your prices, your best work and your WhatsApp one tap away. <strong>Live in 7 days, free hosting included.</strong></p>
+          <h1 class="hero-title" data-split><span class="mark" data-mark>More enquiries</span> for your home service business.</h1>
+          <p class="hero-sub" data-load="2">Websites for Singapore aircon, plumbing, electrical, cleaning, moving and renovation businesses, with your prices and WhatsApp one tap away. <strong>Live in 5 working days. Free hosting.</strong></p>
           <div class="hero-actions" data-load="3">
-            <a class="btn btn-big btn-glow" data-wa="hero" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+            <a class="btn btn-big" data-wa="hero" href="https://wa.me/6592778104" target="_blank" rel="noopener">
               <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
               <span>WhatsApp Darren</span>
             </a>
-            <a class="btn-ghost" href="#packages">See packages and prices</a>
+            <a class="btn-ghost" href="#calculator">See your price</a>
           </div>
           <ul class="hero-terms" data-load="4">
-            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>Free design preview before you pay</li>
-            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>50% to start, 50% when you're happy</li>
-            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>You own your website</li>
+            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>Free design preview</li>
+            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>50% now, 50% when you're happy</li>
+            <li><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg>You own it</li>
           </ul>
         </div>
 
+        <!-- Same business, an old static site vs a site built for enquiries (illustration, not a real client) -->
         <figure class="hero-visual" data-load="2">
-          <div class="tilt" data-tilt>
-            <div class="phone">
-              <div class="phone-screen" aria-hidden="true">
-                <div class="ps-bar"><span class="ps-logo">Your Business</span><span class="ps-menu"></span></div>
-                <div class="ps-hero">
-                  <p class="ps-kicker">Aircon servicing, islandwide</p>
-                  <p class="ps-title">Cold air back, same week.</p>
-                  <span class="ps-cta"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp us</span>
-                </div>
-                <div class="ps-prices">
-                  <div class="ps-row"><span>General service</span><b>from $XX</b></div>
-                  <div class="ps-row"><span>Chemical wash</span><b>from $XX</b></div>
-                  <div class="ps-row"><span>Gas top-up</span><b>from $XX</b></div>
-                </div>
-                <div class="ps-gallery"><i></i><i></i><i></i></div>
+          <div class="win">
+            <div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>yourbusiness.com.sg</span></div>
+            <div class="compare" data-compare>
+              <!-- BEFORE: an old static website, on purpose -->
+              <div class="cmp-pane cmp-before" aria-hidden="true">
+                <div class="ob-title">Welcome to our website!!!</div>
+                <p class="ob-links"><u>Home</u> | <u>About us</u> | <u>Services</u> | <u>Price list</u> | <u>Guestbook</u> | <u>Contact</u></p>
+                <p class="ob-red">*** CALL NOW *** FREE QUOTATION *** CALL NOW ***</p>
+                <p class="ob-h">Aircon servicing and repair</p>
+                <p class="ob-text">We do aircon servicing, repair and installation. Please call for price.</p>
+                <div class="ob-img">[ image not found ]</div>
+                <p class="ob-small">Call 9XXX XXXX after 10am &middot; Best viewed in Internet Explorer &middot; Visitors: <b>000731</b></p>
               </div>
+              <!-- AFTER: a website built to get enquiries -->
+              <div class="cmp-pane cmp-after" aria-hidden="true">
+                <div class="nb-bar"><b>Your Business</b><span class="nb-links"><i>Services</i><i>Prices</i><i>Contact</i></span><span class="nb-btn"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp</span></div>
+                <div class="nb-hero">
+                  <div class="nb-copy">
+                    <small>Aircon servicing</small>
+                    <b>Cold air back, same week.</b>
+                    <span class="nb-cta"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp us</span>
+                  </div>
+                  <div class="nb-prices">
+                    <div><span>General service</span><b>from $XX</b></div>
+                    <div><span>Chemical wash</span><b>from $XX</b></div>
+                    <div><span>Gas top-up</span><b>from $XX</b></div>
+                  </div>
+                </div>
+                <div class="nb-gallery"><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="cmp-handle" aria-hidden="true"><span class="cmp-knob"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+              <span class="cmp-tag cmp-tag-before" aria-hidden="true">Before</span>
+              <span class="cmp-tag cmp-tag-after" aria-hidden="true">After</span>
+              <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: move left to see more of the new website">
             </div>
-
-            <!-- Example enquiries (illustration only). JS cycles them. -->
-            <ol class="pings" aria-hidden="true">
-              <li class="ping is-on">
-                <span class="ping-icon"><svg class="icon"><use href="#i-wa"/></svg></span>
-                <span class="ping-text"><small>New enquiry from your website</small><b>Chemical wash for 2 units</b><span>Tampines, this Saturday</span></span>
-              </li>
-              <li class="ping">
-                <span class="ping-icon"><svg class="icon"><use href="#i-wa"/></svg></span>
-                <span class="ping-text"><small>New enquiry from your website</small><b>Leaking pipe under the sink</b><span>Bukit Batok, today if possible</span></span>
-              </li>
-              <li class="ping">
-                <span class="ping-icon"><svg class="icon"><use href="#i-wa"/></svg></span>
-                <span class="ping-text"><small>New enquiry from your website</small><b>Move-out clean, 3-room HDB</b><span>Punggol, next week</span></span>
-              </li>
-            </ol>
           </div>
-          <figcaption>Example: what your homepage could look like</figcaption>
+          <figcaption>Drag to compare. Example only, not a real client.</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- 2. MOVING STRIPS: who it's for, what's included -->
-    <div class="marquees" aria-hidden="true">
-      <div class="marquee">
-        <div class="marquee-track">
-          <span>Aircon servicing</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Plumbing</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Electrical</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Cleaning</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Moving</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Renovation</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Handyman</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Painting</span><svg class="icon"><use href="#i-spark"/></svg>
-        </div>
-      </div>
-      <div class="marquee marquee-rev">
-        <div class="marquee-track">
-          <span>Free design preview</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Live in 7 days</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>WhatsApp on every screen</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Prices shown upfront</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Free hosting</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>You own your site</span><svg class="icon"><use href="#i-spark"/></svg>
-          <span>Google Maps</span><svg class="icon"><use href="#i-spark"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. HANDS: two hands made of dots reach for each other (js/hands.js) -->
-    <section class="hands" id="connect" aria-labelledby="hands-title" data-hands>
-      <canvas class="hands-canvas" aria-hidden="true"></canvas>
-      <div class="wrap hands-copy">
-        <h2 class="section-title" id="hands-title" data-split>You and your next customer, one tap apart.</h2>
-        <p data-reveal>Your website puts your WhatsApp in their hand. They tap, you reply, the job is booked.</p>
-      </div>
-      <p class="hands-hint" aria-hidden="true">Touch the dots</p>
-    </section>
-
-    <!-- 4. PROBLEM / BENEFIT -->
-    <section class="section why" id="why" aria-labelledby="why-title">
+    <!-- 2. PRICE: pick what you need (options and prices come from js/config.js) -->
+    <section class="section calc" id="calculator" aria-labelledby="calc-title">
       <div class="wrap">
-        <h2 class="section-title" id="why-title" data-split>Why customers message someone else</h2>
-        <ul class="why-list" data-stagger>
-          <li class="panel" data-spot data-reveal>
-            <h3>Your business looks small online</h3>
-            <p>An old site, or just a Facebook page, makes people wonder if you're reliable. A clean website shows you're a proper business.</p>
-          </li>
-          <li class="panel" data-spot data-reveal>
-            <h3>They can't find a rough price</h3>
-            <p>Most people want a ballpark before they message. Show your starting prices and they arrive ready to book.</p>
-          </li>
-          <li class="panel" data-spot data-reveal>
-            <h3>Contacting you takes too many taps</h3>
-            <p>On a phone, every extra step loses people. Your WhatsApp button stays one tap away on every screen.</p>
-          </li>
-          <li class="panel" data-spot data-reveal>
-            <h3>Competitors look more professional</h3>
-            <p>When two companies offer the same service, customers pick the one they trust more. Your website is where that trust starts.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 5. SERVICES -->
-    <section class="section services" id="services" aria-labelledby="services-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="section-title" id="services-title" data-split>Websites and tools I build</h2>
-          <p class="section-intro" data-reveal>Everything is designed for phones first, because that's where your customers find you. Not in home services? Your business is welcome too.</p>
-        </div>
-        <dl class="service-list" data-stagger>
-          <div data-reveal><dt>Business websites</dt><dd>Your services, prices, photos and contact details in one place that looks the part.</dd></div>
-          <div data-reveal><dt>Landing pages</dt><dd>A single page for one service or promotion. Ideal for Instagram and Facebook ads.</dd></div>
-          <div data-reveal><dt>Instant quote calculators</dt><dd>Customers pick their options, see an estimate, and send it to you on WhatsApp.</dd></div>
-          <div data-reveal><dt>Booking and enquiry forms</dt><dd>Get the address, preferred date and job details in the first message, so you can reply with a quote straight away.</dd></div>
-          <div data-reveal><dt>Project galleries</dt><dd>Before-and-after photos that let your work speak for you.</dd></div>
-          <div data-reveal><dt>Google Maps and Business Profile</dt><dd>Show up with your hours, location and contact details when people nearby search for your service.</dd></div>
-          <div data-reveal><dt>Basic SEO</dt><dd>Page titles, descriptions and setup that tell Google what you do and where you work.</dd></div>
-        </dl>
-        <p class="services-more" data-reveal>Need something else? <a data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">Just ask on WhatsApp.</a></p>
-      </div>
-    </section>
-
-    <!-- 6. PACKAGES (prices come from js/config.js) -->
-    <section class="section packages" id="packages" aria-labelledby="packages-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="section-title" id="packages-title" data-split>Know the price before we start</h2>
-          <p class="section-intro" data-reveal>These are starting prices. After we chat, I'll confirm the full price on WhatsApp before any work begins.</p>
-        </div>
-
-        <p class="launch-note" id="launch-note" data-reveal hidden></p>
-
-        <div class="slips" id="package-list" data-stagger>
-          <!-- Filled in from js/config.js. This fallback shows if JavaScript is off. -->
-          <noscript><p>Packages start from S$150. WhatsApp +65 9277 8104 for prices.</p></noscript>
-        </div>
-
-        <div class="packages-foot" data-reveal>
-          <div class="care" id="care-plan" hidden></div>
-          <p class="hosting-note"><svg class="icon icon-check" aria-hidden="true"><use href="#i-check"/></svg> Free hosting included with every package.</p>
-        </div>
-
-        <div class="cta-band" data-reveal>
-          <p><strong>Not sure which package fits?</strong> Tell me about your business and I'll suggest one.</p>
-          <a class="btn" data-wa="packages" href="https://wa.me/6592778104" target="_blank" rel="noopener">
-            <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
-            <span>Ask which package fits</span>
-          </a>
+        <h2 class="section-title" id="calc-title">See your price</h2>
+        <div class="calc-grid">
+          <div class="calc-form" id="calc-form" data-reveal>
+            <fieldset>
+              <legend>Your site</legend>
+              <div class="calc-sizes" id="calc-sizes"></div>
+            </fieldset>
+            <!-- Option groups (Get found, Tools, Automation) are built from js/config.js -->
+            <div class="calc-groups" id="calc-extras"></div>
+            <noscript><p>Turn on JavaScript to use this, or WhatsApp +65 9277 8104 for a price. Websites start from S$150.</p></noscript>
+          </div>
+          <!-- Phones: a small price bar that follows you while you pick -->
+          <div class="calc-mini" id="calc-mini" aria-hidden="true">
+            <span><small id="calc-mini-pkg">Business</small><b>from S$<span id="calc-mini-price">250</span></b></span>
+            <a class="btn btn-small" id="calc-mini-send" href="https://wa.me/6592778104" target="_blank" rel="noopener" tabindex="-1"><svg class="icon"><use href="#i-wa"/></svg>Send</a>
+          </div>
+          <!-- The quote: line items, sale discount, total -->
+          <div class="calc-result" id="calc-result" aria-live="polite" data-reveal>
+            <p class="quote-head"><span>Your quote</span><span class="quote-pkg"><span id="calc-pkg">Business</span> package</span></p>
+            <ul class="quote-lines" id="calc-lines"></ul>
+            <div class="quote-total">
+              <span class="quote-total-label">Total<small>starting price</small></span>
+              <span class="calc-price"><span class="cur">S$</span><span id="calc-price">250</span></span>
+            </div>
+            <p class="calc-extra" id="calc-extra" hidden></p>
+            <a class="btn btn-big btn-ink" id="calc-send" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+              <span>Send this quote to Darren</span>
+            </a>
+            <p class="calc-note">Free hosting included. I confirm the final price on WhatsApp before any work starts.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 7. PORTFOLIO: hidden until you add projects in js/config.js -->
+    <!-- 3. PORTFOLIO: hidden until you add projects in js/config.js -->
     <section class="section work" id="work" aria-labelledby="work-title" hidden>
       <div class="wrap">
-        <h2 class="section-title" id="work-title" data-split>Recent work</h2>
-        <div class="work-grid" id="work-list" data-stagger></div>
+        <h2 class="section-title" id="work-title">Recent work</h2>
+        <div class="work-grid" id="work-list"></div>
       </div>
     </section>
 
-    <!-- 8. HOW IT WORKS -->
+    <!-- 4. HOW IT WORKS (also the risk-free promise) -->
     <section class="section how" id="how" aria-labelledby="how-title">
-      <div class="wrap how-grid">
-        <div class="how-head">
-          <h2 class="section-title" id="how-title" data-split>From first message to live site in about 7 days</h2>
-        </div>
-        <ol class="steps" data-timeline>
-          <li class="track" aria-hidden="true"><span class="track-fill"></span></li>
-          <li class="step" data-reveal>
-            <h3>WhatsApp me about your business</h3>
-            <p>Tell me what you do, where you work and what you want the site to do. A few messages is enough.</p>
-          </li>
-          <li class="step" data-reveal>
-            <h3>Get a free design preview</h3>
-            <p>I design your homepage first, so you can see it before you pay anything.</p>
-          </li>
-          <li class="step" data-reveal>
-            <h3>Give feedback, I make the changes</h3>
-            <p>Tell me what to change in plain words. Two rounds of revisions are included.</p>
-          </li>
-          <li class="step" data-reveal>
-            <h3>Your site goes live</h3>
-            <p>About 7 days after we start, your site is online with free hosting set up.</p>
-          </li>
+      <div class="wrap">
+        <h2 class="section-title" id="how-title">How it works</h2>
+        <ol class="how-steps" data-stagger>
+          <li data-reveal><b>WhatsApp me</b><span>Tell me what you do.</span></li>
+          <li data-reveal><b>See a free preview</b><span>Your homepage, before you pay.</span></li>
+          <li data-reveal><b>Pay 50%, I build</b><span>2 rounds of changes included.</span></li>
+          <li data-reveal><b>Live in 5 working days</b><span>Pay the other 50%. You own it.</span></li>
         </ol>
-      </div>
-    </section>
-
-    <!-- 9. ZERO-RISK PROMISE -->
-    <section class="section promise" id="promise" aria-labelledby="promise-title">
-      <div class="wrap promise-grid">
-        <div class="promise-head">
-          <h2 class="section-title" id="promise-title" data-split>You see your website before you pay a cent.</h2>
-          <p class="promise-intro" data-reveal>Hiring someone online can feel risky. Here's exactly how I work, so you always know where you stand.</p>
-          <a class="btn btn-big btn-glow promise-cta" data-wa="preview" href="https://wa.me/6592778104" target="_blank" rel="noopener" data-reveal>
-            <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
-            <span>Get my free design preview</span>
-          </a>
-        </div>
-        <ul class="promise-list" data-stagger>
-          <li data-reveal><svg class="icon draw" aria-hidden="true"><use href="#i-check"/></svg><div><b>Free design preview</b><span>See your homepage designed before you pay anything.</span></div></li>
-          <li data-reveal><svg class="icon draw" aria-hidden="true"><use href="#i-check"/></svg><div><b>Pay 50% to start, 50% when you're happy</b><span>By PayNow. The price we agree is the price you pay.</span></div></li>
-          <li data-reveal><svg class="icon draw" aria-hidden="true"><use href="#i-check"/></svg><div><b>2 rounds of revisions included</b><span>Change the wording, photos or layout until it feels right.</span></div></li>
-          <li data-reveal><svg class="icon draw" aria-hidden="true"><use href="#i-check"/></svg><div><b>You own your website and files</b><span>Everything is yours. If you ever move on, you take it all with you.</span></div></li>
-          <li data-reveal><svg class="icon draw" aria-hidden="true"><use href="#i-check"/></svg><div><b>Live in 7 days</b><span>Or we agree a timeline upfront, before any work starts.</span></div></li>
-        </ul>
       </div>
     </section>
 
     <!-- TESTIMONIALS: enable when you have REAL reviews (see README step 5).
     <section class="section testimonials" id="reviews" aria-labelledby="reviews-title">
       <div class="wrap">
-        <h2 class="section-title" id="reviews-title" data-split>What clients say</h2>
+        <h2 class="section-title" id="reviews-title">What clients say</h2>
         <div class="quotes" data-stagger>
-          <figure class="quote" data-reveal>
-            <blockquote><p>Paste the client's exact words here.</p></blockquote>
-            <figcaption><b>Client name</b>, Business name</figcaption>
-          </figure>
           <figure class="quote" data-reveal>
             <blockquote><p>Paste the client's exact words here.</p></blockquote>
             <figcaption><b>Client name</b>, Business name</figcaption>
@@ -360,48 +244,36 @@
     </section>
     -->
 
-    <!-- 10. FAQ -->
+    <!-- 5. FAQ -->
     <section class="section faq" id="faq" aria-labelledby="faq-title">
       <div class="wrap faq-wrap">
-        <h2 class="section-title" id="faq-title" data-split>Common questions</h2>
+        <h2 class="section-title" id="faq-title">Questions</h2>
         <div class="faq-list" data-stagger>
           <details data-reveal>
-            <summary>How long does it take?</summary>
-            <div class="faq-a"><p>About 7 days from when I have your text and photos. A bigger site or a custom tool can take longer. If it will, I'll tell you the timeline before we start.</p></div>
-          </details>
-          <details data-reveal>
-            <summary>What do I need to provide?</summary>
-            <div class="faq-a"><p>Your business name, the services you offer, the areas you cover, rough prices if you want them shown, and photos of your work. Phone photos are fine. If you don't have a logo, I'll set your name in a clean text style. Not sure what to write? Tell me about your business on WhatsApp and I'll help you with the wording.</p></div>
-          </details>
-          <details data-reveal>
-            <summary>Do I own the website?</summary>
-            <div class="faq-a"><p>Yes. Once the final payment is made, the website and all its files are yours. I'll hand them over whenever you ask, and you're free to work with someone else later.</p></div>
-          </details>
-          <details data-reveal>
-            <summary>What does free hosting mean?</summary>
-            <div class="faq-a"><p>Hosting is the service that keeps your website online. I put your site on reliable hosting that has no monthly fee, so you don't pay anything to keep it running. The only yearly cost you might choose to add is your own domain name (see below).</p></div>
-          </details>
-          <details data-reveal>
-            <summary>What if I need changes later?</summary>
-            <div class="faq-a"><p>You have two options. The Care Plan, from S$50 a month, covers text changes, new photos, price updates and small fixes whenever you need them. Or just WhatsApp me when something comes up, and I'll quote you for that one change before doing it.</p></div>
+            <summary>What do I need to give you?</summary>
+            <div class="faq-a"><p>Your business name, services, areas, rough prices and phone photos of your work. No logo? I'll set your name in clean text. Not sure what to write? I'll help on WhatsApp. Once I have it, you're live in 5 working days.</p></div>
           </details>
           <details data-reveal>
             <summary>How do I pay?</summary>
-            <div class="faq-a"><p>By PayNow. After you've seen and approved your free design preview, you pay 50% to start the build. You pay the other 50% when you're happy with the finished site. There are no hidden fees.</p></div>
+            <div class="faq-a"><p>By PayNow. 50% after you approve your free preview, 50% when you're happy with the finished site. No hidden fees.</p></div>
           </details>
           <details data-reveal>
-            <summary>Can you do something that isn't listed?</summary>
-            <div class="faq-a"><p>Often, yes. Tell me what you need on WhatsApp. If it's something I can build well, I'll give you a price. If it isn't, I'll say so and suggest another way.</p></div>
+            <summary>Do I own the website?</summary>
+            <div class="faq-a"><p>Yes. After the final payment the site and all its files are yours, and you can work with someone else later.</p></div>
           </details>
           <details data-reveal>
-            <summary>Do I need a domain name?</summary>
-            <div class="faq-a"><p>You don't need one to go live. Your site can start on a free web address. A domain of your own, like yourbusiness.sg, looks more professional and usually costs around S$20 to S$60 a year depending on the ending. You buy it in your own name, so it always belongs to you. I'll help you choose one and connect it.</p></div>
+            <summary>What's free, and what about a domain?</summary>
+            <div class="faq-a"><p>Hosting has no monthly fee. A domain of your own, like yourbusiness.sg, is optional: about S$20 to S$60 a year, bought in your name. I'll help you choose and connect it.</p></div>
+          </details>
+          <details data-reveal>
+            <summary>What if I need changes later?</summary>
+            <div class="faq-a"><p>The Care Plan, from S$50 a month, covers text, photo and price updates and small fixes. Or WhatsApp me and I'll quote that one change before doing it.</p></div>
           </details>
         </div>
       </div>
     </section>
 
-    <!-- 11. CONTACT -->
+    <!-- 6. CONTACT -->
     <section class="section contact" id="contact" aria-labelledby="contact-title">
       <div class="wrap">
         <div class="contact-card" data-reveal>
@@ -410,13 +282,13 @@
             <img src="assets/darren.jpg" alt="Illustrated portrait of Darren Lee" width="480" height="560" loading="lazy" decoding="async" onerror="this.remove()">
           </div>
           <div class="contact-copy">
-            <h2 class="section-title" id="contact-title" data-split>Talk to Darren directly</h2>
-            <p>You'll chat with me, the person who designs and builds your site. No salespeople and no hard selling. Tell me about your business and I'll tell you honestly what would help.</p>
-            <a class="btn btn-big btn-glow" data-wa="contact" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+            <h2 class="section-title" id="contact-title">Talk to Darren</h2>
+            <p>You'll chat with me, the person who builds your site. No salespeople.</p>
+            <a class="btn btn-big" data-wa="contact" href="https://wa.me/6592778104" target="_blank" rel="noopener">
               <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
               <span>WhatsApp Darren</span>
             </a>
-            <p class="contact-number">WhatsApp number: <a data-wa="contact" href="https://wa.me/6592778104" target="_blank" rel="noopener" data-wa-number>+65 9277 8104</a></p>
+            <p class="contact-number"><a data-wa="contact" href="https://wa.me/6592778104" target="_blank" rel="noopener" data-wa-number>+65 9277 8104</a></p>
           </div>
         </div>
       </div>
@@ -438,7 +310,6 @@
       <p class="footer-small footer-privacy"><span data-pixel-notice hidden>This site uses Meta Pixel cookies to measure ads. </span>WhatsApp messages are only used to reply to your enquiry. <a href="privacy.html">Read the privacy notice</a>.</p>
       <p class="footer-small">© <span data-year>2026</span> Darren Lee</p>
     </div>
-    <p class="footer-giant" aria-hidden="true" data-reveal>Darren Lee</p>
   </footer>
 
   <!-- Floating WhatsApp button (phones and tablets) -->

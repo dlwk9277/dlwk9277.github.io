@@ -83,16 +83,26 @@ When you set up an ad campaign aimed at messages or leads, choose this Pixel and
 
 All in `js/config.js`:
 
-- **Prices:** each package has `price: 250`. Type a plain number with no `S$` and no commas. The site formats it as `S$1,500`.
-- **Launch discount (crossed-out prices):** a package with `oldPrice: 500` shows S$500 crossed out next to its `price`, with the small `discountTag` ("50% off"). The line above the packages is `launchNote`. To end the discount: set `price` back to the usual price, delete the `oldPrice` lines, and set `launchNote` and `discountTag` to `""`. Then update the starting price in `index.html` too (see the note below).
-- **Package details:** edit `name`, `bestFor` (the one-line description) and the `includes` list. Each item goes in quotes, separated by commas.
-- **"Most popular" tag:** set `featured: true` on the package you want highlighted and `false` on the others.
-- **Each package's WhatsApp message:** the `message` line inside that package.
-- **Care Plan:** the `carePlan` block (`pricePerMonth`, `description`).
-- **Other WhatsApp messages:** the `whatsappMessages` block. `hero` is the top button, `packages` is "Ask which package fits", `preview` is "Get my free design preview", `contact` is the bottom section, and `floating` is the round phone button. Write them normally; the site handles the link encoding.
+- **Prices:** only two prices are ever shown, Starter and Business, in the `packages` list. `price` is the sale price and `oldPrice` is the full price. Type plain numbers with no `S$` and no commas. Keep every price between S$150 and S$300.
+- **Calculator options:** the `calculator` block. `groups` sets the headings (Get found, Tools, Automation); each option has a `group` and a `needs` (the package it belongs to). Options that need a bigger package show the difference live (e.g. "+S$100"). `free: true` adds a small "free" tag (simple tools and chatbots are built free). `extra: 250` is the complex n8n automation add-on: it is shown on its own line ("+ S$250"), never added into the big price.
+- **Care Plan:** the `carePlan` block (`pricePerMonth`). It is mentioned in the FAQ in `index.html`; update the FAQ answer if you change the price.
+- **Other WhatsApp messages:** the `whatsappMessages` block. `hero` is the top button, `contact` is the bottom section, and `floating` is the round phone button. Write them normally; the site handles the link encoding.
 - **WhatsApp number:** `whatsappNumber: "6592778104"`, as country code + number, digits only. This updates every button and the number shown on the page. If you ever change it, also find-and-replace `6592778104` and `+65 9277 8104` in `index.html`, `privacy.html` and `404.html` (fallback links and Google's business details). The comment in `config.js` lists the exact spots.
 
 > If you change the starting price, also update the starting price (currently `S$150`) in the `<meta name="description">` line, the `priceRange` near the top of `index.html`, and the FAQ answer that mentions the Care Plan price. The share image `assets/og-image.png` also shows the Starter price; its source is kept outside this repo (`~/sites/brand/og/`), so ask for a re-render. After changing the image, bump `?v=` on the `og:image` and `twitter:image` lines so WhatsApp and Facebook fetch the new one.
+
+### Sale calendar (the discount changes by itself)
+
+The discount is shown as the current Singapore sale: "Christmas sale: from S$150 (was S$300) · until 31 Dec", in the blue bar that floats at the top of the page while visitors scroll, and as the crossed-out price in the calculator. The site picks the sale from today's date (Singapore time), so you don't need to change anything when a sale ends.
+
+- The list is `saleEvents` in `js/config.js`. Each line has a name, a first day and a last day.
+- It runs to the end of 2027. **Before it runs out, add next year's sales** (copy a line, change the name and dates).
+- Chinese New Year, Hari Raya and Deepavali move every year: check the dates on mom.gov.sg ("public holidays").
+- **One week a year has no sale** (5-11 Apr 2027): the site shows the full original prices with no discount, so the "usual price" is a real price. Keep a week like this when you add next year's sales. Any day not on the list also shows full prices.
+
+### Price calculator
+
+Visitors pick what they need and see the lowest package that covers it, with the sale price. The button sends their picks to you on WhatsApp. The options are `calculator` in `js/config.js` (see section 4).
 
 ## 5. Turn on testimonials (when you have real ones)
 
@@ -139,22 +149,19 @@ Only list work you actually did, and ask the client before showing their site.
 
 ## 8. Animations (how they work, how to turn them off)
 
-The page has a dark theme with light motion: headings slide up word by word, sections fade in as you scroll, two strips scroll sideways, example enquiries pop up beside the phone, the "How it works" line fills as you scroll, and the "Most popular" card has a light running round its border.
+The page has a dark theme with light motion. "More enquiries" has a marker-pen highlight that sweeps in at the start, wipes away as you scroll down and comes back as you scroll up. Headings slide up word by word, sections fade in as you scroll, and the before/after slider gives one small nudge the first time it's on screen.
 
-Under the strips, two hands made of dots reach for each other, touch, drift apart and come back. Dots move out of the way of a finger or mouse. That's `js/hands.js` (its colours are near the top of the file, under `colors`).
-
-- **Colours:** all in `:root` at the top of `css/style.css`. Black and white do most of the work; `--accent` (soft blue) is for small highlights.
+- **Colours:** all in `:root` at the top of `css/style.css`. Ink black and paper white do most of the work. `--accent` (soft blue) is used as a solid colour (sale bar, quote card, picked options), never as a glow; `--accent-deep` (pen blue) is only the highlight behind "More enquiries". Keep it flat: no glows, gradients or grid backdrops.
 - The rest of the motion lives at the bottom of `css/style.css` (the **MOTION** part) and `js/site.js` (the **MOTION** part).
 - Visitors whose phone is set to "reduce motion" get a still page. So does anyone without JavaScript.
-- **To switch all motion off:** in `index.html`, delete the small `<script>` block near the top that says `h.classList.add("motion")`. To remove the hands, delete the `<section class="hands" ...>` block and the `js/hands.js` script line.
-- To change the words in the moving strips, edit the two `marquee-track` lists in `index.html`.
+- **To switch all motion off:** in `index.html`, delete the small `<script>` block near the top that says `h.classList.add("motion")`.
+- **Drag to compare:** the "before" (an old static site) and "after" (a clean site) in the browser window are drawn in `index.html` (search for `Same business`). They're an illustration, labelled "Example only".
 
 ## 9. Credits
 
 - **Fonts:** [Archivo](https://fonts.google.com/specimen/Archivo) and [Atkinson Hyperlegible Next](https://fonts.google.com/specimen/Atkinson+Hyperlegible+Next), from Google Fonts under the SIL Open Font License. They're served from `assets/fonts/`, so visitors' browsers don't contact Google.
 - **WhatsApp and Instagram icons:** [Simple Icons](https://simpleicons.org) (CC0). WhatsApp and Instagram are trademarks of Meta.
-- **Hand shape (dots section):** "Hand Pointing" from [Phosphor Icons](https://phosphoricons.com) (MIT licence).
-- **Images:** no stock photos are used. The phone mockup, social share image and icons were made for this site.
+- **Images:** no stock photos are used. The browser-window mockup, social share image and icons were made for this site.
 
 ---
 
