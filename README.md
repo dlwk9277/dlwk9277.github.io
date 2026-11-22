@@ -137,7 +137,16 @@ projects: [
 
 Only list work you actually did, and ask the client before showing their site.
 
-## 8. Credits
+## 8. Animations (how they work, how to turn them off)
+
+The page has a dark theme with light motion: headings slide up word by word, sections fade in as you scroll, two strips scroll sideways, example enquiries pop up beside the phone, the "How it works" line fills as you scroll, and the "Most popular" card has a light running round its border.
+
+- It all lives at the bottom of `css/style.css` (the **MOTION** part) and `js/site.js` (the **MOTION** part).
+- Visitors whose phone is set to "reduce motion" get a still page. So does anyone without JavaScript.
+- **To switch all motion off:** in `index.html`, delete the small `<script>` block near the top that says `h.classList.add("motion")`.
+- To change the words in the moving strips, edit the two `marquee-track` lists in `index.html`.
+
+## 9. Credits
 
 - **Fonts:** [Archivo](https://fonts.google.com/specimen/Archivo) and [Atkinson Hyperlegible Next](https://fonts.google.com/specimen/Atkinson+Hyperlegible+Next), from Google Fonts under the SIL Open Font License. They're served from `assets/fonts/`, so visitors' browsers don't contact Google.
 - **WhatsApp and Instagram icons:** [Simple Icons](https://simpleicons.org) (CC0). WhatsApp and Instagram are trademarks of Meta.

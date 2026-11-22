@@ -65,6 +65,9 @@
     C.packages.forEach(function (p, i) {
       var slip = el("article", "slip" + (p.featured ? " is-featured" : ""));
       slip.setAttribute("aria-labelledby", "pkg-" + i);
+      slip.setAttribute("data-reveal", "");
+      slip.setAttribute("data-spot", "");
+      if (p.featured) slip.appendChild(el("span", "slip-bg"));   /* inner layer for the moving border light */
       if (p.featured) slip.appendChild(el("span", "slip-tag", "Most popular"));
 
       var head = el("div", "slip-head");
@@ -113,26 +116,13 @@
       slip.appendChild(total);
 
       slip.appendChild(waButton("Ask about " + p.name, p.message, p.featured ? "" : "btn-dark"));
-      slip.style.setProperty("--i", i);
       list.appendChild(slip);
     });
   }
 
-  /* ---------- Motion moment 2: slips handed over + prices count up ----------
-     Only runs if the packages start below the screen (so nothing visible ever
-     disappears), and never with reduced motion. Prices are real text the
-     whole time; the count only changes the digits, then lands on the exact value. */
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (list && !reduceMotion && "IntersectionObserver" in window &&
-      list.getBoundingClientRect().top > window.innerHeight) {
-    var slipObs = new IntersectionObserver(function (entries) {
-      if (!entries.some(function (en) { return en.isIntersecting; })) return;
-      slipObs.disconnect();
-      list.querySelectorAll(".slip").forEach(function (s) { s.classList.add("is-entering"); });
-      list.querySelectorAll(".amt").forEach(countUp);
-    }, { rootMargin: "0px 0px 60px 0px" });   /* start just before they appear */
-    slipObs.observe(list);
-  }
+  /* Prices count up when their card scrolls into view (see MOTION below).
+     Prices are real text the whole time; the count only changes the digits,
+     then lands on the exact value. */
   function countUp(node) {
     var target = Number(node.getAttribute("data-value"));
     if (!isFinite(target) || target <= 0) return;
@@ -272,4 +262,142 @@
     window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(watchStrip, 200); });
   }
 
+
+  /* =====================================================================
+     MOTION
+     Runs only when <html> has the "motion" class (set in the <head> of
+     index.html; never for visitors who asked for reduced motion).
+     Everything here moves with transform/opacity only, and anything that
+     loops is paused while it's off screen, so scrolling stays smooth.
+     ===================================================================== */
+  var html = doc.documentElement;
+  var MOTION = html.classList.contains("motion");
+  var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  /* Cursor spotlight on cards (desktop only). It answers the pointer,
+     so it also runs for reduced-motion visitors. */
+  if (finePointer) {
+    doc.addEventListener("pointermove", function (e) {
+      var card = e.target.closest && e.target.closest("[data-spot]");
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      card.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }, { passive: true });
+  }
+
+  /* Moving strips: a second copy of each strip follows the first, so the
+     loop is seamless. (The strips are decorative and hidden from screen readers.) */
+  doc.querySelectorAll(".marquee-track").forEach(function (t) { t.parentNode.appendChild(t.cloneNode(true)); });
+
+  if (MOTION) {
+    /* 1. Split headings into words, so each word can slide up from a mask.
+          The words stay real text, so screen readers and Google read them normally. */
+    doc.querySelectorAll("[data-split]").forEach(function (node) {
+      var n = 0;
+      (function walk(parent) {
+        Array.prototype.slice.call(parent.childNodes).forEach(function (c) {
+          if (c.nodeType === 1) { walk(c); return; }
+          if (c.nodeType !== 3) return;
+          var frag = doc.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(doc.createTextNode(" ")); return; }
+            var w = el("span", "w"), wi = el("span", "wi", part);
+            wi.style.setProperty("--i", n++);
+            w.appendChild(wi);
+            frag.appendChild(w);
+          });
+          parent.replaceChild(frag, c);
+        });
+      })(node);
+      node.classList.add("is-split");
+    });
+
+    /* 2. Reveal things as they scroll into view. Items that arrive together
+          (a row of cards, a list) come in one after another. */
+    function onReveal(entries, obs) {
+      var k = 0;
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var t = en.target;
+        obs.unobserve(t);
+        if (t.hasAttribute("data-reveal")) t.style.setProperty("--d", Math.min(k++ * 0.09, 0.45) + "s");
+        t.classList.add("is-in");
+        if (t.classList.contains("slip")) t.querySelectorAll(".amt").forEach(countUp);
+        setTimeout(function () { t.classList.add("is-settled"); }, 1500);
+      });
+    }
+    var revealObs = new IntersectionObserver(onReveal, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    /* Things at the very bottom of the page can't scroll any higher, so they
+       reveal as soon as any part of them shows. */
+    var edgeObs = new IntersectionObserver(onReveal, { threshold: 0 });
+    doc.querySelectorAll("[data-reveal], [data-split]").forEach(function (n) {
+      (n.classList.contains("footer-giant") ? edgeObs : revealObs).observe(n);
+    });
+
+    /* 3. Pause looping animations while they're off screen. */
+    var loopObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle("is-paused", !en.isIntersecting); });
+    });
+    doc.querySelectorAll(".hero, .marquees, .slips").forEach(function (n) { loopObs.observe(n); });
+
+    /* 4. Example enquiries popping up beside the phone, every 3 seconds. */
+    var pings = doc.querySelectorAll(".ping");
+    var hero = doc.querySelector(".hero");
+    if (pings.length > 1 && hero) {
+      var cur = 0, heroOn = true;
+      setInterval(function () {
+        if (!heroOn || doc.hidden) return;
+        var out = pings[cur];
+        out.classList.remove("is-on");
+        out.classList.add("is-out");
+        setTimeout(function () { out.classList.remove("is-out"); }, 700);
+        cur = (cur + 1) % pings.length;
+        pings[cur].classList.add("is-on");
+      }, 3000);
+      new IntersectionObserver(function (en) { heroOn = en[0].isIntersecting; }).observe(hero);
+    }
+
+    /* 5. The phone tilts gently towards the cursor (desktop only). */
+    var tilt = doc.querySelector("[data-tilt]");
+    if (tilt && hero && finePointer) {
+      var tx = 0, ty = 0, tiltQueued = false;
+      hero.addEventListener("pointermove", function (e) {
+        var r = hero.getBoundingClientRect();
+        tx = (e.clientX - r.left) / r.width - 0.5;
+        ty = (e.clientY - r.top) / r.height - 0.5;
+        if (tiltQueued) return;
+        tiltQueued = true;
+        requestAnimationFrame(function () {
+          tiltQueued = false;
+          tilt.style.transform = "rotateY(" + (tx * 14).toFixed(2) + "deg) rotateX(" + (-ty * 10).toFixed(2) + "deg)";
+        });
+      }, { passive: true });
+      hero.addEventListener("pointerleave", function () { tilt.style.transform = ""; });
+    }
+
+    /* 6. "How it works": the line fills and each step lights up as you scroll. */
+    var steps = doc.querySelector("[data-timeline]");
+    if (steps) {
+      var stepItems = steps.querySelectorAll(".step");
+      var howOn = false, howQueued = false;
+      var paint = function () {
+        howQueued = false;
+        var r = steps.getBoundingClientRect();
+        var line = window.innerHeight * 0.62;               /* the "reading line" on screen */
+        var p = Math.max(0, Math.min(1, (line - r.top) / r.height));
+        steps.style.setProperty("--p", p.toFixed(4));
+        stepItems.forEach(function (s) {
+          s.classList.toggle("is-lit", s.getBoundingClientRect().top < line);
+        });
+      };
+      window.addEventListener("scroll", function () {
+        if (howOn && !howQueued) { howQueued = true; requestAnimationFrame(paint); }
+      }, { passive: true });
+      new IntersectionObserver(function (en) { howOn = en[0].isIntersecting; if (howOn) paint(); }).observe(steps);
+    }
+  }
+
+  window.__siteReady = true;
 })();
