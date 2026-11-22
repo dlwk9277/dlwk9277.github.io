@@ -1,30 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-SG">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found | Darren Lee</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0F1B2D">
+  <meta name="theme-color" content="#07080A">
   <!-- This page can be shown at ANY address, so it uses no relative links
        and keeps its styles inline. HOME is set below. -->
   <style>
-    :root { --paper:#FAFAF7; --ink:#0F1B2D; --slate:#4A5568; --orange:#FF6B2C; }
+    :root { --bg:#07080A; --text:#F5F5F7; --muted:#9C9EA8; --accent:#8EA2FF; }
     * { box-sizing: border-box; }
     body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px 20px;
-           background:var(--paper); color:var(--ink);
+           background:var(--bg); color:var(--text);
            font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
     main { max-width: 520px; }
-    .tape { height:12px; width:120px; margin-bottom:28px;
-            background: repeating-linear-gradient(-45deg, var(--orange) 0 12px, var(--ink) 12px 24px); }
+    .tape { height:10px; width:10px; border-radius:50%; margin-bottom:28px; background:var(--accent);
+            box-shadow: 0 0 0 6px rgba(142,162,255,.18); }
     h1 { font-size: clamp(2.2rem, 9vw, 3.2rem); line-height:1.05; margin:0 0 14px; letter-spacing:-.02em; }
-    p { color: var(--slate); margin: 0 0 28px; }
+    p { color: var(--muted); margin: 0 0 28px; }
     .actions { display:flex; flex-wrap:wrap; gap:14px 22px; align-items:center; }
-    .btn { display:inline-flex; align-items:center; min-height:50px; padding:.7em 1.3em; border-radius:999px;
-           background:var(--orange); color:var(--ink); border:2px solid var(--ink); box-shadow:0 3px 0 var(--ink);
-           font-weight:800; text-decoration:none; }
-    .link { font-weight:700; color:var(--ink); text-decoration-color:var(--orange); text-decoration-thickness:3px; text-underline-offset:5px; }
-    a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
+    .btn { display:inline-flex; align-items:center; min-height:50px; padding:.7em 1.4em; border-radius:999px;
+           background:var(--text); color:var(--bg); font-weight:800; text-decoration:none; }
+    .btn:hover { background:#fff; }
+    .link { font-weight:700; color:var(--text); text-decoration-color:var(--accent); text-decoration-thickness:2px; text-underline-offset:5px; }
+    a:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
   </style>
 </head>
 <body>

@@ -27,7 +27,7 @@ Almost everything you'll want to change lives in **`js/config.js`**. Open it in 
 4. Put it in the **`assets`** folder: `assets/darren.jpg`.
 5. Push to GitHub (step 6).
 
-Until the photo exists, the contact section shows an orange "DL" monogram instead.
+Until the photo exists, the contact section shows a blue "DL" monogram instead.
 
 ## 2. Add your Instagram handle
 
@@ -141,15 +141,19 @@ Only list work you actually did, and ask the client before showing their site.
 
 The page has a dark theme with light motion: headings slide up word by word, sections fade in as you scroll, two strips scroll sideways, example enquiries pop up beside the phone, the "How it works" line fills as you scroll, and the "Most popular" card has a light running round its border.
 
-- It all lives at the bottom of `css/style.css` (the **MOTION** part) and `js/site.js` (the **MOTION** part).
+Under the strips, two hands made of dots reach for each other, touch, drift apart and come back. Dots move out of the way of a finger or mouse. That's `js/hands.js` (its colours are near the top of the file, under `colors`).
+
+- **Colours:** all in `:root` at the top of `css/style.css`. Black and white do most of the work; `--accent` (soft blue) is for small highlights.
+- The rest of the motion lives at the bottom of `css/style.css` (the **MOTION** part) and `js/site.js` (the **MOTION** part).
 - Visitors whose phone is set to "reduce motion" get a still page. So does anyone without JavaScript.
-- **To switch all motion off:** in `index.html`, delete the small `<script>` block near the top that says `h.classList.add("motion")`.
+- **To switch all motion off:** in `index.html`, delete the small `<script>` block near the top that says `h.classList.add("motion")`. To remove the hands, delete the `<section class="hands" ...>` block and the `js/hands.js` script line.
 - To change the words in the moving strips, edit the two `marquee-track` lists in `index.html`.
 
 ## 9. Credits
 
 - **Fonts:** [Archivo](https://fonts.google.com/specimen/Archivo) and [Atkinson Hyperlegible Next](https://fonts.google.com/specimen/Atkinson+Hyperlegible+Next), from Google Fonts under the SIL Open Font License. They're served from `assets/fonts/`, so visitors' browsers don't contact Google.
 - **WhatsApp and Instagram icons:** [Simple Icons](https://simpleicons.org) (CC0). WhatsApp and Instagram are trademarks of Meta.
+- **Hand shape (dots section):** "Hand Pointing" from [Phosphor Icons](https://phosphoricons.com) (MIT licence).
 - **Images:** no stock photos are used. The phone mockup, social share image and icons were made for this site.
 
 ---
