@@ -540,3 +540,23 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
 }
+
+/* ---------- Language switch (EN | 中文) ---------- */
+.lang { display: inline-flex; border: 1px solid var(--line-2); border-radius: 999px; padding: 2px; background: var(--bg-2); flex: none; }
+.lang button { min-height: 36px; min-width: 44px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .86rem; cursor: pointer; transition: background-color .2s var(--ease), color .2s var(--ease); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: var(--ink); }
+.lang button:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.header-inner { gap: 12px; }
+@media (min-width: 900px) { .header-inner { gap: 24px; } }
+/* Chinese: system Chinese fonts, looser spacing (the English fonts have no Chinese characters) */
+:lang(zh) body, :lang(zh) h1, :lang(zh) h2, :lang(zh) h3, :lang(zh) .wordmark { font-family: var(--f-body), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+:lang(zh) h1, :lang(zh) h2, :lang(zh) h3 { letter-spacing: 0; line-height: 1.25; }
+:lang(zh) .wordmark { font-family: var(--f-display), sans-serif; }
+.wordmark { white-space: nowrap; }
+@media (max-width: 480px) {
+  .header-inner { gap: 8px; }
+  .wordmark { font-size: 1.05rem; gap: 7px; }
+  .lang button { min-width: 40px; padding: 0 9px; }
+  .header-inner .btn-small { padding: 8px 12px; gap: 6px; }
+}
+@media (max-width: 410px) { .header-inner .btn-small span { display: none; } .header-inner .btn-small { padding: 8px 12px; } }

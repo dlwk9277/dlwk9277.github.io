@@ -47,6 +47,7 @@
 
   <!-- Settings first (prices, WhatsApp, Pixel ID), then site behaviour -->
   <script src="js/config.js" defer></script>
+  <script src="js/i18n.js" defer></script>
   <script src="js/site.js" defer></script>
 
   <script type="application/ld+json">
@@ -98,7 +99,11 @@
           <a href="#how">How it works</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <a class="btn btn-small" data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+        <div class="lang" role="group" aria-label="Language / 语言">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <a class="btn btn-small" aria-label="WhatsApp Darren" data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">
           <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
           <span>WhatsApp</span>
         </a>

@@ -5,6 +5,7 @@
 
   var C = window.SITE_CONFIG || {};
   var doc = document;
+  var ZH = window.SITE_LANG === "zh";
   doc.documentElement.classList.add("js");
 
   /* ---------- Helpers ---------- */
@@ -72,7 +73,7 @@
   function niceDate(iso) {
     var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var p = iso.split("-");
-    return Number(p[2]) + " " + m[Number(p[1]) - 1];
+    return ZH ? Number(p[1]) + "月" + Number(p[2]) + "日" : Number(p[2]) + " " + m[Number(p[1]) - 1];
   }
   var today = sgToday();
   var SALE = (C.saleEvents || []).filter(function (e) { return e && e.from <= today && today <= e.to; })[0] || null;
@@ -88,9 +89,11 @@
   var bar = doc.getElementById("sale-bar");
   if (bar && SALE && pkgs.length) {
     var first = pkgs[0];
-    var ends = daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
-    bar.querySelector("[data-sale-text]").textContent =
-      SALE.name + ": from S$" + money(first.price) + (first.oldPrice ? " (was S$" + money(first.oldPrice) + ")" : "") + " · " + ends;
+    var ends = ZH ? (daysLeft === 0 ? "今天结束" : daysLeft === 1 ? "明天结束" : daysLeft <= 7 ? "还剩 " + daysLeft + " 天" : "至 " + niceDate(SALE.to))
+      : daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
+    bar.querySelector("[data-sale-text]").textContent = ZH
+      ? SALE.name + "：S$" + money(first.price) + " 起" + (first.oldPrice ? "（原价 S$" + money(first.oldPrice) + "）" : "") + " · " + ends
+      : SALE.name + ": from S$" + money(first.price) + (first.oldPrice ? " (was S$" + money(first.oldPrice) + ")" : "") + " · " + ends;
     bar.hidden = false;
   }
 
@@ -123,7 +126,7 @@
 
     /* Options, in groups */
     var chips = [];
-    (calc.groups || [{ id: "", label: "Add what you need" }]).forEach(function (g) {
+    (calc.groups || [{ id: "", label: ZH ? "添加您需要的" : "Add what you need" }]).forEach(function (g) {
       var items = (calc.extras || []).map(function (o, i) { return [o, i]; }).filter(function (x) { return (x[0].group || "") === g.id || (!g.id && !x[0].group); });
       if (!items.length) return;
       var fs = el("fieldset", "calc-group");
@@ -187,9 +190,9 @@
       chips.forEach(function (c) {
         var o = c.o, t;
         if (o.extra) t = "+S$" + money(o.extra);
-        else if (o.free) t = "Free";
+        else if (o.free) t = ZH ? "免费" : "Free";
         else if (rank[o.needs] > need) t = "+S$" + money(num(nowPrice(pkgOf(o.needs))) - num(nowPrice(p)));
-        else t = "Included";
+        else t = ZH ? "已包含" : "Included";
         c.tag.textContent = t;
         c.tag.className = "tag" + (o.extra || t.charAt(0) === "+" ? " tag-plus" : o.free ? " tag-free" : "");
       });
@@ -201,9 +204,9 @@
       /* The quote */
       out.lines.textContent = "";
       var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra; }).map(function (c) { return c.o.label; }));
-      line(p.name + " package", "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
+      line(p.name + (ZH ? "套餐" : " package"), "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
       if (onSale(p)) line(SALE.name, "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
-      picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, "Free", "ql-free"); });
+      picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, ZH ? "免费" : "Free", "ql-free"); });
       showPrice(num(nowPrice(p)));
 
       var extras = picked.filter(function (c) { return c.o.extra; });
