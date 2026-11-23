@@ -34,7 +34,7 @@ window.SITE_CONFIG = {
   /* ---------- Instagram -------------------------------------------------
      Your handle WITHOUT the @, e.g. "darrenlee.web".
      Leave as "" and the Instagram link stays hidden.                   */
-  instagramHandle: "",
+  instagramHandle: "jiebuilds",
 
   /* ---------- Meta Pixel ------------------------------------------------
      Paste your Pixel ID (a long number, e.g. "123456789012345").

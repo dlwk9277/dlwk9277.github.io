@@ -40,7 +40,7 @@ instagramHandle: "",
 Type your handle **without the @**:
 
 ```js
-instagramHandle: "darrenlee.web",
+instagramHandle: "jiebuilds",
 ```
 
 The Instagram link appears in the footer automatically. While it's empty, the link stays hidden.

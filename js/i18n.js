@@ -44,11 +44,11 @@
   }
   function A(sel, attr, v) { var n = $(sel); if (n) n.setAttribute(attr, v); }
 
-  doc.title = "新加坡家居服务生意网站设计 |杰";
+  doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
   A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，免费托管，S$150 起。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
-  A(".wordmark", "aria-label", "杰，回到顶部");
+  A(".wordmark", "aria-label", "杰 Builds，回到顶部");
 
   /* The headline: plain text in Chinese (the word-by-word slide-in is for English only) */
   var h1 = $(".hero-title");
@@ -91,7 +91,7 @@
   Tn(".contact-copy > p", "您会直接和制作网站的我聊，没有销售人员。");
   Tn(".contact-copy .btn span", "WhatsApp 联系杰");
   A(".portrait img", "alt", "杰的插画头像");
-  Tn(".footer-brand", "杰，新加坡");
+  Tn(".footer-brand", "杰 Builds，新加坡");
   Tn(".footer-small", "为家居服务和装修生意制作网站。");
   H(".footer-privacy", '<span data-pixel-notice hidden>本网站使用 Meta Pixel cookies 来衡量广告效果。</span>WhatsApp 消息只用于回复您的询问。<a href="privacy.html">阅读隐私声明</a>（英文）。');
   Tn('.footer-links a[href="privacy.html"]', "隐私");
