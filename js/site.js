@@ -217,7 +217,7 @@
       } else out.extra.hidden = true;
 
       var items = [size.label].concat(picked.map(function (c) { return c.o.extra ? c.o.label + " (+S$" + money(c.o.extra) + ")" : c.o.label; }));
-      var msg = (calc.message || "Hi Darren, I'd like the {package} package.")
+      var msg = (calc.message || "Hi Jie, I'd like the {package} package.")
         .replace("{package}", p.name).replace("{price}", money(nowPrice(p)))
         .replace("{items}", items.join(", "));
       out.send.href = waLink(msg);

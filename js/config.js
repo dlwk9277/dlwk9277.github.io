@@ -23,12 +23,12 @@ window.SITE_CONFIG = {
   /* Pre-filled messages. Each WhatsApp button uses one of these.
      Write them normally; the site handles the link encoding for you.  */
   whatsappMessages: {
-    general:  "Hi Darren, I saw your website. I'm interested in a website for my business.",
-    hero:     "Hi Darren, I saw your website. I'm interested in a website for my business.",
-    packages: "Hi Darren, I saw your packages. Can you help me choose the right one for my business?",
-    contact:  "Hi Darren, I saw your website. I'd like to chat about a website for my business.",
-    floating: "Hi Darren, I saw your website. I'm interested in a website for my business.",
-    preview:  "Hi Darren, I'd like a free design preview for my business."
+    general:  "Hi Jie, I saw your website. I'm interested in a website for my business.",
+    hero:     "Hi Jie, I saw your website. I'm interested in a website for my business.",
+    packages: "Hi Jie, I saw your packages. Can you help me choose the right one for my business?",
+    contact:  "Hi Jie, I saw your website. I'd like to chat about a website for my business.",
+    floating: "Hi Jie, I saw your website. I'm interested in a website for my business.",
+    preview:  "Hi Jie, I'd like a free design preview for my business."
   },
 
   /* ---------- Instagram -------------------------------------------------
@@ -120,7 +120,7 @@ window.SITE_CONFIG = {
         hint: "Leads into Google Sheets, invoices, reminders, AI replies" }
     ],
     extraNote: "quoted on its own, confirmed on WhatsApp",
-    message: "Hi Darren, I used your price calculator. I'd like the {package} package (from S${price}) with: {items}. Can we chat?"
+    message: "Hi Jie, I used your price calculator. I'd like the {package} package (from S${price}) with: {items}. Can we chat?"
   },
 
   /* Optional monthly add-on (mentioned in the FAQ). */

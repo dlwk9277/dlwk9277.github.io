@@ -1,4 +1,4 @@
-# Darren Lee: freelance website
+# Jie Lee: freelance website
 
 Live site: **https://dlwk9277.github.io/**
 
@@ -51,7 +51,7 @@ The Pixel lets Meta tell you which ads lead to WhatsApp messages. The site fires
 
 **Create the Pixel**
 1. Go to [business.facebook.com/events_manager](https://business.facebook.com/events_manager) (Meta Events Manager). Log in with the account that runs your ads.
-2. Click **Connect data sources**, choose **Web**, then **Meta Pixel**, and give it a name (e.g. "Darren Lee website").
+2. Click **Connect data sources**, choose **Web**, then **Meta Pixel**, and give it a name (e.g. "Jie Lee website").
 3. When it asks for your website, enter `https://dlwk9277.github.io`. When it offers ways to install the code, **choose to install the code manually**, then close the setup. You don't need to copy its code, because the site already includes it.
 4. Your **Pixel ID** is the long number shown under the Pixel's name in Events Manager (for example `123456789012345`).
 
