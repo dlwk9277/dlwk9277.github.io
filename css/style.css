@@ -150,7 +150,7 @@ a { color: inherit; }
   font-family: var(--f-display); font-weight: 850; font-stretch: 115%; font-size: 1.2rem;
   text-decoration: none; letter-spacing: -0.01em; margin-right: auto;
 }
-.wordmark-dot { width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+.wordmark img { display: block; height: 46px; width: auto; }
 .site-nav { display: none; gap: 30px; }
 .site-nav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .96rem; transition: color .2s var(--ease); }
 .site-nav a:hover { color: var(--text); }
@@ -451,7 +451,7 @@ a { color: inherit; }
   box-shadow: 0 0 0 1px var(--line-2);
 }
 .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.portrait-fallback { font-family: var(--f-display); font-weight: 850; font-size: 4rem; color: var(--accent); }
+.portrait .portrait-fallback { position: static; inset: auto; width: auto; height: 96px; object-fit: contain; }
 .contact-copy { display: grid; gap: 16px; justify-items: start; }
 .contact-copy > p { color: var(--muted); font-size: 1.1rem; max-width: 50ch; }
 .contact-number { font-size: .98rem !important; }
@@ -555,7 +555,7 @@ a { color: inherit; }
 .wordmark { white-space: nowrap; }
 @media (max-width: 480px) {
   .header-inner { gap: 8px; }
-  .wordmark { font-size: 1.05rem; gap: 7px; }
+  .wordmark img { height: 42px; }
   .lang button { min-width: 40px; padding: 0 9px; }
   .header-inner .btn-small { padding: 8px 12px; gap: 6px; }
 }

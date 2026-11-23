@@ -1,5 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#0C0C0D"/>
-  <text x="32" y="42" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="30" fill="#F2F2EE">DL</text>
-  <rect x="14" y="49" width="36" height="5" rx="2.5" fill="#AFC6EE"/>
+  <svg x="14" y="8" width="36" height="48" viewBox="250 56 580 920" fill="#AFC6EE">
+    <path d="M624 68l191 112v58L624 350v-65l124-77-124-75z"/>
+    <path d="M754 303v191H624V380z"/>
+    <path d="M624 516h130v131H624zM624 673h130v131H624zM264 677h130v131H264z"/>
+    <path d="M264 831h185v133H394a130 133 0 0 1-130-133z"/>
+    <path d="M471 831h131v133H471zM624 831h130L624 964z"/>
+  </svg>
 </svg>
