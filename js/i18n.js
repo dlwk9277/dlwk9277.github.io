@@ -74,6 +74,21 @@
   Tn("#calc-mini-send", "发送");
   Tn(".calc-mini b", "从 S$");
 
+  Tn("#why-title", "为什么要有网站？");
+  Tn(".why-claim", "的受访者说，没有网站的生意让人觉得没那么“真实”。");
+  Tn(".why-card h3", "有网站", 0); Tn(".why-card h3", "没有网站", 1);
+  [[["谷歌搜索", "客户看到您的服务、地区和价格。"], ["信任", "先看照片和价格才发消息，所以“多少钱？”的问题更少。"],
+    ["深夜", "晚上 11 点网站照样开着，WhatsApp 按钮把访客变成询问。"], ["朋友推荐", "朋友推荐您，对方上网搜您的名字，找到一家真实的生意。"],
+    ["所有权", "网站归您所有。社交媒体页面可能改变或消失。"]],
+   [["谷歌搜索", "客户只看到地图上的一个点和一个电话号码。"], ["信任", "什么都得问您，或者直接找下一家。"],
+    ["深夜", "他们可能给最先回复的那家发消息。"], ["朋友推荐", "他们搜您的名字，却找不到什么能证明您是真的。"],
+    ["所有权", "您依赖不属于您的页面。"]]]
+    .forEach(function (rows, c) {
+      var card = $$(".why-card")[c]; if (!card) return;
+      rows.forEach(function (p, i) { var li = $$("li", card)[i]; if (li) li.innerHTML = "<b>" + p[0] + "</b>" + p[1]; });
+    });
+  H(".why-source", '来源：<a href="https://www.dreamhost.com/blog/dreamhost-2026-local-business-trust-index/" target="_blank" rel="noopener">DreamHost《2026 本地生意信任指数》（Local Business Trust Index）</a>');
+
   Tn("#how-title", "流程");
   [["WhatsApp 联系我", "告诉我您做什么生意。"], ["免费预览", "付款前，先看您的首页。"],
    ["付 50%，我来制作", "包含 2 轮修改。"], ["5 个工作天上线", "付清另外 50%。网站归您所有。"]]
