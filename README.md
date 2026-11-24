@@ -93,12 +93,12 @@ All in `js/config.js`:
 
 ### Sale calendar (the discount changes by itself)
 
-The discount is shown as the current Singapore sale: "Christmas sale: from S$150 (was S$300) · until 31 Dec", in the blue bar that floats at the top of the page while visitors scroll, and as the crossed-out price in the calculator. The site picks the sale from today's date (Singapore time), so you don't need to change anything when a sale ends.
+The discount is shown as the current Singapore sale: "Christmas sale: from S$150 (was S$200) · until 31 Dec", in the blue bar that floats at the top of the page while visitors scroll, and as the crossed-out price in the calculator. The site picks the sale from today's date (Singapore time), so you don't need to change anything when a sale ends.
 
 - The list is `saleEvents` in `js/config.js`. Each line has a name, a first day and a last day.
 - It runs to the end of 2027. **Before it runs out, add next year's sales** (copy a line, change the name and dates).
 - Chinese New Year, Hari Raya and Deepavali move every year: check the dates on mom.gov.sg ("public holidays").
-- **One week a year has no sale** (5-11 Apr 2027): the site shows the full original prices with no discount, so the "usual price" is a real price. Keep a week like this when you add next year's sales. Any day not on the list also shows full prices.
+- **One full month a year has no sale** (July 2027, no public holiday or festival): the site shows the full original prices with no discount, so the "usual price" is a real price. Keep a month like this when you add next year's sales, ideally before the sales that follow. Any day not on the list also shows full prices.
 
 ### Price calculator
 

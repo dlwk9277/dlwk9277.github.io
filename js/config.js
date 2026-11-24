@@ -49,8 +49,8 @@ window.SITE_CONFIG = {
      Add next year's sales before the list runs out.
      The sale banner floats at the top of the page during a sale.
      On any day with NO sale, the banner is hidden and the site shows the
-     full original prices (oldPrice) with no discount. Keep one such week every year (this
-     year: 5-11 Apr 2027) so the original price is a real price.
+     full original prices (oldPrice) with no discount. Keep one full-price month every year (this
+     year: July 2027, no festivities) so the original price is a real price.
      Lunar dates (Chinese New Year, Hari Raya, Deepavali) move every year:
      check them on mom.gov.sg ("public holidays").                       */
   saleEvents: [
@@ -61,10 +61,10 @@ window.SITE_CONFIG = {
     { name: "Chinese New Year sale",  from: "2027-01-21", to: "2027-02-20" },  /* CNY 6-7 Feb 2027 */
     { name: "Hari Raya sale",         from: "2027-02-21", to: "2027-03-20" },  /* Hari Raya Puasa 10 Mar 2027 */
     { name: "Easter sale",            from: "2027-03-21", to: "2027-04-04" },  /* Good Friday 26 Mar 2027 */
-    /* 5-11 Apr 2027: no sale. Full (original) prices for one week a year. */
-    { name: "Labour Day sale",        from: "2027-04-12", to: "2027-05-15" },
+    { name: "Labour Day sale",        from: "2027-04-05", to: "2027-05-15" },
     { name: "Vesak Day sale",         from: "2027-05-16", to: "2027-05-31" },
-    { name: "Great Singapore Sale",   from: "2027-06-01", to: "2027-07-31" },
+    { name: "Great Singapore Sale",   from: "2027-06-01", to: "2027-06-30" },
+    /* July 2027: no sale. Full (original) prices for the whole month (no public holiday or festival). */
     { name: "National Day sale",      from: "2027-08-01", to: "2027-08-31" },
     { name: "9.9 sale",               from: "2027-09-01", to: "2027-09-09" },
     { name: "Mid-Autumn sale",        from: "2027-09-10", to: "2027-09-30" },  /* Mid-Autumn 15 Sep 2027 */
@@ -89,7 +89,7 @@ window.SITE_CONFIG = {
        its own line, never added into the big number, so the headline price
        stays between S$150 and S$300.                                    */
   packages: [
-    { id: "starter",  name: "Starter",  price: 150, oldPrice: 300 },
+    { id: "starter",  name: "Starter",  price: 150, oldPrice: 200 },
     { id: "business", name: "Business", price: 250, oldPrice: 300 }
   ],
 
