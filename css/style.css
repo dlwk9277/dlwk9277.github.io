@@ -259,9 +259,17 @@ a { color: inherit; }
 .nb-gallery i:nth-child(4) { background: linear-gradient(150deg, #D8DCE4, #AEB6C4); }
 
 /* ---------- Price calculator: options on the left, a printed-style quote on the right ---------- */
-.calc-grid { display: grid; gap: 16px; align-items: start; margin-top: 32px; }
-@media (min-width: 980px) { .calc-grid { grid-template-columns: 1.3fr .7fr; gap: 24px; } .calc-result { position: sticky; top: 124px; } }
-.calc-form { display: grid; gap: 26px; }
+.calc-grid { display: grid; gap: 16px; align-items: start; margin-top: 32px; max-width: 720px; }
+.calc-form { display: grid; gap: 18px; padding: clamp(16px, 4vw, 26px); border-radius: var(--r-lg); background: var(--bg-2); border: 1px solid var(--line); }
+.calc-progress { display: grid; gap: 8px; font-size: .86rem; font-weight: 650; color: var(--muted); }
+.calc-progress b { display: block; height: 4px; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+.calc-progress i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .35s var(--ease-out); }
+.calc-step legend { font-size: clamp(1.25rem, 5vw, 1.55rem); line-height: 1.2; margin-bottom: 16px; outline: 0; }
+.calc-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.calc-nav .btn:last-child { margin-left: auto; min-width: 150px; }
+.calc-edit { justify-self: center; background: none; border: 0; color: var(--ink-2); font: inherit; font-size: .9rem; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 8px; min-height: 40px; }
+.calc-edit:hover { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .calc-progress i { transition: none; } }
 .calc-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .calc-form legend { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-family: var(--f-display); font-weight: 780; font-size: 1.12rem; margin-bottom: 12px; padding: 0; }
 .calc-form legend span { font-family: var(--f-body); font-weight: 600; font-size: .86rem; color: var(--accent-2); }
