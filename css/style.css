@@ -587,3 +587,20 @@ a { color: inherit; }
   .header-inner .btn-small { padding: 8px 12px; gap: 6px; }
 }
 @media (max-width: 410px) { .header-inner .btn-small span { display: none; } .header-inner .btn-small { padding: 8px 12px; } }
+
+/* ---------- Aircon / plumber pages ---------- */
+.vp-hero .hero-grid { grid-template-columns: 1fr; }
+.vp-hero .hero-copy { max-width: 46rem; }
+.vp-fig { margin: 0; }
+.vp-fig .win a { display: block; }
+.vp-fig img { display: block; width: 100%; height: auto; }
+.vp-fig figcaption { margin-top: 10px; color: var(--muted); font-size: .85rem; }
+@media (min-width: 980px) { .vp-hero:has(.vp-fig) .hero-grid { grid-template-columns: .95fr 1.05fr; gap: 56px; } }
+.vp-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
+.vp-list li { display: grid; gap: 4px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.vp-list b { font-family: var(--f-display); font-size: 1.12rem; font-weight: 780; line-height: 1.25; }
+.vp-list span { color: var(--muted); max-width: 60ch; }
+@media (min-width: 820px) { .vp-list li { grid-template-columns: 17rem 1fr; gap: 32px; align-items: baseline; } }
+.vp-related { margin: 28px 0 0; }
+.vp-related a { color: var(--accent-2); font-weight: 700; text-underline-offset: 3px; }
+.vp-hero .hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem); }

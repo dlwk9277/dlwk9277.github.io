@@ -44,23 +44,25 @@
   }
   function A(sel, attr, v) { var n = $(sel); if (n) n.setAttribute(attr, v); }
 
-  doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
-  A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，免费托管，S$150 至 S$300。付款前先看免费设计预览。");
+  var PAGE = doc.body.getAttribute("data-page");   /* set on the aircon / plumber pages: they carry their own Chinese in data-zh */
+  if (PAGE && window.PAGE_ZH) { doc.title = window.PAGE_ZH.title; A('meta[name="description"]', "content", window.PAGE_ZH.desc); }
+  if (!PAGE) doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
+  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，免费托管，S$150 至 S$300。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
   A(".wordmark", "aria-label", "杰 Builds，回到顶部");
 
   /* The headline: plain text in Chinese (the word-by-word slide-in is for English only) */
   var h1 = $(".hero-title");
-  if (h1) {
+  if (h1 && !PAGE) {
     h1.removeAttribute("data-split");
     h1.innerHTML = '为您的家居服务生意带来<span class="mark" data-mark>更多询问</span>。';
   }
-  H(".hero-sub", "为新加坡的冷气、水管、电工、清洁、搬家和装修生意制作网站，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，免费托管。</strong>");
+  if (!PAGE) H(".hero-sub", "为新加坡的冷气、水管、电工、清洁、搬家和装修生意制作网站，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，免费托管。</strong>");
   Tn(".hero-actions .btn span", "WhatsApp 联系杰");
   Tn(".btn-ghost", "查看价格");
   ["免费设计预览", "现在付 50%，满意后再付 50%", "网站归您所有"].forEach(function (t, i) { Tn(".hero-terms li", t, i); });
-  Tn(".hero-visual figcaption", "拖动对比。仅为示例，并非真实客户。");
+  if (!PAGE) Tn(".hero-visual figcaption", "拖动对比。仅为示例，并非真实客户。");
   Tn(".cmp-tag-before", "之前"); Tn(".cmp-tag-after", "之后");
   A(".cmp-range", "aria-label", "对比前后：向左拖动可看到更多新网站");
 
@@ -74,6 +76,8 @@
   Tn("#calc-mini-send", "发送");
   Tn(".calc-mini b", "从 S$");
 
+  Tn("#work-title", "近期作品");
+  if (!PAGE) {
   Tn("#why-title", "为什么要有网站？");
   Tn(".why-claim", "的受访者说，没有网站的生意让人觉得没那么“真实”。");
   Tn(".why-card h3", "有网站", 0); Tn(".why-card h3", "没有网站", 1);
@@ -89,12 +93,14 @@
     });
   H(".why-source", '来源：<a href="https://www.dreamhost.com/blog/dreamhost-2026-local-business-trust-index/" target="_blank" rel="noopener">DreamHost《2026 本地生意信任指数》（Local Business Trust Index）</a>');
 
+  }
   Tn("#how-title", "流程");
   [["WhatsApp 联系我", "告诉我您做什么生意。"], ["免费预览", "付款前，先看您的首页。"],
    ["付 50%，我来制作", "包含 2 轮修改。"], ["5 个工作天上线", "付清另外 50%。网站归您所有。"]]
     .forEach(function (p, i) { var li = $$(".how-steps li")[i]; if (li) { li.querySelector("b").textContent = p[0]; li.querySelector("span").textContent = p[1]; } });
 
   Tn("#faq-title", "常见问题");
+  if (!PAGE)
   [["我需要给您什么资料？", "您的公司名称、服务项目、服务地区、大概的价格，以及用手机拍的工作照片。没有 logo？我会用清晰的文字设置您的名称。不知道怎么写？我会在 WhatsApp 上帮您。资料齐了，5 个工作天内上线。"],
    ["怎么付款？", "用 PayNow。看过免费预览并确认后付 50%，网站完成、您满意后再付 50%。没有隐藏费用。"],
    ["网站归我所有吗？", "是的。付清尾款后，网站和所有文件都归您所有，以后也可以找别人接手。"],
@@ -111,6 +117,10 @@
   H(".footer-privacy", '<span data-pixel-notice hidden>本网站使用 Meta Pixel cookies 来衡量广告效果。</span>WhatsApp 消息只用于回复您的询问。<a href="privacy.html">阅读隐私声明</a>（英文）。');
   Tn('.footer-links a[href="privacy.html"]', "隐私");
   A(".wa-float", "aria-label", "在 WhatsApp 上联系杰");
+
+  /* Any element with data-zh gets that Chinese text (used on the aircon / plumber pages and the footer links) */
+  $$("[data-zh]").forEach(function (n) { n.innerHTML = n.getAttribute("data-zh"); });
+  $$("[data-zh-alt]").forEach(function (n) { n.setAttribute("alt", n.getAttribute("data-zh-alt")); });
 
   /* ---------- Chinese: labels from config.js ---------- */
   var C = window.SITE_CONFIG || {};

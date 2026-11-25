@@ -142,6 +142,15 @@ window.SITE_CONFIG = {
      },
   */
   projects: [
-    // { name: "", type: "", image: "assets/work/your-image.jpg", url: "https://" },
+    // type/cta: English. typeZh/ctaZh: Chinese. Say "Free preview" until the owner has paid.
+    {
+      name: "OneStop Cooling",
+      type: "Aircon servicing, Sengkang. Free preview with a price calculator.",
+      typeZh: "盛港冷气保养。含价格计算器的免费预览。",
+      cta: "View the preview",
+      ctaZh: "查看预览",
+      image: "assets/work/onestop-cooling.webp",
+      url: "https://dlwk9277.github.io/onestop-cooling-preview/"
+    }
   ]
 };

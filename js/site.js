@@ -55,7 +55,9 @@
   var msgs = C.whatsappMessages || {};
   doc.querySelectorAll("[data-wa]").forEach(function (a) {
     var key = a.getAttribute("data-wa");
-    a.href = waLink(msgs[key] || msgs.general || "");
+    /* a page can give its own message: data-wa-msg (English) and data-wa-msg-zh (Chinese) */
+    var own = (window.SITE_LANG === "zh" && a.getAttribute("data-wa-msg-zh")) || a.getAttribute("data-wa-msg");
+    a.href = waLink(own || msgs[key] || msgs.general || "");
   });
   /* Visible phone number text */
   doc.querySelectorAll("[data-wa-number]").forEach(function (n) { n.textContent = prettyNumber(WA_NUM); });
@@ -349,7 +351,7 @@
       if (p.image) {
         var img = el("img");
         img.src = p.image;
-        img.alt = "Screenshot of the " + p.name + " website";
+        img.alt = (window.SITE_LANG === "zh" ? p.name + " 网站截图" : "Screenshot of the " + p.name + " website");
         img.loading = "lazy";
         img.decoding = "async";
         img.width = 800;
@@ -357,8 +359,10 @@
         card.appendChild(img);
       }
       card.appendChild(el("h3", null, p.name));
-      if (p.type) card.appendChild(el("p", null, p.type));
-      if (p.url) card.appendChild(el("span", "btn-link", "Visit website"));
+      var zhLang = window.SITE_LANG === "zh";
+      var kind = zhLang && p.typeZh ? p.typeZh : p.type;
+      if (kind) card.appendChild(el("p", null, kind));
+      if (p.url) card.appendChild(el("span", "btn-link", (zhLang ? p.ctaZh : p.cta) || (zhLang ? "访问网站" : "Visit website")));
       workList.appendChild(card);
     });
     work.hidden = false;
