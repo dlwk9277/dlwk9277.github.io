@@ -1,6 +1,6 @@
 # Jie: freelance website
 
-Live site: **https://dlwk9277.github.io/**
+Live site: **https://jiebuilds.com/**
 
 Plain HTML, CSS and JavaScript. There's no build step: what's in this folder is exactly what GitHub Pages serves.
 
@@ -52,7 +52,7 @@ The Pixel lets Meta tell you which ads lead to WhatsApp messages. The site fires
 **Create the Pixel**
 1. Go to [business.facebook.com/events_manager](https://business.facebook.com/events_manager) (Meta Events Manager). Log in with the account that runs your ads.
 2. Click **Connect data sources**, choose **Web**, then **Meta Pixel**, and give it a name (e.g. "Jie website").
-3. When it asks for your website, enter `https://dlwk9277.github.io`. When it offers ways to install the code, **choose to install the code manually**, then close the setup. You don't need to copy its code, because the site already includes it.
+3. When it asks for your website, enter `https://jiebuilds.com`. When it offers ways to install the code, **choose to install the code manually**, then close the setup. You don't need to copy its code, because the site already includes it.
 4. Your **Pixel ID** is the long number shown under the Pixel's name in Events Manager (for example `123456789012345`).
 
 **Paste it into the site**
@@ -73,7 +73,7 @@ Push to GitHub (step 6). While it still says `YOUR_PIXEL_ID`, the Pixel does **n
 
 **Check it works**
 1. Install the free **Meta Pixel Helper** extension for Chrome.
-2. Open https://dlwk9277.github.io/ and click the extension icon. You should see your Pixel ID with a **PageView** event.
+2. Open https://jiebuilds.com/ and click the extension icon. You should see your Pixel ID with a **PageView** event.
 3. Tap any WhatsApp button. Pixel Helper should now also show a **Contact** event.
 4. In Events Manager, the **Test events** tab shows events live as you browse.
 
@@ -126,7 +126,7 @@ git push
 
 Then:
 1. Open **github.com/dlwk9277/dlwk9277.github.io**, go to the **Actions** tab, and wait for the "pages build and deployment" run to turn green (usually 1–2 minutes).
-2. Open https://dlwk9277.github.io/ and refresh. If you still see the old version, do a hard refresh (Ctrl+Shift+R) or open it in a private window, because browsers cache pages.
+2. Open https://jiebuilds.com/ and refresh. If you still see the old version, do a hard refresh (Ctrl+Shift+R) or open it in a private window, because browsers cache pages.
 
 You can also just ask Claude Code to "push my website changes".
 
@@ -167,9 +167,9 @@ The page has a dark theme with light motion. "More enquiries" has a marker-pen h
 
 ## After launch: free steps that help you get found
 
-1. **Google Search Console:** go to [search.google.com/search-console](https://search.google.com/search-console), add `https://dlwk9277.github.io/` as a URL-prefix property, verify it (the HTML tag method works: send the tag to Claude Code to add), then submit `sitemap.xml`.
+1. **Google Search Console:** go to [search.google.com/search-console](https://search.google.com/search-console), add `https://jiebuilds.com/` as a URL-prefix property, verify it (the HTML tag method works: send the tag to Claude Code to add), then submit `sitemap.xml`.
 2. **Google Business Profile:** create one for yourself as a **service-area business** in Singapore (hide your home address), category "Website designer", and link this site.
-3. **Your own domain** (optional, about S$20–60 a year): looks more professional and builds search authority you keep. If you add one, update the `https://dlwk9277.github.io` addresses in `index.html`, `privacy.html`, `robots.txt` and `sitemap.xml`.
+3. **Your own domain:** done. The site uses `https://jiebuilds.com`, set by the `CNAME` file. If the domain ever changes, update the addresses in `index.html`, `privacy.html`, `robots.txt`, `sitemap.xml` and `CNAME`.
 4. **Instagram:** once you set your handle, also add it to the `JSON-LD` block near the top of `index.html` as `"sameAs": ["https://www.instagram.com/yourhandle/"]`.
 
 ## Notes for hosting at a different address

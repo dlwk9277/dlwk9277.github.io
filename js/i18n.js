@@ -1,7 +1,7 @@
 /* Language switch: English (default) or Chinese (简体).
    Runs before site.js. English text stays in index.html; for Chinese this file swaps the text in
    and translates the labels from config.js. To fix a Chinese sentence, edit it below.
-   Share a Chinese link with ?lang=zh  (e.g. https://dlwk9277.github.io/?lang=zh) */
+   Share a Chinese link with ?lang=zh  (e.g. https://jiebuilds.com/?lang=zh) */
 (function () {
   "use strict";
   var doc = document, LANG = "en";

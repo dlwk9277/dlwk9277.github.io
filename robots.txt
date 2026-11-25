@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dlwk9277.github.io/sitemap.xml
+Sitemap: https://jiebuilds.com/sitemap.xml
