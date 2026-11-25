@@ -602,3 +602,16 @@ a { color: inherit; }
 .hero-proof b { color: var(--text); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .hero-proof:hover { border-color: var(--accent); }
 .hero-proof-dot { width: 9px; height: 9px; border-radius: 50%; background: #1fa85a; box-shadow: 0 0 0 3px rgba(31,168,90,.2); flex: none; }
+
+/* Skip rendering work for sections far below the fold (sizes measured at phone / tablet+ so anchor jumps land right) */
+.section.why, .section.how, .section.faq, .section.contact { content-visibility: auto; }
+.section.why { contain-intrinsic-size: auto none auto 1270px; }
+.section.how { contain-intrinsic-size: auto none auto 490px; }
+.section.faq { contain-intrinsic-size: auto none auto 530px; }
+.section.contact { contain-intrinsic-size: auto none auto 655px; }
+@media (min-width: 700px) {
+  .section.why { contain-intrinsic-size: auto none auto 780px; }
+  .section.how { contain-intrinsic-size: auto none auto 360px; }
+  .section.faq { contain-intrinsic-size: auto none auto 520px; }
+  .section.contact { contain-intrinsic-size: auto none auto 600px; }
+}

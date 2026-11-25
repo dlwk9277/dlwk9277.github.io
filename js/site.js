@@ -349,7 +349,7 @@
   var header = doc.querySelector(".site-header");
   function onScroll() { if (header) header.classList.toggle("is-scrolled", window.scrollY > 8); }
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  requestAnimationFrame(onScroll);   /* after first paint: reading scrollY at load forced an early layout */
 
   /* ---------- Floating WhatsApp: hide when a big WhatsApp button is on screen ---------- */
   var float = doc.querySelector(".wa-float");
