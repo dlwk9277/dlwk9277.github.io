@@ -142,15 +142,15 @@ window.SITE_CONFIG = {
      },
   */
   projects: [
-    // type/cta: English. typeZh/ctaZh: Chinese. Say "Free preview" until the owner has paid.
+    // type/cta: English. typeZh/ctaZh: Chinese. Say "Free preview" until the owner has paid; OneStop is live on its own domain.
     {
       name: "OneStop Cooling",
-      type: "Aircon servicing, Sengkang. Free preview with a price calculator.",
-      typeZh: "盛港冷气保养。含价格计算器的免费预览。",
-      cta: "View the preview",
-      ctaZh: "查看预览",
+      type: "Aircon servicing, Sengkang. Live website with a price calculator.",
+      typeZh: "盛港冷气保养。含价格计算器的已上线网站。",
+      cta: "Visit the site",
+      ctaZh: "访问网站",
       image: "assets/work/onestop-cooling.webp",
-      url: "https://dlwk9277.github.io/onestop-cooling-preview/"
+      url: "https://onestopcooling.online/"
     }
   ]
 };

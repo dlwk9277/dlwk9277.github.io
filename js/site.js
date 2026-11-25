@@ -233,65 +233,6 @@
     }
     doc.getElementById("calc-form").addEventListener("change", update);
     update();
-
-    /* ---------- One question at a time ----------
-       Steps = the site-size question + each option group. The quote appears after the last one. */
-    var form = doc.getElementById("calc-form"), result = doc.getElementById("calc-result");
-    var steps = [].slice.call(form.querySelectorAll("fieldset"));
-    if (steps.length && result) {
-      var cur = 0, done = false;
-      var L = ZH
-        ? { q: "第 {n} 题，共 {t} 题", back: "上一步", next: "下一步", skip: "跳过", see: "查看我的价格", edit: "修改答案", size: "您需要多大的网站？", pick: "可多选" }
-        : { q: "Question {n} of {t}", back: "Back", next: "Next", skip: "Skip", see: "See my price", edit: "Change my answers", size: "How big a site do you need?", pick: "Pick any, or skip" };
-      steps[0].querySelector("legend").textContent = L.size;
-      steps.forEach(function (fs) {
-        var lg = fs.querySelector("legend"); lg.tabIndex = -1;
-        if (fs !== steps[0] && !lg.querySelector("span")) lg.appendChild(el("span", null, L.pick));
-        fs.classList.add("calc-step");
-      });
-      var prog = el("div", "calc-progress");
-      var progTxt = el("span"), bar = el("i"), track = el("b"); track.appendChild(bar);
-      prog.appendChild(progTxt); prog.appendChild(track);
-      var nav = el("div", "calc-nav");
-      var back = el("button", "btn btn-ghost btn-small", L.back); back.type = "button";
-      var next = el("button", "btn", L.next); next.type = "button";
-      nav.appendChild(back); nav.appendChild(next);
-      form.insertBefore(prog, steps[0]);
-      form.appendChild(nav);
-      var edit = el("button", "calc-edit", L.edit); edit.type = "button";
-      result.appendChild(edit);
-
-      function show(n, focus) {
-        cur = n;
-        steps.forEach(function (fs, i) { fs.hidden = i !== n; });
-        progTxt.textContent = L.q.replace("{n}", n + 1).replace("{t}", steps.length);
-        bar.style.width = ((n + 1) / steps.length * 100) + "%";
-        track.setAttribute("aria-hidden", "true");
-        back.hidden = n === 0;
-        var any = n > 0 && steps[n].querySelector("input:checked");
-        next.textContent = n === steps.length - 1 ? L.see : (n > 0 && !any ? L.skip : L.next);
-        if (focus) steps[n].querySelector("legend").focus({ preventScroll: true });
-      }
-      function finish() {
-        done = true; form.hidden = true; result.hidden = false;
-        result.scrollIntoView({ block: "nearest", behavior: animate ? "smooth" : "auto" });
-      }
-      function advance() { if (cur < steps.length - 1) show(cur + 1, true); else finish(); }
-      next.addEventListener("click", advance);
-      back.addEventListener("click", function () { if (cur > 0) show(cur - 1, true); });
-      edit.addEventListener("click", function () {
-        done = false; result.hidden = true; form.hidden = false; show(0, true);
-        form.scrollIntoView({ block: "nearest" });
-      });
-      /* Mouse or touch pick on the size cards moves on by itself (keyboard users press Next) */
-      sizesBox.addEventListener("click", function (e) {
-        if (e.detail > 0 && e.target.closest("label") && cur === 0) setTimeout(function () { if (!done && cur === 0) advance(); }, 260);
-      });
-      form.addEventListener("change", function () { show(cur, false); });
-      result.hidden = true;
-      if (miniBox) miniBox.hidden = true; /* the quote is the last step now, no floating price bar */
-      show(0, false);
-    }
   }
 
   /* ---------- Drag to compare ---------- */
