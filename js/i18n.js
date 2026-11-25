@@ -49,7 +49,7 @@
   if (!PAGE) doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
   if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，免费托管，S$150 至 S$300。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
-  var hp = $(".hero-proof-text"); if (hp) hp.textContent = "已上线：我做的冷气网站，含价格计算器";
+  var hp = $(".hero-proof-text"); if (hp) hp.textContent = "我的作品";
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
   A(".wordmark", "aria-label", "杰 Builds，回到顶部");
 

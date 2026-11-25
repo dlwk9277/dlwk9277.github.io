@@ -598,7 +598,7 @@ a { color: inherit; }
 .vp-hero .hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem); }
 
 /* Proof pill above the hero title */
-.hero-proof { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-bottom: 22px; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--bg-2); font-size: .9rem; color: var(--muted); text-decoration: none; line-height: 1.3; }
+.hero-proof { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 9px 18px; font-weight: 650; color: var(--text); border-radius: 999px; border: 1px solid var(--line-2); background: var(--bg-2); font-size: .9rem; color: var(--muted); text-decoration: none; line-height: 1.3; }
 .hero-proof b { color: var(--text); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-.hero-proof:hover b { color: var(--accent); }
+.hero-proof:hover { border-color: var(--accent); }
 .hero-proof-dot { width: 9px; height: 9px; border-radius: 50%; background: #1fa85a; box-shadow: 0 0 0 3px rgba(31,168,90,.2); flex: none; }
