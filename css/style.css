@@ -615,3 +615,35 @@ a { color: inherit; }
   .section.faq { contain-intrinsic-size: auto none auto 520px; }
   .section.contact { contain-intrinsic-size: auto none auto 600px; }
 }
+
+/* Connect-domain guide: numbered steps */
+.guide-note { margin: 18px 0 0; color: var(--muted); max-width: 46rem; }
+.hero-sub code, .guide-do code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92em; padding: 1px 6px; border-radius: 6px; background: rgba(255,255,255,.08); overflow-wrap: anywhere; }
+.guide-steps { list-style: none; margin: 0; padding: 0; counter-reset: gstep; border-top: 1px solid var(--line); }
+.guide-step { counter-increment: gstep; position: relative; padding: 26px 0 26px 56px; border-bottom: 1px solid var(--line); }
+.guide-step::before { content: counter(gstep); position: absolute; left: 0; top: 24px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--ink); font-family: var(--f-display); font-weight: 800; font-size: 1.1rem; }
+.guide-h { font-family: var(--f-display); font-size: clamp(1.3rem, 3.6vw, 1.7rem); font-weight: 780; line-height: 1.2; margin: 6px 0 6px; }
+.guide-intro { margin: 0 0 12px; color: var(--muted); max-width: 60ch; }
+.guide-do { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 60ch; }
+@media (min-width: 720px) { .guide-step { padding-left: 72px; } .guide-step::before { width: 48px; height: 48px; font-size: 1.3rem; } }
+.guide-fig { margin: 4px 0 16px; max-width: 560px; }
+.guide-fig img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line-2); background: #fff; }
+.guide-fig figcaption { margin-top: 8px; color: var(--muted); font-size: .85rem; }
+.guide-fig a { display: block; }
+
+/* Monthly hosting / automation costs in the quote */
+.tag-mo { color: var(--text); border-color: #55555B; margin-left: 4px; }
+.calc-chip input:checked + span .tag-mo { color: var(--ink); border-color: rgba(12, 12, 13, .35); }
+.calc-monthly { display: grid; gap: 2px; font-size: .88rem; color: var(--ink); background: rgba(12, 12, 13, .08); border: 1px solid rgba(12, 12, 13, .25); border-radius: var(--r-sm); padding: 8px 11px; }
+.calc-monthly small { font-size: .8rem; opacity: .8; }
+
+/* Site size and monthly plan cards: one per row on phones (name left, price right), three across on wider screens */
+.calc-sizes { grid-template-columns: 1fr; }
+.calc-opt .box { grid-template-columns: 1fr auto; align-items: center; column-gap: 14px; row-gap: 2px; }
+.calc-opt .box b, .calc-opt .box small { grid-column: 1; }
+.calc-opt .box .opt-price { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; text-align: right; white-space: nowrap; }
+@media (min-width: 700px) {
+  .calc-sizes { grid-template-columns: repeat(3, 1fr); }
+  .calc-opt .box { grid-template-columns: 1fr; align-content: start; }
+  .calc-opt .box .opt-price { grid-column: 1; grid-row: auto; margin-top: 6px; text-align: left; }
+}

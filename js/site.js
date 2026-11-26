@@ -126,6 +126,31 @@
       sizesBox.appendChild(lab);
     });
 
+    /* After launch: Self-host / Hosting / Full care, three cards under the site size */
+    var plans = calc.plans || [];
+    if (plans.length) {
+      var pfs = el("fieldset"), plg = el("legend", null, calc.plansLabel || "");
+      if (calc.plansHint) plg.appendChild(el("span", null, calc.plansHint));
+      pfs.appendChild(plg);
+      var pbox = el("div", "calc-sizes calc-plans");
+      var pickPlan = Math.max(0, plans.findIndex(function (o) { return o.selected; }));
+      plans.forEach(function (o, i) {
+        var lab = el("label", "calc-opt");
+        var inp = el("input"); inp.type = "radio"; inp.name = "calc-plan"; inp.value = String(i);
+        if (i === pickPlan) inp.checked = true;
+        var box = el("span", "box");
+        box.appendChild(el("b", null, o.label));
+        if (o.hint) box.appendChild(el("small", null, o.hint));
+        var pr = el("span", "opt-price", o.monthly ? "S$" + money(o.monthly) + (ZH ? "/月" : "/mo") : (ZH ? "免费" : "Free"));
+        box.appendChild(pr);
+        lab.appendChild(inp); lab.appendChild(box);
+        pbox.appendChild(lab);
+      });
+      pfs.appendChild(pbox);
+      var sizeFs = sizesBox.closest("fieldset");
+      sizeFs.parentNode.insertBefore(pfs, sizeFs.nextSibling);
+    }
+
     /* Options, in groups */
     var chips = [];
     (calc.groups || [{ id: "", label: ZH ? "添加您需要的" : "Add what you need" }]).forEach(function (g) {
@@ -145,10 +170,12 @@
         txt.appendChild(name);
         var tag = el("em", "tag");
         txt.appendChild(tag);
+        var mo = null;
+        if (o.monthly) { mo = el("em", "tag tag-mo"); txt.appendChild(mo); }
         if (o.hint) txt.appendChild(el("small", null, o.hint));
         lab.appendChild(inp); lab.appendChild(txt);
         wrap.appendChild(lab);
-        chips.push({ o: o, inp: inp, tag: tag });
+        chips.push({ o: o, inp: inp, tag: tag, mo: mo });
       });
       fs.appendChild(wrap);
       extrasBox.appendChild(fs);
@@ -156,7 +183,7 @@
 
     var out = {
       pkg: doc.getElementById("calc-pkg"), price: doc.getElementById("calc-price"),
-      lines: doc.getElementById("calc-lines"), extra: doc.getElementById("calc-extra"), send: doc.getElementById("calc-send")
+      lines: doc.getElementById("calc-lines"), extra: doc.getElementById("calc-extra"), monthly: doc.getElementById("calc-monthly"), send: doc.getElementById("calc-send")
     };
     var mini = { pkg: doc.getElementById("calc-mini-pkg"), price: doc.getElementById("calc-mini-price"), send: doc.getElementById("calc-mini-send") };
     var shown = null, tween = 0;
@@ -180,23 +207,43 @@
       li.appendChild(el("span", "ql-amt", amount));
       out.lines.appendChild(li);
     }
+    var TT = calc.toolTiers;
+    /* Package needed for a set of picked options: biggest "needs", then the tool-count tier */
+    function needOf(size, set) {
+      var n = rank[size.needs] || 0;
+      set.forEach(function (c) { if (c.o.needs && rank[c.o.needs] > n) n = rank[c.o.needs]; });
+      if (TT) {
+        var tc = set.filter(function (c) { return c.o.group === TT.group; }).length;
+        if (tc) {
+          var t = TT.tiers.filter(function (x) { return tc <= x.max; })[0] || TT.tiers[TT.tiers.length - 1];
+          if (rank[t.needs] > n) n = rank[t.needs];
+        }
+      }
+      return n;
+    }
     function update(e) {
       var sizeInp = sizesBox.querySelector("input:checked");
       var size = calc.sizes[Number(sizeInp ? sizeInp.value : 0)];
-      var need = rank[size.needs] || 0;
       var picked = chips.filter(function (c) { return c.inp.checked; });
-      picked.forEach(function (c) { if (rank[c.o.needs] > need) need = rank[c.o.needs]; });
+      var need = needOf(size, picked);
       var p = pkgs[need];
+      var toolCount = TT ? picked.filter(function (c) { return c.o.group === TT.group; }).length : 0;
+      var overTools = TT && toolCount > TT.tiers[TT.tiers.length - 1].max;
 
       /* Live tags: Free, Included, +S$ difference, or the add-on price */
       chips.forEach(function (c) {
-        var o = c.o, t;
+        var o = c.o, t = "";
         if (o.extra) t = "+S$" + money(o.extra);
         else if (o.free) t = ZH ? "免费" : "Free";
-        else if (rank[o.needs] > need) t = "+S$" + money(num(nowPrice(pkgOf(o.needs))) - num(nowPrice(p)));
-        else t = ZH ? "已包含" : "Included";
+        else if (o.needs) {
+          var withIt = c.inp.checked ? need : needOf(size, picked.concat(c));
+          var diff = num(nowPrice(pkgs[withIt])) - num(nowPrice(p));
+          t = diff > 0 ? "+S$" + money(diff) : (ZH ? "已包含" : "Included");
+        }
         c.tag.textContent = t;
+        c.tag.hidden = !t;
         c.tag.className = "tag" + (o.extra || t.charAt(0) === "+" ? " tag-plus" : o.free ? " tag-free" : "");
+        if (c.mo) c.mo.textContent = "S$" + money(o.monthly) + (ZH ? "/月" : "/mo");
       });
 
       var old = out.pkg.textContent;
@@ -205,7 +252,7 @@
 
       /* The quote */
       out.lines.textContent = "";
-      var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra; }).map(function (c) { return c.o.label; }));
+      var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra && c.o.needs; }).map(function (c) { return c.o.label; }));
       line(p.name + (ZH ? "套餐" : " package"), "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
       if (onSale(p)) line(SALE.name, "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
       picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, ZH ? "免费" : "Free", "ql-free"); });
@@ -216,12 +263,43 @@
       if (extraCost) {
         out.extra.textContent = "+ S$" + money(extraCost) + " " + extras.map(function (c) { return c.o.label; }).join(", ") + ", " + (calc.extraNote || "");
         out.extra.hidden = false;
+      } else if (overTools) {
+        out.extra.textContent = TT.overNote;
+        out.extra.hidden = false;
       } else out.extra.hidden = true;
 
-      var items = [size.label].concat(picked.map(function (c) { return c.o.extra ? c.o.label + " (+S$" + money(c.o.extra) + ")" : c.o.label; }));
+      /* Monthly costs: the chosen plan + S$50 per automation ticked. Own line, never in the big number. */
+      var planInp = plans.length ? doc.querySelector("input[name=calc-plan]:checked") : null;
+      var plan = planInp ? plans[Number(planInp.value)] : null;
+      var monthly = picked.filter(function (c) { return c.o.monthly; });
+      var planCost = plan ? num(plan.monthly) : 0;
+      var monthlyTotal = planCost + monthly.reduce(function (a, c) { return a + num(c.o.monthly); }, 0);
+      if (out.monthly) {
+        if (monthlyTotal) {
+          var parts = [];
+          if (planCost) parts.push(plan.label + " S$" + money(planCost));
+          monthly.forEach(function (c) { parts.push(c.o.label + " S$" + money(c.o.monthly)); });
+          out.monthly.textContent = "";
+          out.monthly.appendChild(el("b", null, (ZH ? "每月 S$" : "Every month: S$") + money(monthlyTotal) + (ZH ? "" : "/month")));
+          out.monthly.appendChild(el("small", null, parts.join(" · ")));
+          out.monthly.hidden = false;
+        } else out.monthly.hidden = true;
+      }
+
+      var items = [size.label].concat(picked.map(function (c) {
+        return c.o.extra ? c.o.label + " (+S$" + money(c.o.extra) + ")" : c.o.monthly ? c.o.label + " (S$" + money(c.o.monthly) + (ZH ? "/月)" : "/month)") : c.o.label;
+      }));
       var msg = (calc.message || "Hi Jie, I'd like the {package} package.")
         .replace("{package}", p.name).replace("{price}", money(nowPrice(p)))
         .replace("{items}", items.join(", "));
+      var planText = "";
+      if (plan) {
+        planText = ZH
+          ? "托管方案：" + plan.label + (planCost ? "（S$" + money(planCost) + "/月）" : "") + "。"
+          : " Hosting: " + plan.label + (planCost ? " (S$" + money(planCost) + "/month)" : "") + ".";
+        if (monthlyTotal) planText += ZH ? "每月合计 S$" + money(monthlyTotal) + "。" : " Monthly total: S$" + money(monthlyTotal) + ".";
+      }
+      msg = msg.indexOf("{plan}") >= 0 ? msg.replace("{plan}", planText) : msg + planText;
       out.send.href = waLink(msg);
       if (mini.pkg) { mini.pkg.textContent = p.name; mini.price.textContent = money(nowPrice(p)); mini.send.href = out.send.href; }
     }

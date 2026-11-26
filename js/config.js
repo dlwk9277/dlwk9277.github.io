@@ -77,7 +77,7 @@ window.SITE_CONFIG = {
   ],
 
   /* ---------- PRICE CALCULATOR + PACKAGES -------------------------------
-     Only two prices are ever shown: Starter and Business.
+     Four packages: Starter, Business, Business + Tool (1 to 3 tools) and Business + Tools (4 to 7).
      - price: the price during a sale. oldPrice: the full price (no sale).
        Prices are plain numbers in S$ (no "S$", no commas).
      - The calculator shows the LOWEST package that covers what the visitor
@@ -87,46 +87,80 @@ window.SITE_CONFIG = {
        built free inside either package.
      - extra: a fixed add-on in S$ (complex n8n automation). It is shown on
        its own line, never added into the big number, so the headline price
-       stays between S$150 and S$300.                                    */
+       stays between S$250 and S$1500.                                    */
   packages: [
-    { id: "starter",  name: "Starter",  price: 150, oldPrice: 200 },
-    { id: "business", name: "Business", price: 250, oldPrice: 300 }
+    { id: "starter",  name: "Starter",          price: 250,  oldPrice: 350 },
+    { id: "business", name: "Business",         price: 300,  oldPrice: 400 },
+    { id: "tool",     name: "Business + Tool",  price: 1000, oldPrice: 1500 },   /* 1 to 3 tools */
+    { id: "tools",    name: "Business + Tools", price: 1500, oldPrice: 2200 }    /* 4 to 7 tools */
   ],
 
   calculator: {
-    /* The two site sizes. Each shows its price.
+    /* The site sizes. Each shows its price.
        selected: true = picked when the page opens (only one). */
     sizes: [
       { label: "One page",                hint: "Services, prices, photos, WhatsApp", needs: "starter" },
-      { label: "A page for each service", hint: "4 to 6 pages",                       needs: "business", selected: true }
+      { label: "A page for each service", hint: "4 to 6 pages",                       needs: "business", selected: true },
+      { label: "Business site + tools",   hint: "Pick your tools below",              needs: "tool" }
     ],
+    /* Price by number of tools picked in the group below: 1 to 3 tools = "tool" package,
+       4 to 7 = "tools" package, 8 or more = quoted on WhatsApp (shown at the top price). */
+    toolTiers: {
+      group: "tools",
+      tiers: [ { max: 3, needs: "tool" }, { max: 7, needs: "tools" } ],
+      overNote: "8 or more tools: I quote the extra on WhatsApp"
+    },
     /* Option groups, in the order shown. hint = small line under the group name. */
     groups: [
       { id: "found", label: "Get found" },
-      { id: "tools", label: "Tools that answer customers", hint: "Free with any package" },
-      { id: "auto",  label: "Automation" }
+      { id: "tools", label: "Tools that answer customers", hint: "Up to 3 tools S$1,000 · up to 7 tools S$1,500" }
     ],
-    /* Each option: group, needs (package id), and free: true or extra: 250.
-       Options that need a bigger package show the price difference, e.g. "+S$100". */
+    /* After launch: the customer picks one plan (or self-host). Shown as three cards under the site size.
+       monthly = S$ per month. selected: true = picked when the page opens (only one).
+       The monthly total = the plan + the "monthly" price of every automation ticked below. It is
+       shown on its own line under the quote, never added into the big price. Extra edits are
+       hosting.extraEditPrice on either plan. */
+    plansLabel: "After launch",
+    plansHint: "Extra edits are S$50 each on either plan",
+    plans: [
+      { label: "Self-host", hint: "Free. You host it with my setup guide", monthly: 0 },
+      { label: "Hosting",   hint: "Hosting, SSL and basic backups. No edits included", monthly: 50 },
+      { label: "Full care", hint: "Hosting, updates, support and 2 edits a month, all handled by me", monthly: 150, selected: true }
+    ],
+    /* Each option: group, needs (package id), optional monthly (S$ per month).
+       Options that need a bigger package show the price difference, e.g. "+S$700".
+       monthly: 50 marks an automation (S$50 a month on either plan). */
     extras: [
       { label: "Photo gallery",          group: "found", needs: "starter" },
       { label: "Google Maps",            group: "found", needs: "business" },
       { label: "Google SEO",             group: "found", needs: "business" },
-      { label: "Quote calculator",       group: "tools", free: true, needs: "starter" },
-      { label: "Booking form",           group: "tools", free: true, needs: "starter" },
-      { label: "WhatsApp auto-reply",    group: "tools", free: true, needs: "starter" },
-      { label: "Chatbot",                group: "tools", free: true, needs: "starter" },
-      { label: "Complex n8n automation", group: "auto",  extra: 250,  needs: "starter",
+      { label: "Quote calculator",       group: "tools", needs: "tool" },
+      { label: "Booking form",           group: "tools", needs: "tool" },
+      { label: "Job roster for your team", group: "tools", needs: "tool",
+        hint: "Who goes to which job, and when" },
+      { label: "WhatsApp auto-reply",    group: "tools", needs: "tool", monthly: 50 },
+      { label: "Chatbot",                group: "tools", needs: "tool", monthly: 50 },
+      { label: "Staff leave tracker",    group: "tools", needs: "tool", monthly: 50,
+        hint: "HR: leave requests and balances" },
+      { label: "Attendance clock-in",    group: "tools", needs: "tool", monthly: 50,
+        hint: "HR: staff clock in from their phone" },
+      { label: "Claims and commission",  group: "tools", needs: "tool", monthly: 50,
+        hint: "HR: staff claims, commission and payslip sums" },
+      { label: "Complex n8n automation", group: "tools", needs: "tool", monthly: 50,
         hint: "Leads into Google Sheets, invoices, reminders, AI replies" }
     ],
     extraNote: "quoted on its own, confirmed on WhatsApp",
-    message: "Hi Jie, I used your price calculator. I'd like the {package} package (from S${price}) with: {items}. Can we chat?"
+    message: "Hi Jie, I used your price calculator. I'd like the {package} package (from S${price}) with: {items}.{plan} Can we chat?"
   },
 
-  /* Optional monthly add-on (mentioned in the FAQ). */
-  carePlan: {
-    name: "Care Plan",
-    pricePerMonth: 50
+  /* Monthly plans, for reference (the calculator reads calculator.plans above; the FAQ text in
+     index.html and js/i18n.js repeats these numbers). Replaces the old Care Plan. */
+  hosting: {
+    hostingPerMonth: 50,          /* hosting, SSL, basic backups, no edits */
+    fullCarePerMonth: 150,        /* hosting, SSL, backups, updates, support, 2 edits a month */
+    editsIncludedInFullCare: 2,
+    extraEditPrice: 50,           /* on either plan */
+    perAutomationPerMonth: 50     /* on either plan */
   },
 
   /* ---------- PORTFOLIO (your real projects) ----------------------------

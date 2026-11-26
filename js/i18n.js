@@ -47,7 +47,7 @@
   var PAGE = doc.body.getAttribute("data-page");   /* set on the aircon / plumber pages: they carry their own Chinese in data-zh */
   if (PAGE && window.PAGE_ZH) { doc.title = window.PAGE_ZH.title; A('meta[name="description"]', "content", window.PAGE_ZH.desc); }
   if (!PAGE) doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
-  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，免费托管，S$150 至 S$300。付款前先看免费设计预览。");
+  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，可免费自行托管，S$250 至 S$1500。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   var hp = $(".hero-proof-text"); if (hp) hp.textContent = "我的作品";
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
@@ -59,7 +59,7 @@
     h1.removeAttribute("data-split");
     h1.innerHTML = '为您的家居服务生意带来<span class="mark" data-mark>更多询问</span>。';
   }
-  if (!PAGE) H(".hero-sub", "为新加坡的冷气、水管、电工、清洁、搬家和装修生意制作网站，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，免费托管。</strong>");
+  if (!PAGE) H(".hero-sub", "为新加坡的冷气、水管、电工、清洁、搬家和装修生意制作网站，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，可免费自行托管。</strong>");
   Tn(".hero-actions .btn span", "WhatsApp 联系杰");
   Tn(".btn-ghost", "查看价格");
   ["免费设计预览", "现在付 50%，满意后再付 50%", "网站归您所有"].forEach(function (t, i) { Tn(".hero-terms li", t, i); });
@@ -73,7 +73,7 @@
   Tn(".quote-pkg", "套餐");
   H(".quote-total-label", "总计<small>起步价</small>");
   Tn("#calc-send span", "把此报价发给杰");
-  Tn(".calc-note", "含免费托管。开工前，我会在 WhatsApp 上确认最终价格。");
+  Tn(".calc-note", "可免费自行托管，也可由我代管，每月 S$50 起。开工前，我会在 WhatsApp 上确认最终价格。");
   Tn("#calc-mini-send", "发送");
   Tn(".calc-mini b", "从 S$");
 
@@ -105,8 +105,8 @@
   [["我需要给您什么资料？", "您的公司名称、服务项目、服务地区、大概的价格，以及用手机拍的工作照片。没有 logo？我会用清晰的文字设置您的名称。不知道怎么写？我会在 WhatsApp 上帮您。资料齐了，5 个工作天内上线。"],
    ["怎么付款？", "用 PayNow。看过免费预览并确认后付 50%，网站完成、您满意后再付 50%。没有隐藏费用。"],
    ["网站归我所有吗？", "是的。付清尾款后，网站和所有文件都归您所有，以后也可以找别人接手。"],
-   ["什么是免费的？域名呢？", "托管没有月费。您自己的域名，例如 yourbusiness.sg，是可选的：每年约 S$20 到 S$60，用您的名字购买。我会帮您选择并连接。"],
-   ["以后需要修改怎么办？", "维护计划每月 S$50 起，包括更新文字、照片和价格，以及小修小补。或者直接 WhatsApp 我，动手前我会先为这一项修改报价。"]]
+   ["什么是免费的？托管和域名呢？", "网站归您所有，您可以按我的设置指南免费自行托管。代管是可选的：托管 每月 S$50（托管、SSL、基本备份，不含修改），或全面维护 每月 S$150（托管、更新、支持，每月含 2 次修改，全部由我处理）。您自己的域名，例如 yourbusiness.sg，也是可选的：每年约 S$20 到 S$60，用您的名字购买。我会帮您选择并连接。"],
+   ["以后需要修改怎么办？", "全面维护（每月 S$150）每月含 2 次修改：文字、照片或价格。无论哪个方案，额外修改每次 S$50；托管方案（每月 S$50）不含修改。每个自动化（例如聊天机器人或 WhatsApp 自动回复）每月加 S$50。或者直接 WhatsApp 我，动手前我会先为这一项修改报价。"]]
     .forEach(function (p, i) { var d = $$(".faq-list details")[i]; if (d) { d.querySelector("summary").textContent = p[0]; d.querySelector(".faq-a p").textContent = p[1]; } });
 
   Tn("#contact-title", "联系杰");
@@ -126,11 +126,19 @@
   /* ---------- Chinese: labels from config.js ---------- */
   var C = window.SITE_CONFIG || {};
   var MAP = {
-    "Starter": "入门版", "Business": "商业版",
+    "Starter": "入门版", "Business": "商业版", "Business + Tool": "商业版 + 工具", "Business + Tools": "商业版 + 多个工具",
+    "Business site + tools": "商业网站 + 工具", "Pick your tools below": "在下方选择工具", "Up to 3 tools S$1,000 · up to 7 tools S$1,500": "最多 3 个工具 S$1,000 · 最多 7 个工具 S$1,500", "8 or more tools: I quote the extra on WhatsApp": "8 个或以上工具：额外部分我会在 WhatsApp 上报价",
+    "Job roster for your team": "团队工作排班", "Who goes to which job, and when": "谁去哪个工作，何时去",
+    "Staff leave tracker": "员工请假记录", "HR: leave requests and balances": "人事：请假申请和余额",
+    "Attendance clock-in": "考勤打卡", "HR: staff clock in from their phone": "人事：员工用手机打卡",
+    "Claims and commission": "报销和佣金", "HR: staff claims, commission and payslip sums": "人事：员工报销、佣金和工资单计算",
+    "After launch": "上线之后", "Extra edits are S$50 each on either plan": "无论哪个方案，额外修改每次 S$50",
+    "Self-host": "自行托管", "Free. You host it with my setup guide": "免费。按我的设置指南自行托管",
+    "Hosting": "托管", "Hosting, SSL and basic backups. No edits included": "托管、SSL 和基本备份。不含修改",
+    "Full care": "全面维护", "Hosting, updates, support and 2 edits a month, all handled by me": "托管、更新、支持，每月含 2 次修改，全部由我处理",
     "One page": "单页网站", "Services, prices, photos, WhatsApp": "服务、价格、照片、WhatsApp",
     "A page for each service": "每项服务一页", "4 to 6 pages": "4 到 6 页",
-    "Get found": "让客户找到您", "Tools that answer customers": "自动回复客户的工具", "Free with any package": "任何套餐都免费",
-    "Automation": "自动化",
+    "Get found": "让客户找到您", "Tools that answer customers": "自动回复客户的工具",
     "Photo gallery": "照片库", "Google Maps": "谷歌地图", "Google SEO": "谷歌搜索优化",
     "Quote calculator": "报价计算器", "Booking form": "预约表单", "WhatsApp auto-reply": "WhatsApp 自动回复",
     "Chatbot": "聊天机器人", "Complex n8n automation": "复杂 n8n 自动化",
@@ -145,11 +153,13 @@
   (C.saleEvents || []).forEach(function (e) { e.name = tr(e.name); });
   var cc = C.calculator;
   if (cc) {
-    [cc.sizes, cc.groups, cc.extras].forEach(function (list) {
+    [cc.sizes, cc.groups, cc.extras, cc.plans].forEach(function (list) {
       (list || []).forEach(function (o) { o.label = tr(o.label); if (o.hint) o.hint = tr(o.hint); });
     });
+    if (cc.toolTiers) cc.toolTiers.overNote = tr(cc.toolTiers.overNote);
+    cc.plansLabel = tr(cc.plansLabel); cc.plansHint = tr(cc.plansHint);
     cc.extraNote = "单独报价，在 WhatsApp 上确认";
-    cc.message = "您好杰，我用了您网站的价格计算器。我想要{package}套餐（从 S${price} 起），包含：{items}。可以聊聊吗？";
+    cc.message = "您好杰，我用了您网站的价格计算器。我想要{package}套餐（从 S${price} 起），包含：{items}。{plan}可以聊聊吗？";
   }
   if (C.whatsappMessages) {
     var wm = C.whatsappMessages, a = "您好杰，我看到了您的网站，我想为我的生意做一个网站。";

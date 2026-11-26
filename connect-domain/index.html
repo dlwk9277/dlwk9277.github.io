@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect Your Domain to Your Site | Jie Builds</title>
+  <meta name="description" content="Step by step: point your own domain bought at Namecheap to your Netlify site, turn on HTTPS and add it to Google Search Console.">
+  <link rel="canonical" href="https://jiebuilds.com/connect-domain/">
+  <meta name="theme-color" content="#0C0C0D">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Jie Builds">
+  <meta property="og:title" content="Connect Your Domain to Your Site | Jie Builds">
+  <meta property="og:description" content="Step by step: point your own domain bought at Namecheap to your Netlify site, turn on HTTPS and add it to Google Search Console.">
+  <meta property="og:url" content="https://jiebuilds.com/connect-domain/">
+  <meta property="og:image" content="https://jiebuilds.com/assets/og-image.png?v=9">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_SG">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png?v=2" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
+  <link rel="preload" href="/assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/atkinson-next-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <script>
+    (function (d) {
+      var h = d.documentElement; h.classList.add("js");
+      var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!calm && "IntersectionObserver" in window) {
+        h.classList.add("motion");
+        setTimeout(function () { if (!window.__siteReady) h.classList.remove("motion"); }, 3500);
+      }
+    })(document);
+    window.PAGE_ZH = { title: "把您的域名连接到网站 | 杰 Builds", desc: "一步一步：把您在 Namecheap 买的域名指向 Netlify 上的网站，开启 HTTPS，并加入谷歌搜索控制台（Google Search Console）。" };
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/config.js" defer></script>
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/site.js" defer></script>
+</head>
+<body data-page="guide">
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Floating top: the sale banner (text from the sale calendar in js/config.js) stays on screen while you scroll -->
+  <div class="top">
+    <a class="sale-bar" id="sale-bar" href="/#calculator" hidden><span class="sale-dot" aria-hidden="true"></span><span data-sale-text></span></a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="/" aria-label="Jie Builds, back to top"><img src="/assets/logo.svg" alt="" width="26" height="42"></a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="/#calculator">Prices</a>
+          <a href="/#how">How it works</a>
+          <a href="/#faq">FAQ</a>
+        </nav>
+        <div class="lang" role="group" aria-label="Language / 语言">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <a class="btn btn-small" aria-label="WhatsApp Jie" data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </header>
+  </div>
+
+  <main id="main">
+
+    <section class="hero vp-hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 class="hero-title" data-zh="把您的域名连接到网站">Connect your domain to your site</h1>
+          <p class="hero-sub" data-load="2" data-zh="六步：Netlify、Namecheap，再到谷歌搜索控制台。大约 20 分钟操作，之后等 DNS 生效。我们用 <code>YOURDOMAIN.com</code> 代表您的域名，<code>YOURSITE</code> 代表您的 Netlify 网站名。">Six steps across Netlify, Namecheap and Google Search Console. About 20 minutes of clicking, then a wait for DNS. Below, <code>YOURDOMAIN.com</code> is your domain and <code>YOURSITE</code> is your Netlify site name.</p>
+          <p class="guide-note" data-load="3" data-zh="菜单名称偶尔会变。找不到某个按钮？直接 WhatsApp 我，我帮您看。请不要把密码发给任何人，包括我。">Menu names change now and then. Can't find a button? WhatsApp me and I'll point you to it. Never send your passwords to anyone, including me.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section guide" aria-label="Steps" data-zh-label="步骤">
+      <div class="wrap">
+        <ol class="guide-steps">
+          <li class="guide-step" id="step-1" data-reveal>
+            <h2 class="guide-h" data-zh="在 Netlify 添加您的域名">In Netlify, add your domain</h2>
+            <p class="guide-intro" data-zh="Netlify 是您网站所在的地方。先告诉它您拥有哪个域名。">Netlify is where your site lives. Tell it which domain you own.</p>
+            <figure class="guide-fig"><img src="/assets/guide/step1-netlify-login.webp" width="370" height="302" loading="lazy" decoding="async" alt="The Netlify log-in page with a blue box and the number 1 around the three buttons: Continue with Google, Continue with GitHub and Log in with email." data-zh-alt="Netlify 登录页面，蓝色框和数字 1 圈出三个按钮：用 Google 继续、用 GitHub 继续、用电邮登录。"><figcaption data-zh="第 1 步：用您注册时的方式登录 Netlify。">Step 1: log in to Netlify the same way you signed up.</figcaption></figure>
+            <ul class="guide-do"><li data-zh="登录 &lt;b&gt;app.netlify.com&lt;/b&gt;，打开您的网站。">Log in to <b>app.netlify.com</b> and open your site.</li><li data-zh="进入&lt;b&gt;域名管理（Domain management）&lt;/b&gt;，在&lt;b&gt;站点配置（Site configuration）&lt;/b&gt;下面。">Go to <b>Domain management</b> (under <b>Site configuration</b>).</li><li data-zh="点&lt;b&gt;添加域名（Add a domain）&lt;/b&gt;，输入 &lt;code&gt;YOURDOMAIN.com&lt;/code&gt;，再点&lt;b&gt;验证（Verify）&lt;/b&gt;和&lt;b&gt;添加（Add domain）&lt;/b&gt;。">Click <b>Add a domain</b>, type <code>YOURDOMAIN.com</code>, then click <b>Verify</b> and <b>Add domain</b>.</li><li data-zh="如果 Netlify 提供它自己的 DNS，请跳过。我们把 DNS 留在 Namecheap，下面几步在那里设置。">If Netlify offers its own DNS, skip it. We keep DNS at Namecheap, so the next steps set it up there.</li></ul>
+          </li>
+          <li class="guide-step" id="step-2" data-reveal>
+            <h2 class="guide-h" data-zh="在 Namecheap 打开 Advanced DNS">In Namecheap, open Advanced DNS</h2>
+            <p class="guide-intro" data-zh="在这个页面把域名指向您的网站。">This is the page where you point the domain at your site.</p>
+            <figure class="guide-fig"><a href="/assets/guide/step2-namecheap-manage.webp" target="_blank" rel="noopener"><img src="/assets/guide/step2-namecheap-manage.webp" width="551" height="98" loading="lazy" decoding="async" alt="The Namecheap Domain List with a blue box and the number 2 around the Manage button next to your domain." data-zh-alt="Namecheap 域名列表，蓝色框和数字 2 圈出域名旁边的“Manage”按钮。"></a><figcaption data-zh="第 2 步：点域名旁边的 Manage。截图来源：Namecheap。点击可放大。">Step 2: click Manage next to your domain. Screenshot: Namecheap. Tap to enlarge.</figcaption></figure>
+            <figure class="guide-fig"><a href="/assets/guide/step2-namecheap-advanced-dns.webp" target="_blank" rel="noopener"><img src="/assets/guide/step2-namecheap-advanced-dns.webp" width="804" height="80" loading="lazy" decoding="async" alt="The Namecheap domain tabs with a blue box and the number 2 around the Advanced DNS tab." data-zh-alt="Namecheap 域名页面的标签栏，蓝色框和数字 2 圈出“Advanced DNS”标签。"></a><figcaption data-zh="然后打开 Advanced DNS 标签。截图来源：Namecheap。点击可放大。">Then open the Advanced DNS tab. Screenshot: Namecheap. Tap to enlarge.</figcaption></figure>
+            <ul class="guide-do"><li data-zh="登录 &lt;b&gt;namecheap.com&lt;/b&gt;，点&lt;b&gt;域名列表（Domain List）&lt;/b&gt;。">Log in to <b>namecheap.com</b> and click <b>Domain List</b>.</li><li data-zh="点域名旁边的&lt;b&gt;管理（Manage）&lt;/b&gt;。">Click <b>Manage</b> next to your domain.</li><li data-zh="在&lt;b&gt;域名（Domain）&lt;/b&gt;标签里，确认域名服务器（Nameservers）显示 &lt;b&gt;Namecheap BasicDNS&lt;/b&gt;。">On the <b>Domain</b> tab, check that Nameservers says <b>Namecheap BasicDNS</b>.</li><li data-zh="打开 &lt;b&gt;Advanced DNS&lt;/b&gt; 标签。">Open the <b>Advanced DNS</b> tab.</li></ul>
+          </li>
+          <li class="guide-step" id="step-3" data-reveal>
+            <h2 class="guide-h" data-zh="删除默认的停放记录">Delete the parking records</h2>
+            <p class="guide-intro" data-zh="新域名自带两条会显示 Namecheap 停放页面的记录，它们会挡住您的网站。">A new domain comes with two records that show a Namecheap parking page. They block your site.</p>
+            <figure class="guide-fig"><a href="/assets/guide/step3-namecheap-records.webp" target="_blank" rel="noopener"><img src="/assets/guide/step3-namecheap-records.webp" width="900" height="181" loading="lazy" decoding="async" alt="The Namecheap Advanced DNS record list. A blue box and the number 3 mark the two bin icons that delete the parking records, and the number 4 marks the Add New Record button." data-zh-alt="Namecheap 的 Advanced DNS 记录列表。蓝色框和数字 3 圈出删除停放记录的两个垃圾桶图标，数字 4 圈出“Add New Record”按钮。"></a><figcaption data-zh="第 3 步：两条停放记录都点垃圾桶。第 4 步从 Add New Record 开始。截图来源：Namecheap。点击可放大。">Step 3: click the bin on both parking records. Step 4 starts at Add New Record. Screenshot: Namecheap. Tap to enlarge.</figcaption></figure>
+            <ul class="guide-do"><li data-zh="找到主机（Host）为 &lt;code&gt;www&lt;/code&gt;、值为 &lt;code&gt;parkingpage.namecheap.com.&lt;/code&gt; 的 &lt;b&gt;CNAME&lt;/b&gt; 记录，点垃圾桶图标。">Find the <b>CNAME</b> record with Host <code>www</code> and Value <code>parkingpage.namecheap.com.</code>. Click the bin icon.</li><li data-zh="找到主机为 &lt;code&gt;@&lt;/code&gt; 的 &lt;b&gt;URL Redirect Record&lt;/b&gt;，也删除。">Find the <b>URL Redirect Record</b> with Host <code>@</code>. Delete it too.</li><li data-zh="同样删除 &lt;b&gt;AAAA&lt;/b&gt;（IPv6）记录，以及 &lt;code&gt;@&lt;/code&gt; 或 &lt;code&gt;www&lt;/code&gt; 上其他的 A、CNAME 或跳转记录。Netlify 不支持 IPv6，旧记录会冲突。">Also delete any <b>AAAA</b> (IPv6) record, and any other A, CNAME or redirect record on <code>@</code> or <code>www</code>. Netlify does not support IPv6, so old records clash.</li><li data-zh="其他记录不要动，尤其是邮箱（MX）记录。">Leave any other records alone, especially email (MX) records.</li></ul>
+          </li>
+          <li class="guide-step" id="step-4" data-reveal>
+            <h2 class="guide-h" data-zh="添加两条记录">Add the two records</h2>
+            <p class="guide-intro" data-zh="点两次&lt;b&gt;添加新记录（Add New Record）&lt;/b&gt;，填写下面的内容。如果 Netlify 显示的值不同，以 Netlify 的为准。">Click <b>Add New Record</b> twice and fill in these. Use the values Netlify shows you if they differ from mine.</p>
+            <ul class="guide-do"><li data-zh="&lt;b&gt;A Record&lt;/b&gt;：主机 &lt;code&gt;@&lt;/code&gt;，值 &lt;code&gt;75.2.60.5&lt;/code&gt;，TTL 选 Automatic。"><b>A Record</b>: Host <code>@</code>, Value <code>75.2.60.5</code>, TTL Automatic.</li><li data-zh="&lt;b&gt;CNAME Record&lt;/b&gt;：主机 &lt;code&gt;www&lt;/code&gt;，值 &lt;code&gt;YOURSITE.netlify.app&lt;/code&gt;，TTL 选 Automatic。"><b>CNAME Record</b>: Host <code>www</code>, Value <code>YOURSITE.netlify.app</code>, TTL Automatic.</li><li data-zh="每一行都点绿色的勾保存。">Click the green tick on each row to save it.</li></ul>
+          </li>
+          <li class="guide-step" id="step-5" data-reveal>
+            <h2 class="guide-h" data-zh="回到 Netlify，开启 HTTPS">Back in Netlify, turn on HTTPS</h2>
+            <p class="guide-intro" data-zh="HTTPS 就是那把小锁。客户和谷歌都期待它。">HTTPS is the padlock. Customers and Google both expect it.</p>
+            <figure class="guide-fig"><a href="/assets/guide/step5-netlify-awaiting-dns.webp" target="_blank" rel="noopener"><img src="/assets/guide/step5-netlify-awaiting-dns.webp" width="900" height="74" loading="lazy" decoding="async" alt="The Netlify Domain management list with a blue box and the number 5 around the &quot;Awaiting External DNS&quot; notice next to a custom domain." data-zh-alt="Netlify 域名管理列表，蓝色框和数字 5 圈出自定义域名旁边的“Awaiting External DNS”提示。"></a><figcaption data-zh="第 5 步：出现这个提示，说明 DNS 还没有生效到 Netlify。点它可以看缺少什么。截图来源：Netlify 文档。点击可放大。">Step 5: while this notice shows, DNS has not reached Netlify yet. Click it to see what is missing. Screenshot: Netlify docs. Tap to enlarge.</figcaption></figure>
+            <ul class="guide-do"><li data-zh="等 30 分钟。有时 DNS 需要几个小时，最长可能要 48 小时。">Wait about 30 minutes. Sometimes DNS takes a few hours, and up to 48 at most.</li><li data-zh="在&lt;b&gt;域名管理&lt;/b&gt;里，点域名旁边的&lt;b&gt;验证 DNS 配置（Verify DNS configuration）&lt;/b&gt;。">In <b>Domain management</b>, click <b>Verify DNS configuration</b> next to your domain.</li><li data-zh="向下找到 &lt;b&gt;HTTPS&lt;/b&gt;，点&lt;b&gt;申请证书（Provision certificate）&lt;/b&gt;。">Scroll to <b>HTTPS</b> and click <b>Provision certificate</b>.</li><li data-zh="在&lt;b&gt;域名管理&lt;/b&gt;里，把 &lt;code&gt;www.YOURDOMAIN.com&lt;/code&gt; 设为主域名。DNS 留在别家（这里是 Namecheap）时，Netlify 建议这样做。">In <b>Domain management</b>, make <code>www.YOURDOMAIN.com</code> your primary domain. Netlify recommends this when DNS stays with another provider such as Namecheap.</li><li data-zh="用手机打开 &lt;code&gt;https://YOURDOMAIN.com&lt;/code&gt;，应该能看到您的网站和一把小锁。">Open <code>https://YOURDOMAIN.com</code> on your phone. You should see your site and a padlock.</li></ul>
+          </li>
+          <li class="guide-step" id="step-6" data-reveal>
+            <h2 class="guide-h" data-zh="把网站加入谷歌搜索控制台">Add the site to Google Search Console</h2>
+            <p class="guide-intro" data-zh="让谷歌知道您的网站存在，客户搜索时才找得到。">This tells Google your site exists, so customers can find it when they search.</p>
+            <figure class="guide-fig"><img src="/assets/guide/step6-search-console-start.webp" width="560" height="360" loading="lazy" decoding="async" alt="The Google Search Console welcome page with a blue box and the number 6 around the Start now button." data-zh-alt="谷歌搜索控制台欢迎页面，蓝色框和数字 6 圈出“Start now”按钮。"><figcaption data-zh="第 6 步：打开搜索控制台，点 Start now。">Step 6: open Search Console and click Start now.</figcaption></figure>
+            <ul class="guide-do"><li data-zh="打开 &lt;b&gt;search.google.com/search-console&lt;/b&gt;，用您的谷歌账号登录。">Go to <b>search.google.com/search-console</b> and sign in with your Google account.</li><li data-zh="点&lt;b&gt;添加资源（Add property）&lt;/b&gt;，选&lt;b&gt;域名（Domain）&lt;/b&gt;，输入 &lt;code&gt;YOURDOMAIN.com&lt;/code&gt;，点&lt;b&gt;继续（Continue）&lt;/b&gt;。">Click <b>Add property</b>, choose <b>Domain</b>, type <code>YOURDOMAIN.com</code> and click <b>Continue</b>.</li><li data-zh="谷歌会显示一条 &lt;b&gt;TXT&lt;/b&gt; 记录，复制它。">Google shows a <b>TXT</b> record. Copy it.</li><li data-zh="在 Namecheap 的 &lt;b&gt;Advanced DNS&lt;/b&gt; 点&lt;b&gt;添加新记录&lt;/b&gt;：&lt;b&gt;TXT Record&lt;/b&gt;，主机 &lt;code&gt;@&lt;/code&gt;，值粘贴您复制的文字，保存。">In Namecheap <b>Advanced DNS</b>, click <b>Add New Record</b>: <b>TXT Record</b>, Host <code>@</code>, Value the text you copied. Save it.</li><li data-zh="回到搜索控制台，点&lt;b&gt;验证（Verify）&lt;/b&gt;。如果失败，等 10 分钟再试。验证后请保留这条 TXT 记录，删除后谷歌可能取消验证。">Back in Search Console, click <b>Verify</b>. If it fails, wait 10 minutes and try again. Keep the TXT record afterwards: if you delete it, Google can un-verify you.</li><li data-zh="打开&lt;b&gt;站点地图（Sitemaps）&lt;/b&gt;，输入 &lt;code&gt;sitemap.xml&lt;/code&gt;，点&lt;b&gt;提交（Submit）&lt;/b&gt;。">Open <b>Sitemaps</b>, type <code>sitemap.xml</code> and click <b>Submit</b>.</li></ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="contact-card" data-reveal>
+          <div class="portrait">
+            <img class="portrait-fallback" src="/assets/logo.svg" alt="" aria-hidden="true" width="90" height="143">
+            <img src="/assets/darren.jpg" alt="Illustrated portrait of Jie" width="480" height="560" loading="lazy" decoding="async" onerror="this.remove()">
+          </div>
+          <div class="contact-copy">
+            <h2 class="section-title" id="contact-title">Talk to Jie</h2>
+            <p>You'll chat with me, the person who builds your site. No salespeople.</p>
+            <a class="btn btn-big" data-wa="contact" data-wa-msg="Hi Jie, I'm connecting my domain and I'm stuck." data-wa-msg-zh="您好杰，我在连接域名，卡住了。" href="https://wa.me/6592778104" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+              <span>WhatsApp Jie</span>
+            </a>
+            <p class="contact-number"><a data-wa="contact" href="https://wa.me/6592778104" target="_blank" rel="noopener" data-wa-number>+65 9277 8104</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 12. FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="footer-brand">Jie Builds, Singapore</p>
+        <p class="footer-small">Websites for home service and renovation businesses.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></li>
+        <li data-instagram hidden><a href="#" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ig"/></svg>Instagram</a></li>
+        <li><a href="/aircon-website-design-singapore/">Aircon websites</a></li>
+        <li><a href="/plumber-website-design-singapore/">Plumber websites</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+      </ul>
+      <p class="footer-small footer-privacy"><span data-pixel-notice hidden>This site uses Meta Pixel cookies to measure ads. </span>WhatsApp messages are only used to reply to your enquiry. <a href="/privacy.html">Read the privacy notice</a>.</p>
+      <p class="footer-small">© <span data-year>2026</span> Jie Builds</p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp button (phones and tablets) -->
+  <a class="wa-float" data-wa="floating" href="https://wa.me/6592778104" target="_blank" rel="noopener" aria-label="Chat with Jie on WhatsApp">
+    <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+  </a>
+</body>
+</html>
