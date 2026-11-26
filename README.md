@@ -93,12 +93,12 @@ All in `js/config.js`:
 
 ### Sale calendar (the discount changes by itself)
 
-The discount is shown as the current Singapore sale: "Christmas sale: code XMAS26, from S$500 (usual S$700) · until 31 Dec", in the blue bar that floats at the top of the page while visitors scroll, and as the crossed-out price in the calculator. The site picks the sale from today's date (Singapore time), so you don't need to change anything when a sale ends.
+The discount is shown as the current Singapore sale: "Christmas sale: from S$500 (usual S$700) · until 31 Dec", in the blue bar that floats at the top of the page while visitors scroll, and as the crossed-out price in the calculator. The site picks the sale from today's date (Singapore time), so you don't need to change anything when a sale ends.
 
 - The list is `saleEvents` in `js/config.js`. Each line has a name, a first day and a last day.
 - It runs to the end of 2027. **Before it runs out, add next year's sales** (copy a line, change the name and dates).
 - Chinese New Year, Hari Raya and Deepavali move every year: check the dates on mom.gov.sg ("public holidays").
-- **Promo codes:** each sale line has a `code`. It shows in the banner, quote and WhatsApp message during that sale only. Don't accept expired codes. Between sales the banner names the next sale and its start date.
+- Between sales the banner names the next sale and its start date.
 - **Refer a friend:** `referral.amount` in `js/config.js` (0 hides the strip and calculator note). The terms are the last FAQ question on the home, aircon and plumber pages (EN in the page, 中文 in `data-zh`).
 - **Sale lengths:** big events (Christmas, Chinese New Year, Hari Raya, Great Singapore Sale, National Day) run about a month; small events run one week. Keep gaps between them.
 - **Days not on the list show full prices** (about 150 days in 2027, including all of July). Charge the full price on those days, on WhatsApp too, so the "was" price stays real.

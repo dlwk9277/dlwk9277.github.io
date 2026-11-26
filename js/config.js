@@ -53,8 +53,6 @@ window.SITE_CONFIG = {
      automatically (Singapore time). No need to edit the site each time.
      - name: shown on the site, e.g. "Christmas sale"
      - from / to: first and last day, written "YYYY-MM-DD"
-     - code: the promo code shown in the banner, quote and WhatsApp message
-       during that sale only. Don't accept it after the sale ends.
      Add next year's sales before the list runs out.
      The banner floats at the top of the page. On any day with NO sale it names
      the next sale and its start date, and the site shows and charges the full
@@ -64,22 +62,22 @@ window.SITE_CONFIG = {
   saleEvents: [
     /* Big events run about a month, small events one week. Days between sales are full price
        (oldPrice): quote and charge that price then, so the "was" price stays real. */
-    { name: "Black Friday sale",     from: "2026-11-24", to: "2026-11-30", code: "BF26" },
-    { name: "Christmas sale",        from: "2026-12-01", to: "2026-12-31", code: "XMAS26" },
-    { name: "Chinese New Year sale", from: "2027-01-08", to: "2027-02-07", code: "CNY27" },  /* CNY 6-7 Feb 2027 */
-    { name: "Hari Raya sale",        from: "2027-02-11", to: "2027-03-11", code: "RAYA27" },  /* Hari Raya Puasa 10 Mar 2027 */
-    { name: "Easter sale",           from: "2027-03-22", to: "2027-03-28", code: "EASTER27" },  /* Good Friday 26 Mar 2027 */
-    { name: "Labour Day sale",       from: "2027-04-26", to: "2027-05-02", code: "LABOUR27" },
-    { name: "Vesak Day sale",        from: "2027-05-17", to: "2027-05-23", code: "VESAK27" },
-    { name: "Great Singapore Sale",  from: "2027-06-01", to: "2027-06-30", code: "GSS27" },
-    { name: "National Day sale",     from: "2027-08-01", to: "2027-08-31", code: "NDP27" },
-    { name: "9.9 sale",              from: "2027-09-03", to: "2027-09-09", code: "SALE99" },
-    { name: "Mid-Autumn sale",       from: "2027-09-13", to: "2027-09-19", code: "MOON27" },  /* Mid-Autumn 15 Sep 2027 */
-    { name: "10.10 sale",            from: "2027-10-04", to: "2027-10-10", code: "SALE1010" },
-    { name: "Deepavali sale",        from: "2027-10-23", to: "2027-10-29", code: "DEEPA27" },  /* check: about 28 Oct 2027 */
-    { name: "11.11 sale",            from: "2027-11-05", to: "2027-11-11", code: "SALE1111" },
-    { name: "Black Friday sale",     from: "2027-11-22", to: "2027-11-28", code: "BF27" },
-    { name: "Christmas sale",        from: "2027-12-01", to: "2027-12-31", code: "XMAS27" }
+    { name: "Black Friday sale",     from: "2026-11-24", to: "2026-11-30" },
+    { name: "Christmas sale",        from: "2026-12-01", to: "2026-12-31" },
+    { name: "Chinese New Year sale", from: "2027-01-08", to: "2027-02-07" },  /* CNY 6-7 Feb 2027 */
+    { name: "Hari Raya sale",        from: "2027-02-11", to: "2027-03-11" },  /* Hari Raya Puasa 10 Mar 2027 */
+    { name: "Easter sale",           from: "2027-03-22", to: "2027-03-28" },  /* Good Friday 26 Mar 2027 */
+    { name: "Labour Day sale",       from: "2027-04-26", to: "2027-05-02" },
+    { name: "Vesak Day sale",        from: "2027-05-17", to: "2027-05-23" },
+    { name: "Great Singapore Sale",  from: "2027-06-01", to: "2027-06-30" },
+    { name: "National Day sale",     from: "2027-08-01", to: "2027-08-31" },
+    { name: "9.9 sale",              from: "2027-09-03", to: "2027-09-09" },
+    { name: "Mid-Autumn sale",       from: "2027-09-13", to: "2027-09-19" },  /* Mid-Autumn 15 Sep 2027 */
+    { name: "10.10 sale",            from: "2027-10-04", to: "2027-10-10" },
+    { name: "Deepavali sale",        from: "2027-10-23", to: "2027-10-29" },  /* check: about 28 Oct 2027 */
+    { name: "11.11 sale",            from: "2027-11-05", to: "2027-11-11" },
+    { name: "Black Friday sale",     from: "2027-11-22", to: "2027-11-28" },
+    { name: "Christmas sale",        from: "2027-12-01", to: "2027-12-31" }
   ],
 
 

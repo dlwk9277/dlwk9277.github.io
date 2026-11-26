@@ -88,7 +88,7 @@
   var calc = C.calculator, pkgs = C.packages || [];
 
   /* ---------- Floating sale banner (stays at the top while you scroll) ----------
-     During a sale: name, code and price. Between sales: the next sale and its start date. */
+     During a sale: name and price. Between sales: the next sale and its start date. */
   var bar = doc.getElementById("sale-bar");
   var NEXT = SALE ? null : (C.saleEvents || []).filter(function (e) { return e && e.from > today; })
     .sort(function (a, b) { return a.from < b.from ? -1 : 1; })[0] || null;
@@ -100,8 +100,7 @@
     if (SALE) {
       var ends = ZH ? (daysLeft === 0 ? "今天结束" : daysLeft === 1 ? "明天结束" : daysLeft <= 7 ? "还剩 " + daysLeft + " 天" : "至 " + niceDate(SALE.to))
         : daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
-      var code = SALE.code ? (ZH ? "优惠码 " + SALE.code + "，" : "code " + SALE.code + ", ") : "";
-      text = SALE.name + (ZH ? "：" : ": ") + code + price + " · " + ends;
+      text = SALE.name + (ZH ? "：" : ": ") + price + " · " + ends;
     } else {
       text = ZH ? NEXT.name + " " + niceDate(NEXT.from) + "开始：" + price : NEXT.name + " starts " + niceDate(NEXT.from) + ": " + price;
     }
@@ -290,7 +289,7 @@
       out.lines.textContent = "";
       var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra && c.o.needs; }).map(function (c) { return c.o.label; }));
       line(p.name + (ZH ? "套餐" : " package"), "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
-      if (onSale(p)) line(SALE.name + (SALE.code ? (ZH ? "（优惠码 " + SALE.code + "）" : " (code " + SALE.code + ")") : ""), "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
+      if (onSale(p)) line(SALE.name, "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
       picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, ZH ? "免费" : "Free", "ql-free"); });
       showPrice(num(nowPrice(p)));
 
@@ -336,7 +335,6 @@
         if (monthlyTotal) planText += ZH ? "每月合计 S$" + money(monthlyTotal) + "。" : " Monthly total: S$" + money(monthlyTotal) + ".";
       }
       msg = msg.indexOf("{plan}") >= 0 ? msg.replace("{plan}", planText) : msg + planText;
-      if (SALE && SALE.code && onSale(p)) msg += ZH ? "\n优惠码：" + SALE.code : "\nPromo code: " + SALE.code;
       if (REF) msg += ZH ? "\n推荐人（如有）：" : "\nReferred by (if anyone): ";
       out.send.href = waLink(msg);
       if (mini.pkg) { mini.pkg.textContent = p.name; mini.price.textContent = money(nowPrice(p)); mini.send.href = out.send.href; }
