@@ -186,14 +186,21 @@ a { color: inherit; }
 .sale-bar {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 36px; padding: 6px var(--gutter);
-  background: var(--accent); color: var(--ink); text-decoration: none;
+  background: var(--accent-deep); color: #fff; text-decoration: none;
   font-size: .84rem; font-weight: 700; text-align: center; line-height: 1.3;
 }
-.sale-bar:hover { background: var(--accent-2); }
-.sale-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); flex: none; }
+.sale-bar:hover { background: #274DB8; }
+.sale-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; flex: none; }
 .motion .sale-dot { animation: blink 1.6s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: .25; } }
 @media (min-width: 720px) { .sale-bar { font-size: .92rem; min-height: 40px; } }
+/* Refer-a-friend strip: soft blue, one thin line under the sale banner */
+.refer-bar { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 28px; padding: 4px var(--gutter); background: var(--accent); color: var(--ink); text-decoration: none; font-size: .78rem; font-weight: 700; line-height: 1.3; text-align: center; }
+.refer-bar:hover { background: var(--accent-2); }
+.refer-bar u { text-underline-offset: 3px; font-weight: 600; }
+@media (min-width: 720px) { .refer-bar { font-size: .86rem; } }
+.faq-list details#referral { scroll-margin-top: 40px; }
+.calc-refer { color: var(--ink); font-size: .85rem; font-weight: 700; }
 
 /* ---------- Drag to compare: a small browser window ---------- */
 .hero-visual { margin: 0 auto; width: 100%; max-width: 640px; }
@@ -630,6 +637,9 @@ a { color: inherit; }
 .guide-fig img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line-2); background: #fff; }
 .guide-fig figcaption { margin-top: 8px; color: var(--muted); font-size: .85rem; }
 .guide-fig a { display: block; }
+
+.guide-steps-abc > .guide-step::before { content: counter(gstep, upper-alpha); }
+.guide .section-title { margin-bottom: 18px; }
 
 /* Monthly hosting / automation costs in the quote */
 .tag-mo { color: var(--text); border-color: #55555B; margin-left: 4px; }

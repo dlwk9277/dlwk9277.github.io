@@ -87,17 +87,47 @@
 
   var calc = C.calculator, pkgs = C.packages || [];
 
-  /* ---------- Floating sale banner (stays at the top while you scroll) ---------- */
+  /* ---------- Floating sale banner (stays at the top while you scroll) ----------
+     During a sale: name, code and price. Between sales: the next sale and its start date. */
   var bar = doc.getElementById("sale-bar");
-  if (bar && SALE && pkgs.length) {
-    var first = pkgs[0];
-    var ends = ZH ? (daysLeft === 0 ? "今天结束" : daysLeft === 1 ? "明天结束" : daysLeft <= 7 ? "还剩 " + daysLeft + " 天" : "至 " + niceDate(SALE.to))
-      : daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
-    bar.querySelector("[data-sale-text]").textContent = ZH
-      ? SALE.name + "：S$" + money(first.price) + " 起" + (first.oldPrice ? "（原价 S$" + money(first.oldPrice) + "）" : "") + " · " + ends
-      : SALE.name + ": from S$" + money(first.price) + (first.oldPrice ? " (was S$" + money(first.oldPrice) + ")" : "") + " · " + ends;
+  var NEXT = SALE ? null : (C.saleEvents || []).filter(function (e) { return e && e.from > today; })
+    .sort(function (a, b) { return a.from < b.from ? -1 : 1; })[0] || null;
+  if (bar && (SALE || NEXT) && pkgs.length) {
+    var first = pkgs[0], was = first.oldPrice;
+    var price = ZH ? "S$" + money(first.price) + " 起" + (was ? "（原价 S$" + money(was) + "）" : "")
+      : "from S$" + money(first.price) + (was ? " (usual S$" + money(was) + ")" : "");
+    var text;
+    if (SALE) {
+      var ends = ZH ? (daysLeft === 0 ? "今天结束" : daysLeft === 1 ? "明天结束" : daysLeft <= 7 ? "还剩 " + daysLeft + " 天" : "至 " + niceDate(SALE.to))
+        : daysLeft === 0 ? "ends today" : daysLeft === 1 ? "ends tomorrow" : daysLeft <= 7 ? daysLeft + " days left" : "until " + niceDate(SALE.to);
+      var code = SALE.code ? (ZH ? "优惠码 " + SALE.code + "，" : "code " + SALE.code + ", ") : "";
+      text = SALE.name + (ZH ? "：" : ": ") + code + price + " · " + ends;
+    } else {
+      text = ZH ? NEXT.name + " " + niceDate(NEXT.from) + "开始：" + price : NEXT.name + " starts " + niceDate(NEXT.from) + ": " + price;
+    }
+    bar.querySelector("[data-sale-text]").textContent = text;
     bar.hidden = false;
   }
+
+  /* ---------- Refer a friend (config: referral): second strip under the sale banner ---------- */
+  var REF = C.referral && num(C.referral.amount) ? num(C.referral.amount) : 0;
+  if (bar && REF) {
+    var rb = el("a", "refer-bar");
+    rb.href = doc.getElementById("referral") ? "#referral" : "/#referral";
+    rb.appendChild(el("span", null, ZH ? "推荐朋友：双方各得 S$" + money(REF) : "Refer a friend: you both get S$" + money(REF)));
+    rb.appendChild(el("u", null, ZH ? "条款" : "Terms"));
+    bar.parentNode.insertBefore(rb, bar.nextSibling);
+  }
+  /* A link to #referral opens that question */
+  function openReferral() {
+    var d = location.hash === "#referral" && doc.getElementById("referral");
+    if (!d) return;
+    d.open = true;
+    setTimeout(function () { d.scrollIntoView(); }, 450);
+  }
+  window.addEventListener("hashchange", openReferral);
+  doc.addEventListener("click", function (e) { if (e.target.closest && e.target.closest('a[href$="#referral"]')) setTimeout(openReferral, 0); });
+  openReferral();
 
   /* ---------- Price calculator (config: packages, calculator) ----------
      Always shows the LOWEST package that covers everything picked.
@@ -158,7 +188,8 @@
       if (!items.length) return;
       var fs = el("fieldset", "calc-group");
       var lg = el("legend", null, g.label);
-      if (g.hint) lg.appendChild(el("span", null, g.hint));
+      /* a group hint may hold {packageid}: replaced by that package's price today */
+      if (g.hint) lg.appendChild(el("span", null, g.hint.replace(/\{(\w+)\}/g, function (m, id) { return id in rank ? "S$" + money(nowPrice(pkgOf(id))) : m; })));
       fs.appendChild(lg);
       var wrap = el("div", "calc-extras");
       items.forEach(function (x) {
@@ -221,6 +252,11 @@
       }
       return n;
     }
+    if (REF && out.send) {
+      out.send.parentNode.insertBefore(el("p", "calc-refer", ZH
+        ? "朋友推荐？再减 S$" + money(REF) + "。请在 WhatsApp 消息里写上朋友的名字。"
+        : "Referred by a friend? Take another S$" + money(REF) + " off. Add their name to the WhatsApp message."), out.send);
+    }
     function update(e) {
       var sizeInp = sizesBox.querySelector("input:checked");
       var size = calc.sizes[Number(sizeInp ? sizeInp.value : 0)];
@@ -254,7 +290,7 @@
       out.lines.textContent = "";
       var incl = [size.label].concat(picked.filter(function (c) { return !c.o.free && !c.o.extra && c.o.needs; }).map(function (c) { return c.o.label; }));
       line(p.name + (ZH ? "套餐" : " package"), "S$" + money(onSale(p) ? p.oldPrice : nowPrice(p)), "", incl.join(" · "));
-      if (onSale(p)) line(SALE.name, "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
+      if (onSale(p)) line(SALE.name + (SALE.code ? (ZH ? "（优惠码 " + SALE.code + "）" : " (code " + SALE.code + ")") : ""), "−S$" + money(num(p.oldPrice) - num(p.price)), "ql-sale");
       picked.filter(function (c) { return c.o.free; }).forEach(function (c) { line(c.o.label, ZH ? "免费" : "Free", "ql-free"); });
       showPrice(num(nowPrice(p)));
 
@@ -300,6 +336,8 @@
         if (monthlyTotal) planText += ZH ? "每月合计 S$" + money(monthlyTotal) + "。" : " Monthly total: S$" + money(monthlyTotal) + ".";
       }
       msg = msg.indexOf("{plan}") >= 0 ? msg.replace("{plan}", planText) : msg + planText;
+      if (SALE && SALE.code && onSale(p)) msg += ZH ? "\n优惠码：" + SALE.code : "\nPromo code: " + SALE.code;
+      if (REF) msg += ZH ? "\n推荐人（如有）：" : "\nReferred by (if anyone): ";
       out.send.href = waLink(msg);
       if (mini.pkg) { mini.pkg.textContent = p.name; mini.price.textContent = money(nowPrice(p)); mini.send.href = out.send.href; }
     }

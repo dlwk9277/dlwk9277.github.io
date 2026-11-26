@@ -47,7 +47,7 @@
   var PAGE = doc.body.getAttribute("data-page");   /* set on the aircon / plumber pages: they carry their own Chinese in data-zh */
   if (PAGE && window.PAGE_ZH) { doc.title = window.PAGE_ZH.title; A('meta[name="description"]', "content", window.PAGE_ZH.desc); }
   if (!PAGE) doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
-  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，可免费自行托管，S$250 至 S$1500。付款前先看免费设计预览。");
+  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，可免费自行托管，S$500 至 S$4,400。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   var hp = $(".hero-proof-text"); if (hp) hp.textContent = "我的作品";
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
@@ -127,7 +127,7 @@
   var C = window.SITE_CONFIG || {};
   var MAP = {
     "Starter": "入门版", "Business": "商业版", "Business + Tool": "商业版 + 工具", "Business + Tools": "商业版 + 多个工具",
-    "Business site + tools": "商业网站 + 工具", "Pick your tools below": "在下方选择工具", "Up to 3 tools S$1,000 · up to 7 tools S$1,500": "最多 3 个工具 S$1,000 · 最多 7 个工具 S$1,500", "8 or more tools: I quote the extra on WhatsApp": "8 个或以上工具：额外部分我会在 WhatsApp 上报价",
+    "Business site + tools": "商业网站 + 工具", "Pick your tools below": "在下方选择工具", "Up to 3 tools {tool} · up to 7 tools {tools}": "最多 3 个工具 {tool} · 最多 7 个工具 {tools}", "8 or more tools: I quote the extra on WhatsApp": "8 个或以上工具：额外部分我会在 WhatsApp 上报价",
     "Job roster for your team": "团队工作排班", "Who goes to which job, and when": "谁去哪个工作，何时去",
     "Staff leave tracker": "员工请假记录", "HR: leave requests and balances": "人事：请假申请和余额",
     "Attendance clock-in": "考勤打卡", "HR: staff clock in from their phone": "人事：员工用手机打卡",

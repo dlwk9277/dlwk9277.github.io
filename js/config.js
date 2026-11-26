@@ -41,40 +41,47 @@ window.SITE_CONFIG = {
      While it says "YOUR_PIXEL_ID" the pixel does NOT load.             */
   metaPixelId: "YOUR_PIXEL_ID",
 
+  /* ---------- REFER A FRIEND --------------------------------------------
+     amount: S$ off for the friend, and the same S$ sent to the referrer.
+     Stacks with any sale. 0 hides the banner strip and the calculator note.
+     The terms are in the FAQ (index.html and the aircon / plumber pages):
+     update them there if the amount or rules change.                    */
+  referral: { amount: 100 },
+
   /* ---------- SALE CALENDAR ---------------------------------------------
      The discount is shown as the current Singapore sale, picked by date
      automatically (Singapore time). No need to edit the site each time.
-     - name: shown on the site, e.g. "Christmas sale: 50% off until 31 Dec"
+     - name: shown on the site, e.g. "Christmas sale"
      - from / to: first and last day, written "YYYY-MM-DD"
+     - code: the promo code shown in the banner, quote and WhatsApp message
+       during that sale only. Don't accept it after the sale ends.
      Add next year's sales before the list runs out.
-     The sale banner floats at the top of the page during a sale.
-     On any day with NO sale, the banner is hidden and the site shows the
-     full original prices (oldPrice) with no discount. Keep one full-price month every year (this
-     year: July 2027, no festivities) so the original price is a real price.
+     The banner floats at the top of the page. On any day with NO sale it names
+     the next sale and its start date, and the site shows and charges the full
+     original prices (oldPrice), so the original price stays a real price.
      Lunar dates (Chinese New Year, Hari Raya, Deepavali) move every year:
      check them on mom.gov.sg ("public holidays").                       */
   saleEvents: [
-    { name: "Black Friday sale",      from: "2026-11-20", to: "2026-11-30" },
-    { name: "12.12 sale",             from: "2026-12-01", to: "2026-12-12" },
-    { name: "Christmas sale",         from: "2026-12-13", to: "2026-12-31" },
-    { name: "New Year sale",          from: "2027-01-01", to: "2027-01-20" },
-    { name: "Chinese New Year sale",  from: "2027-01-21", to: "2027-02-20" },  /* CNY 6-7 Feb 2027 */
-    { name: "Hari Raya sale",         from: "2027-02-21", to: "2027-03-20" },  /* Hari Raya Puasa 10 Mar 2027 */
-    { name: "Easter sale",            from: "2027-03-21", to: "2027-04-04" },  /* Good Friday 26 Mar 2027 */
-    { name: "Labour Day sale",        from: "2027-04-05", to: "2027-05-15" },
-    { name: "Vesak Day sale",         from: "2027-05-16", to: "2027-05-31" },
-    { name: "Great Singapore Sale",   from: "2027-06-01", to: "2027-06-30" },
-    /* July 2027: no sale. Full (original) prices for the whole month (no public holiday or festival). */
-    { name: "National Day sale",      from: "2027-08-01", to: "2027-08-31" },
-    { name: "9.9 sale",               from: "2027-09-01", to: "2027-09-09" },
-    { name: "Mid-Autumn sale",        from: "2027-09-10", to: "2027-09-30" },  /* Mid-Autumn 15 Sep 2027 */
-    { name: "10.10 sale",             from: "2027-10-01", to: "2027-10-10" },
-    { name: "Deepavali sale",         from: "2027-10-11", to: "2027-10-31" },  /* check: about 28 Oct 2027 */
-    { name: "11.11 sale",             from: "2027-11-01", to: "2027-11-19" },
-    { name: "Black Friday sale",      from: "2027-11-20", to: "2027-11-30" },
-    { name: "12.12 sale",             from: "2027-12-01", to: "2027-12-12" },
-    { name: "Christmas sale",         from: "2027-12-13", to: "2027-12-31" }
+    /* Big events run about a month, small events one week. Days between sales are full price
+       (oldPrice): quote and charge that price then, so the "was" price stays real. */
+    { name: "Black Friday sale",     from: "2026-11-24", to: "2026-11-30", code: "BF26" },
+    { name: "Christmas sale",        from: "2026-12-01", to: "2026-12-31", code: "XMAS26" },
+    { name: "Chinese New Year sale", from: "2027-01-08", to: "2027-02-07", code: "CNY27" },  /* CNY 6-7 Feb 2027 */
+    { name: "Hari Raya sale",        from: "2027-02-11", to: "2027-03-11", code: "RAYA27" },  /* Hari Raya Puasa 10 Mar 2027 */
+    { name: "Easter sale",           from: "2027-03-22", to: "2027-03-28", code: "EASTER27" },  /* Good Friday 26 Mar 2027 */
+    { name: "Labour Day sale",       from: "2027-04-26", to: "2027-05-02", code: "LABOUR27" },
+    { name: "Vesak Day sale",        from: "2027-05-17", to: "2027-05-23", code: "VESAK27" },
+    { name: "Great Singapore Sale",  from: "2027-06-01", to: "2027-06-30", code: "GSS27" },
+    { name: "National Day sale",     from: "2027-08-01", to: "2027-08-31", code: "NDP27" },
+    { name: "9.9 sale",              from: "2027-09-03", to: "2027-09-09", code: "SALE99" },
+    { name: "Mid-Autumn sale",       from: "2027-09-13", to: "2027-09-19", code: "MOON27" },  /* Mid-Autumn 15 Sep 2027 */
+    { name: "10.10 sale",            from: "2027-10-04", to: "2027-10-10", code: "SALE1010" },
+    { name: "Deepavali sale",        from: "2027-10-23", to: "2027-10-29", code: "DEEPA27" },  /* check: about 28 Oct 2027 */
+    { name: "11.11 sale",            from: "2027-11-05", to: "2027-11-11", code: "SALE1111" },
+    { name: "Black Friday sale",     from: "2027-11-22", to: "2027-11-28", code: "BF27" },
+    { name: "Christmas sale",        from: "2027-12-01", to: "2027-12-31", code: "XMAS27" }
   ],
+
 
   /* ---------- PRICE CALCULATOR + PACKAGES -------------------------------
      Four packages: Starter, Business, Business + Tool (1 to 3 tools) and Business + Tools (4 to 7).
@@ -87,12 +94,12 @@ window.SITE_CONFIG = {
        built free inside either package.
      - extra: a fixed add-on in S$ (complex n8n automation). It is shown on
        its own line, never added into the big number, so the headline price
-       stays between S$250 and S$1500.                                    */
+       stays between S$500 and S$4400.                                    */
   packages: [
-    { id: "starter",  name: "Starter",          price: 250,  oldPrice: 350 },
-    { id: "business", name: "Business",         price: 300,  oldPrice: 400 },
-    { id: "tool",     name: "Business + Tool",  price: 1000, oldPrice: 1500 },   /* 1 to 3 tools */
-    { id: "tools",    name: "Business + Tools", price: 1500, oldPrice: 2200 }    /* 4 to 7 tools */
+    { id: "starter",  name: "Starter",          price: 500,  oldPrice: 700 },
+    { id: "business", name: "Business",         price: 600,  oldPrice: 800 },
+    { id: "tool",     name: "Business + Tool",  price: 2000, oldPrice: 3000 },   /* 1 to 3 tools */
+    { id: "tools",    name: "Business + Tools", price: 3000, oldPrice: 4400 }    /* 4 to 7 tools */
   ],
 
   calculator: {
@@ -113,7 +120,7 @@ window.SITE_CONFIG = {
     /* Option groups, in the order shown. hint = small line under the group name. */
     groups: [
       { id: "found", label: "Get found" },
-      { id: "tools", label: "Tools that answer customers", hint: "Up to 3 tools S$1,000 · up to 7 tools S$1,500" }
+      { id: "tools", label: "Tools that answer customers", hint: "Up to 3 tools {tool} · up to 7 tools {tools}" }   /* {tool}, {tools} = today's package price */
     ],
     /* After launch: the customer picks one plan (or self-host). Shown as three cards under the site size.
        monthly = S$ per month. selected: true = picked when the page opens (only one).
