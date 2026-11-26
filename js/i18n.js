@@ -46,8 +46,8 @@
 
   var PAGE = doc.body.getAttribute("data-page");   /* set on the aircon / plumber pages: they carry their own Chinese in data-zh */
   if (PAGE && window.PAGE_ZH) { doc.title = window.PAGE_ZH.title; A('meta[name="description"]', "content", window.PAGE_ZH.desc); }
-  if (!PAGE) doc.title = "新加坡家居服务生意网站设计 | 杰 Builds";
-  if (!PAGE) A('meta[name="description"]', "content", "为新加坡冷气、水管、清洁和装修生意制作网站。5 个工作天上线，可免费自行托管，S$500 至 S$4,400。付款前先看免费设计预览。");
+  if (!PAGE) doc.title = "新加坡企业网站设计 | 杰 Builds";
+  if (!PAGE) A('meta[name="description"]', "content", "为新加坡各行各业的生意制作网站，从冷气到装修。5 个工作天上线，可免费自行托管，S$500 至 S$4,400。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   var hp = $(".hero-proof-text"); if (hp) hp.textContent = "我的作品";
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
@@ -57,9 +57,20 @@
   var h1 = $(".hero-title");
   if (h1 && !PAGE) {
     h1.removeAttribute("data-split");
-    h1.innerHTML = '为您的家居服务生意带来<span class="mark" data-mark>更多询问</span>。';
+    h1.innerHTML = '为您的生意带来<span class="mark" data-mark>更多询问</span>。';
   }
-  if (!PAGE) H(".hero-sub", "为新加坡的冷气、水管、电工、清洁、搬家和装修生意制作网站，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，可免费自行托管。</strong>");
+  if (!PAGE) H(".hero-sub", "为新加坡各行各业的生意制作网站，从冷气、水管到装修，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，可免费自行托管。</strong>");
+  /* intro: the 3D phone */
+  A(".intro-sec", "aria-label", "网站如何为您带来询问");
+  Tn(".intro-title", "为您带来询问的网站");
+  ["您好，我是从您的网站找到您的。可以报价吗？", "在您网站上看到价格了，星期六有空吗？", "网站上写您服务淡滨尼，可以预约吗？"].forEach(function (t, i) {
+    Tn(".intro-text", t, i); Tn(".intro-meta b", "新客户", i); Tn(".intro-meta small", "现在", i);
+  });
+  Tn(".intro-label", "示例通知");
+  Tn(".intro-actions .btn span", "WhatsApp 联系杰");
+  Tn(".intro-skip", "跳过");
+  Tn(".intro-hint-text", "向下滑动看看效果");
+  A(".showcase", "aria-label", "改版前后示例");
   Tn(".hero-actions .btn span", "WhatsApp 联系杰");
   Tn(".btn-ghost", "查看价格");
   ["免费设计预览", "现在付 50%，满意后再付 50%", "网站归您所有"].forEach(function (t, i) { Tn(".hero-terms li", t, i); });
@@ -114,7 +125,7 @@
   Tn(".contact-copy .btn span", "WhatsApp 联系杰");
   A(".portrait img", "alt", "杰的插画头像");
   Tn(".footer-brand", "杰 Builds，新加坡");
-  Tn(".footer-small", "为家居服务和装修生意制作网站。");
+  Tn(".footer-small", "为新加坡各行各业的生意制作网站。");
   H(".footer-privacy", '<span data-pixel-notice hidden>本网站使用 Meta Pixel cookies 来衡量广告效果。</span>WhatsApp 消息只用于回复您的询问。<a href="privacy.html">阅读隐私声明</a>（英文）。');
   Tn('.footer-links a[href="privacy.html"]', "隐私");
   A(".wa-float", "aria-label", "在 WhatsApp 上联系杰");

@@ -657,3 +657,74 @@ a { color: inherit; }
   .calc-opt .box { grid-template-columns: 1fr; align-content: start; }
   .calc-opt .box .opt-price { grid-column: 1; grid-row: auto; margin-top: 6px; text-align: left; }
 }
+
+/* =====================================================================
+   INTRO: the 3D phone (js/intro.js). Shown only when <html> has "intro".
+   ===================================================================== */
+.intro-sec { display: none; }
+html.intro { --top-h: 132px; --vh: 1vh; --intro-h: calc(var(--vh) * 100 - var(--top-h)); }
+@supports (height: 100svh) { html.intro { --vh: 1svh; } }
+@media (min-width: 720px) { html.intro { --top-h: 136px; } }
+html.intro .intro-sec { display: block; height: calc(var(--vh) * 300); }
+.hero-title:focus:not(:focus-visible) { outline: none; }
+/* hold the room for the sale and referral strips until js/site.js adds them, so nothing jumps */
+html.intro:not(.top-ready) .top { display: flex; flex-direction: column; justify-content: flex-end; min-height: var(--top-h); }
+.intro-stage { position: sticky; top: var(--top-h); height: var(--intro-h); z-index: 20; background: var(--bg); }
+/* keeps the strip under a collapsing phone address bar black */
+.intro-stage::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 25vh; background: var(--bg); }
+html.intro:not(.intro-playing) .intro-stage, html.intro:not(.intro-playing) .intro-stage * { visibility: hidden !important; }
+html.intro:not(.intro-playing) .intro-stage::after { visibility: hidden; }
+html.intro-playing .wa-float { display: none; }
+.intro-title { position: absolute; left: var(--gutter); right: var(--gutter); top: 16px; margin: 0 auto; max-width: 22ch; text-align: center; text-wrap: balance; font-family: var(--f-display); font-weight: 800; font-stretch: 108%; font-size: clamp(1.3rem, 3.4vw, 2rem); line-height: 1.15; letter-spacing: -0.02em; }
+:lang(zh) .intro-title { font-family: var(--f-body), "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; letter-spacing: 0; }
+.intro-poster, .intro-flat, .intro-canvas { position: absolute; pointer-events: none; }
+/* placed by CSS so it shows at once; js/intro.js works from the same --from and --to numbers */
+html.intro { --from: 92px; --to: 116px; }
+@media (min-width: 720px) { html.intro { --from: 108px; } }
+.intro-poster { --h: min(calc(var(--intro-h) - var(--from) - var(--to)), 660px, 163vw); max-width: none; height: calc(var(--h) * 1.0036); width: calc(var(--h) * .7527); left: calc(50% - var(--h) * .37635); top: calc(var(--from) + (var(--intro-h) - var(--from) - var(--to) - var(--h) * 1.0036) / 2); }
+.intro-canvas { inset: 0; width: 100%; height: 100%; visibility: hidden; }
+.intro-flat { box-sizing: border-box; opacity: 0; background: #101a38; border: 0 solid #5b657e; }
+.intro-sec.ready .intro-canvas { visibility: visible; }
+.intro-sec.ready .intro-poster, .intro-sec.ready .intro-flat { visibility: hidden; }
+.intro-notes { position: absolute; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: .55em; pointer-events: none; transform-origin: 50% 30%; }
+.intro-notes:not(.placed) { visibility: hidden; }
+.intro-notes li { display: flex; align-items: flex-start; gap: .7em; padding: .7em .8em; border-radius: 1.25em; background: #F2F2EE; color: var(--ink); line-height: 1.3; opacity: 0; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, .7); }
+.intro-app { flex: none; width: 2.5em; height: 2.5em; border-radius: .65em; display: grid; place-items: center; background: #15803d; color: #fff; }
+.intro-app svg { width: 1.5em; height: 1.5em; }
+.intro-msg { display: grid; gap: .1em; min-width: 0; flex: 1; }
+.intro-meta { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.intro-meta b { font-weight: 800; }
+.intro-meta small { font-size: .85em; color: #45454a; }
+.intro-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: max(10px, env(safe-area-inset-bottom)); display: grid; justify-items: center; gap: 6px; }
+.intro-actions { display: flex; align-items: center; gap: 12px; }
+.intro-skip { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 64px; padding: 0 14px; color: var(--text); font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.intro-cue { display: grid; justify-items: center; min-height: 40px; }
+.intro-cue > * { grid-area: 1 / 1; margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.3; text-align: center; }
+.intro-hint { display: grid; justify-items: center; }
+.intro-hint svg { width: 20px; height: 20px; }
+html.intro-playing .intro-hint svg { animation: nudge 1.8s var(--ease) infinite; }
+@keyframes nudge { 50% { transform: translateY(4px); } }
+.intro-label { align-self: center; opacity: 0; }
+/* the copy of the first screen that grows out of the phone */
+.intro-portal { position: absolute; z-index: 2; left: 0; width: 100%; top: calc(-1px - var(--head-h)); transform-origin: 0 0; visibility: hidden; opacity: 0; pointer-events: none; }
+.intro-sheet { position: absolute; z-index: 2; left: 0; top: 0; visibility: hidden; opacity: 0; background: var(--bg); pointer-events: none; }
+.intro-stage.is-open .intro-portal { pointer-events: auto; }
+html.intro .intro-portal .hero { margin-top: 0; }
+.intro-portal * { animation: none !important; }
+/* the real first screen sits where the intro ends */
+html.intro .hero { display: flex; flex-direction: column; justify-content: center; min-height: calc(var(--intro-h) + var(--head-h) + 1px); margin-top: calc(-1px - var(--head-h) - var(--intro-h)); }
+html.intro .hero > .wrap { width: 100%; }
+html.intro .hero .mark { transition: background-size .9s var(--ease-out); }
+html.intro .hero .mark.is-live { transition: none; }
+
+/* First screen is words only; the before/after example follows it */
+.hero-solo { padding-bottom: 48px; }
+@media (min-width: 980px) {
+  .hero-solo .hero-grid { grid-template-columns: 1fr; }
+  .hero-solo .hero-copy { text-align: center; max-width: 60rem; margin: 0 auto; }
+  .hero-solo .hero-title { max-width: 16ch; margin-left: auto; margin-right: auto; }
+  .hero-solo .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-solo .hero-actions, .hero-solo .hero-terms { justify-content: center; }
+}
+.showcase { padding: 8px 0 var(--section-y); }
+.hero-solo .hero-title:lang(zh) { max-width: none; }

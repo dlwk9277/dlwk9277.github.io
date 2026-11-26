@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="google-site-verification" content="2xer0mkSP5VUdhM2R_G-a2jgA3SitdXtqtMEsazaQb0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Website Design Singapore for Home Service Businesses | Jie Builds</title>
-  <meta name="description" content="Websites for Singapore aircon, plumbing, cleaning and renovation businesses. Live in 5 working days, free to self-host, S$500 to S$4,400. Free design preview before you pay.">
+  <title>Website Design Singapore for Businesses | Jie Builds</title>
+  <meta name="description" content="Websites for Singapore businesses, from aircon to renovation. Live in 5 working days, free to self-host, S$500 to S$4,400. Free design preview before you pay.">
   <link rel="canonical" href="https://jiebuilds.com/">
   <meta name="theme-color" content="#0C0C0D">
   <meta name="color-scheme" content="dark">
@@ -13,18 +13,18 @@
   <!-- Open Graph / social sharing -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Jie Builds">
-  <meta property="og:title" content="Websites for Singapore home service businesses | Jie Builds">
+  <meta property="og:title" content="Websites for Singapore businesses | Jie Builds">
   <meta property="og:description" content="Get more enquiries with a fast, professional website. Live in 5 working days, free to self-host, free design preview before you pay.">
   <meta property="og:url" content="https://jiebuilds.com/">
-  <meta property="og:image" content="https://jiebuilds.com/assets/og-image.png?v=10">
+  <meta property="og:image" content="https://jiebuilds.com/assets/og-image.png?v=11">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Jie Builds: websites for Singapore home service businesses. Live in 5 working days.">
+  <meta property="og:image:alt" content="Jie Builds: websites for Singapore businesses. Live in 5 working days.">
   <meta property="og:locale" content="en_SG">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Websites for Singapore home service businesses | Jie Builds">
+  <meta name="twitter:title" content="Websites for Singapore businesses | Jie Builds">
   <meta name="twitter:description" content="Get more enquiries with a fast, professional website. Live in 5 working days, free to self-host.">
-  <meta name="twitter:image" content="https://jiebuilds.com/assets/og-image.png?v=10">
+  <meta name="twitter:image" content="https://jiebuilds.com/assets/og-image.png?v=11">
 
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
@@ -44,24 +44,30 @@
       if (!calm && "IntersectionObserver" in window) {
         h.classList.add("motion");
         setTimeout(function () { if (!window.__siteReady) h.classList.remove("motion"); }, 3500);
+        /* 3D phone intro: only with motion on, enough screen height and no data saver */
+        if (innerHeight >= 600 && !(navigator.connection && navigator.connection.saveData)) {
+          h.classList.add("intro", "intro-playing");
+          setTimeout(function () { if (!window.__introReady) h.classList.remove("intro", "intro-playing"); }, 4000);
+        }
       }
     })(document);
   </script>
-  <link rel="stylesheet" href="css/style.css?v=20261126h">
+  <link rel="stylesheet" href="css/style.css?v=20261126j">
 
   <!-- Settings first (prices, WhatsApp, Pixel ID), then site behaviour -->
-  <script src="js/config.js?v=20261126h" defer></script>
-  <script src="js/i18n.js?v=20261126h" defer></script>
-  <script src="js/site.js?v=20261126h" defer></script>
+  <script src="js/config.js?v=20261126j" defer></script>
+  <script src="js/i18n.js?v=20261126j" defer></script>
+  <script src="js/intro.js?v=20261126j" defer></script>
+  <script src="js/site.js?v=20261126j" defer></script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Jie Builds",
-    "description": "Websites, landing pages, chatbots and automations for home service and renovation businesses in Singapore.",
+    "description": "Websites, landing pages, chatbots and automations for businesses in Singapore, including aircon, plumbing and renovation.",
     "url": "https://jiebuilds.com/",
-    "image": "https://jiebuilds.com/assets/og-image.png?v=10",
+    "image": "https://jiebuilds.com/assets/og-image.png?v=11",
     "telephone": "+6592778104",
     "priceRange": "S$500-S$4400",
     "areaServed": { "@type": "Country", "name": "Singapore" },
@@ -118,13 +124,40 @@
 
   <main id="main">
 
-    <!-- 1. HERO + drag-to-compare -->
-    <section class="hero" id="top">
+    <!-- 0. INTRO: 3D phone, enquiries arrive, the screen opens into the site (js/intro.js) -->
+    <section class="intro-sec" id="intro" aria-label="How your website brings enquiries">
+      <div class="intro-stage">
+        <p class="intro-title">Websites that bring you enquiries</p>
+        <img class="intro-poster" src="assets/intro-phone.webp?v=1" alt="" width="900" height="1200" fetchpriority="high">
+        <div class="intro-flat" aria-hidden="true"></div>
+        <canvas class="intro-canvas" aria-hidden="true"></canvas>
+        <ul class="intro-notes">
+            <li><span class="intro-app" aria-hidden="true"><svg><use href="#i-wa"/></svg></span><span class="intro-msg"><span class="intro-meta"><b>New customer</b><small>now</small></span><span class="intro-text">Hey, I came from your website. Can I get a quote?</span></span></li>
+            <li><span class="intro-app" aria-hidden="true"><svg><use href="#i-wa"/></svg></span><span class="intro-msg"><span class="intro-meta"><b>New customer</b><small>now</small></span><span class="intro-text">Saw your prices on your website. Are you free on Saturday?</span></span></li>
+            <li><span class="intro-app" aria-hidden="true"><svg><use href="#i-wa"/></svg></span><span class="intro-msg"><span class="intro-meta"><b>New customer</b><small>now</small></span><span class="intro-text">Your website says you cover Tampines. Can I book?</span></span></li>
+        </ul>
+        <div class="intro-foot">
+          <div class="intro-actions">
+            <a class="btn btn-small" data-wa="hero" href="https://wa.me/6592778104" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg><span>WhatsApp Jie</span></a>
+            <a class="intro-skip" href="#top">Skip</a>
+          </div>
+          <div class="intro-cue">
+            <p class="intro-hint"><span class="intro-hint-text">Scroll to see it work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></p>
+            <p class="intro-label">Example notifications</p>
+          </div>
+        </div>
+        <div class="intro-sheet" aria-hidden="true"></div>
+        <div class="intro-portal" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 1. HERO -->
+    <section class="hero hero-solo" id="top">
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <a class="hero-proof" href="#work"><span class="hero-proof-dot" aria-hidden="true"></span><span class="hero-proof-text">My work</span><span aria-hidden="true">→</span></a>
-          <h1 class="hero-title" data-split><span class="mark" data-mark>More enquiries</span> for your home service business.</h1>
-          <p class="hero-sub" data-load="2">Websites for Singapore aircon, plumbing, electrical, cleaning, moving and renovation businesses, with your prices and WhatsApp one tap away. <strong>Live in 5 working days. Free to self-host.</strong></p>
+          <h1 class="hero-title" data-split><span class="mark" data-mark>More enquiries</span> for your business.</h1>
+          <p class="hero-sub" data-load="2">Websites for Singapore businesses, from aircon and plumbing to renovation, with your prices and WhatsApp one tap away. <strong>Live in 5 working days. Free to self-host.</strong></p>
           <div class="hero-actions" data-load="3">
             <a class="btn btn-big" data-wa="hero" href="https://wa.me/6592778104" target="_blank" rel="noopener">
               <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
@@ -139,8 +172,14 @@
           </ul>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Drag to compare -->
+    <section class="showcase" aria-label="Before and after example">
+      <div class="wrap">
         <!-- Same business, an old static site vs a site built for enquiries (illustration, not a real client) -->
-        <figure class="hero-visual" data-load="2">
+        <figure class="hero-visual" data-reveal>
           <div class="win">
             <div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>yourbusiness.com.sg</span></div>
             <div class="compare" data-compare>
@@ -351,7 +390,7 @@
     <div class="wrap footer-inner">
       <div>
         <p class="footer-brand">Jie Builds, Singapore</p>
-        <p class="footer-small">Websites for home service and renovation businesses.</p>
+        <p class="footer-small">Websites for Singapore businesses.</p>
       </div>
       <ul class="footer-links">
         <li><a data-wa="general" href="https://wa.me/6592778104" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></li>

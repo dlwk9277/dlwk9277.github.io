@@ -10,6 +10,8 @@ privacy.html      Privacy notice (Meta Pixel + WhatsApp)
 404.html          "Page not found" page
 js/config.js      ← YOUR SETTINGS: WhatsApp, prices, Instagram, Pixel, portfolio
 js/site.js        Site behaviour (you normally don't need to touch this)
+js/intro.js       The 3D phone intro on the home page (see "Phone intro" below)
+js/phone3d.js     The 3D phone itself (built file, don't edit by hand)
 css/style.css     All styling
 assets/           Images, icons, fonts, social share image
 robots.txt, sitemap.xml   For Google
@@ -178,3 +180,15 @@ The page has a dark theme with light motion. "More enquiries" has a marker-pen h
 ## Notes for hosting at a different address
 
 All links are relative, so the site also works at `username.github.io/repo-name/`. Only the **404 page** needs a tweak there: open `404.html` and change `var HOME = "/";` to `var HOME = "/repo-name/";`.
+
+---
+
+## Phone intro (first screen of the home page)
+
+Scrolling turns a 3D phone to face you, three example notifications arrive, and the screen opens into the website.
+
+- **Words:** English is in `index.html` (search for `id="intro"`). Chinese is in `js/i18n.js` (search for `intro`).
+- **The notifications are examples**, and the screen says so. Keep that label.
+- **Turn it off:** in `index.html`, delete the line `h.classList.add("intro", "intro-playing");`.
+- **Who doesn't see it:** reduced motion, data saver, screens under 600 px tall, or no JavaScript. They get the normal page.
+- **Change the phone's shape or wallpaper:** edit `~/sites/models/jiebuilds-phone/src/index.js`, run `sh build.sh` there, then `node poster.js` to redo the still picture.
