@@ -184,7 +184,7 @@
     var time = now.getHours() + ":" + ("0" + now.getMinutes()).slice(-2);
     var date = now.toLocaleDateString(loc, { weekday: "long", day: "numeric", month: "long" });
     var fonts = doc.fonts && doc.fonts.load ? doc.fonts.load('800 100px Archivo') : Promise.resolve();
-    Promise.all([import(new URL("js/phone3d.js?v=20261126j", doc.baseURI).href), fonts])
+    Promise.all([import(new URL("js/phone3d.js?v=20261127a", doc.baseURI).href), fonts])
       .then(function (r) {
         var scene = r[0].createPhone(canvas, { time: time, date: date });
         api = scene; size(); paint(shown === null ? progress() : shown);

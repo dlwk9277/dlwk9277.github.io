@@ -47,7 +47,7 @@
   var PAGE = doc.body.getAttribute("data-page");   /* set on the aircon / plumber pages: they carry their own Chinese in data-zh */
   if (PAGE && window.PAGE_ZH) { doc.title = window.PAGE_ZH.title; A('meta[name="description"]', "content", window.PAGE_ZH.desc); }
   if (!PAGE) doc.title = "新加坡企业网站设计 | 杰 Builds";
-  if (!PAGE) A('meta[name="description"]', "content", "为新加坡各行各业的生意制作网站，从冷气到装修。5 个工作天上线，可免费自行托管，S$500 至 S$4,400。付款前先看免费设计预览。");
+  if (!PAGE) A('meta[name="description"]', "content", "为新加坡各行各业的生意制作网站，从冷气到装修。资料齐全后 3 个工作天上线，可免费自行托管，S$500 至 S$4,400。付款前先看免费设计预览。");
   Tn(".skip-link", "跳到内容");
   var hp = $(".hero-proof-text"); if (hp) hp.textContent = "我的作品";
   ["价格", "流程", "常见问题"].forEach(function (t, i) { Tn(".site-nav a", t, i); });
@@ -59,7 +59,7 @@
     h1.removeAttribute("data-split");
     h1.innerHTML = '为您的生意带来<span class="mark" data-mark>更多询问</span>。';
   }
-  if (!PAGE) H(".hero-sub", "为新加坡各行各业的生意制作网站，从冷气、水管到装修，价格和 WhatsApp 一键即达。<strong>5 个工作天上线，可免费自行托管。</strong>");
+  if (!PAGE) H(".hero-sub", "为新加坡各行各业的生意制作网站，从冷气、水管到装修，价格和 WhatsApp 一键即达。<strong>资料齐全后 3 个工作天上线，可免费自行托管。</strong>");
   /* intro: the 3D phone */
   A(".intro-sec", "aria-label", "网站如何为您带来询问");
   Tn(".intro-title", "为您带来询问的网站");
@@ -108,12 +108,12 @@
   }
   Tn("#how-title", "流程");
   [["WhatsApp 联系我", "告诉我您做什么生意。"], ["免费预览", "付款前，先看您的首页。"],
-   ["付 50%，我来制作", "包含 2 轮修改。"], ["5 个工作天上线", "付清另外 50%。网站归您所有。"]]
+   ["付 50%，我来制作", "包含 2 轮修改。"], ["3 个工作天上线", "从收齐所需资料起算。付清另外 50%。网站归您所有。"]]
     .forEach(function (p, i) { var li = $$(".how-steps li")[i]; if (li) { li.querySelector("b").textContent = p[0]; li.querySelector("span").textContent = p[1]; } });
 
   Tn("#faq-title", "常见问题");
   if (!PAGE)
-  [["我需要给您什么资料？", "您的公司名称、服务项目、服务地区、大概的价格，以及用手机拍的工作照片。没有 logo？我会用清晰的文字设置您的名称。不知道怎么写？我会在 WhatsApp 上帮您。资料齐了，5 个工作天内上线。"],
+  [["我需要给您什么资料？", "您的公司名称、服务项目、服务地区、大概的价格，以及用手机拍的工作照片。没有 logo？我会用清晰的文字设置您的名称。不知道怎么写？我会在 WhatsApp 上帮您。所需资料齐全后，3 个工作天内上线。"],
    ["怎么付款？", "用 PayNow。看过免费预览并确认后付 50%，网站完成、您满意后再付 50%。没有隐藏费用。"],
    ["网站归我所有吗？", "是的。付清尾款后，网站和所有文件都归您所有，以后也可以找别人接手。"],
    ["什么是免费的？托管和域名呢？", "网站归您所有，您可以按我的设置指南免费自行托管。代管是可选的：托管 每月 S$50（托管、SSL、基本备份，不含修改），或全面维护 每月 S$150（托管、更新、支持，每月含 2 次修改，全部由我处理）。您自己的域名，例如 yourbusiness.sg，也是可选的：每年约 S$20 到 S$60，用您的名字购买。我会帮您选择并连接。"],
